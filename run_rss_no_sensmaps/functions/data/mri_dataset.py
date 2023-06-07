@@ -147,18 +147,19 @@ class SliceDataset(torch.utils.data.Dataset):
                 with open(self.dataset_cache_file, "wb") as f:
                     pickle.dump(dataset_cache, f)
         
-        # Take a subset of the datasets for fast trouble shooting
-        if num_samples == None: 
-            pass
-        else: 
-            self.examples = self.examples[0:num_samples]
-        
         if num_cols:
             self.examples = [
                 ex
                 for ex in self.examples
                 if ex[2]["encoding_size"][1] in num_cols  # type: ignore
             ]
+        
+
+        # Take a subset of the datasets for fast trouble shooting
+        if num_samples == None: 
+            pass
+        else: 
+            self.examples = self.examples[0:num_samples]
 
     def _retrieve_metadata(self, fname):
         with h5py.File(fname, "r") as hf:
