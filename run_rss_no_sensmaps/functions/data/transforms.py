@@ -469,16 +469,16 @@ class UnetDataTransform_norm:
 
         if self.mode=='train': # the last option only matters for self-supervised training. During training the input/taret split is random if self.hp_exp['use_mask_seed_for_training']=False and fixed otherwise. During validation and testin it is always fixed.
             seed = None
-            input_kspace, input_mask, target_kspace, target_mask, target_mask_weighted = apply_mask(kspace, self.mask_func, seed, False)
+            input_kspace, input_mask, target_kspace, target_mask, target_mask_weighted = apply_mask(kspace, self.mask_func, seed)
         if self.mode=='adapt': # the last option only matters for self-supervised training. During training the input/taret split is random if self.hp_exp['use_mask_seed_for_training']=False and fixed otherwise. During validation and testin it is always fixed.
             # fix the mask
             seed = tuple(map(ord, fname))
-            input_kspace, input_mask, target_kspace, target_mask, target_mask_weighted = apply_mask(kspace, self.mask_func, seed, False)
+            input_kspace, input_mask, target_kspace, target_mask, target_mask_weighted = apply_mask(kspace, self.mask_func, seed)
         else:
             # during validation and test we want to always use the same seed for the same slice
             # fix the mask
             seed = tuple(map(ord, fname))
-            input_kspace, input_mask, target_kspace, target_mask, target_mask_weighted = apply_mask(kspace, self.mask_func, seed, True)
+            input_kspace, input_mask, target_kspace, target_mask, target_mask_weighted = apply_mask(kspace, self.mask_func, seed)
 
         # inverse Fourier transform to get zero filled solution
 
