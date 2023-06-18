@@ -34,9 +34,11 @@ experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
 writer = SummaryWriter(experiment_path)
 
 # seed
-random.seed(1)
-np.random.seed(1)
-torch.manual_seed(1)
+SEED = 1
+random.seed(SEED)
+np.random.seed(SEED)
+torch.cuda.manual_seed(SEED)
+torch.manual_seed(SEED)
 
 # hyperparameter
 TRAINING_EPOCH = 70

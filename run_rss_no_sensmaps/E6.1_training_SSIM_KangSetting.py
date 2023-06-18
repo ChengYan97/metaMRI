@@ -1,12 +1,13 @@
 import random
 import numpy as np
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '3'
+os.environ['CUDA_VISIBLE_DEVICES'] = '2'
 import torch
 import learn2learn as l2l
 from tqdm import tqdm
 from torch.utils.tensorboard import SummaryWriter
 from torch.optim.lr_scheduler import StepLR
+from torch.nn.utils import clip_grad_norm_
 # The corase reconstruction is the rss of the zerofilled multi-coil kspaces
 # after inverse FT.
 from functions.data.transforms import UnetDataTransform, UnetDataTransform_norm, normalize
@@ -22,12 +23,9 @@ from functions.training.losses import SSIMLoss
 
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
-#experiment_name = 'E6.1_train_SSIM_kneePD_Skyra'
-#experiment_name = 'E6.1_train_SSIM_kneePDFS_Aera'
-#experiment_name = 'E6.1_train_SSIM_brainT1POST_TrioTim'
-#experiment_name = 'E6.1_train_SSIM_knee(PD_Skyra+PDFS_Aera)'
-experiment_name = 'E6.1_train_SSIM_(P1+P2+P3)'
-#experiment_name = 'E6.1_train_SSIM_kneePDFS_paper'
+
+#experiment_name = 'E6.1_train_SSIM_(P1+P2)_KangSetting'
+experiment_name = 'E6.1_train_SSIM_P2_KangSetting'
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -42,14 +40,12 @@ torch.manual_seed(1)
 TRAINING_EPOCH = 70
 num_sample_train = 300
 num_sample_val = 100
-#path_train = '/cheng/metaMRI/metaMRI/data_dict/Acquisition/knee_train.yaml'
-path_train1 = '/cheng/metaMRI/metaMRI/data_dict_narrowSlices/E6.1/knee_train_PD_Skyra_15-22.yaml'
+
+#path_train1 = '/cheng/metaMRI/metaMRI/data_dict_narrowSlices/E6.1/knee_train_PD_Skyra_15-22.yaml'
 path_train2 = '/cheng/metaMRI/metaMRI/data_dict_narrowSlices/E6.1/knee_train_PDFS_Aera_15-22.yaml'
-path_train3 = '/cheng/metaMRI/metaMRI/data_dict_narrowSlices/E6.1/brain_train_T1POST_TrioTim5-8.yaml'
-#path_val = '/cheng/metaMRI/metaMRI/data_dict/Acquisition/knee_val_CORPDFS.yaml'
-path_val1 = '/cheng/metaMRI/metaMRI/data_dict_narrowSlices/E6.1/knee_val_PD_Skyra_15-22.yaml'
+
+#path_val1 = '/cheng/metaMRI/metaMRI/data_dict_narrowSlices/E6.1/knee_val_PD_Skyra_15-22.yaml'
 path_val2 = '/cheng/metaMRI/metaMRI/data_dict_narrowSlices/E6.1/knee_val_PDFS_Aera_15-22.yaml'
-path_val3 = '/cheng/metaMRI/metaMRI/data_dict_narrowSlices/E6.1/brain_val_T1POST_TrioTim5-8.yaml'
 
 # mask function and data transform
 mask_function = create_mask_for_mask_type(mask_type_str = 'random', self_sup = False, 
@@ -59,26 +55,22 @@ data_transform_train = UnetDataTransform_norm('multicoil', mask_func = mask_func
 data_transform_val = UnetDataTransform_norm('multicoil', mask_func = mask_function, use_seed=True, mode='val')
 
 # dataset: num_sample_subset x 3
-trainset1 = SliceDataset(dataset = path_train1, path_to_dataset='', path_to_sensmaps=None, provide_senmaps=False, 
-                        challenge="multicoil", transform=data_transform_train, use_dataset_cache=True, num_samples= num_sample_train)
+#trainset1 = SliceDataset(dataset = path_train1, path_to_dataset='', path_to_sensmaps=None, provide_senmaps=False, 
+#                        challenge="multicoil", transform=data_transform_train, use_dataset_cache=True, num_samples= num_sample_train)
 trainset2 = SliceDataset(dataset = path_train2, path_to_dataset='', path_to_sensmaps=None, provide_senmaps=False, 
                         challenge="multicoil", transform=data_transform_train, use_dataset_cache=True, num_samples= num_sample_train)
-trainset3 = SliceDataset(dataset = path_train3, path_to_dataset='', path_to_sensmaps=None, provide_senmaps=False, 
-                        challenge="multicoil", transform=data_transform_train, use_dataset_cache=True, num_samples= num_sample_train)
-trainset = torch.utils.data.ConcatDataset([trainset1, trainset2, trainset3])
+trainset = torch.utils.data.ConcatDataset([trainset2])
 
 print("Training date number: ", len(trainset))
-valset1 = SliceDataset(dataset = path_val1, path_to_dataset='', path_to_sensmaps=None, provide_senmaps=False, 
-                      challenge="multicoil", transform=data_transform_val, use_dataset_cache=True, num_samples= num_sample_val)
+#valset1 = SliceDataset(dataset = path_val1, path_to_dataset='', path_to_sensmaps=None, provide_senmaps=False, 
+#                      challenge="multicoil", transform=data_transform_val, use_dataset_cache=True, num_samples= num_sample_val)
 valset2 = SliceDataset(dataset = path_val2, path_to_dataset='', path_to_sensmaps=None, provide_senmaps=False, 
                       challenge="multicoil", transform=data_transform_val, use_dataset_cache=True, num_samples= num_sample_val)
-valset3 = SliceDataset(dataset = path_val3, path_to_dataset='', path_to_sensmaps=None, provide_senmaps=False, 
-                      challenge="multicoil", transform=data_transform_val, use_dataset_cache=True, num_samples= num_sample_val)
-valset = torch.utils.data.ConcatDataset([valset1, valset2, valset3])
+valset = torch.utils.data.ConcatDataset([valset2])
 print("Validation date number: ", len(valset))
 
 # dataloader: batch size 1 
-train_dataloader = torch.utils.data.DataLoader(dataset = trainset, batch_size = 8, num_workers = 8, 
+train_dataloader = torch.utils.data.DataLoader(dataset = trainset, batch_size = 4, num_workers = 8, 
                     shuffle = True, generator = torch.Generator().manual_seed(1), pin_memory = True)
 val_dataloader = torch.utils.data.DataLoader(dataset = valset, batch_size = 1, num_workers = 8, 
                     shuffle = False, generator = torch.Generator().manual_seed(1))
@@ -104,6 +96,7 @@ def train(model, dataloader, optimizer):
         
         optimizer.zero_grad()
         loss.backward()
+        clip_grad_norm_(model.parameters(), max_norm=1, norm_type=2.)
         optimizer.step()
         train_loss += (1-loss.item())
 
@@ -140,10 +133,26 @@ model = model.to(device)
 
 
 ##########################
-optimizer = torch.optim.Adam(model.parameters(),lr=0.001)
-# optimizer = torch.optim.RMSprop(model.parameters(),lr=0.0001,weight_decay=0.0)
-#scheduler = StepLR(optimizer, step_size=10, gamma=0.1)
-#scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=5, eta_min=1e-8)
+def traintools(model, trainloader, num_epochs, max_lr):
+    """Get optimizer and schduler"""
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.0)
+    scheduler = torch.optim.lr_scheduler.OneCycleLR(
+        optimizer=optimizer, 
+        max_lr=max_lr,
+        steps_per_epoch=len(trainloader),
+        epochs=num_epochs,
+        pct_start=0.01,
+        anneal_strategy='linear',
+        cycle_momentum=False,
+        base_momentum=0., 
+        max_momentum=0.,
+        div_factor = 25.,
+        final_div_factor=1.,
+    )
+    return optimizer, scheduler
+#optimizer = torch.optim.Adam(model.parameters(),lr=0.001)
+optimizer, scheduler = traintools(model, train_dataloader, TRAINING_EPOCH, max_lr = 0.001)
+
 best_loss = 0.000
 for iteration in range(TRAINING_EPOCH):
     print('Iteration:', iteration+1)
