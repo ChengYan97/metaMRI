@@ -1,10 +1,6 @@
 - filename: file1001746
   path: /srv/knee/multicoil_train/file1001746.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001746
-  path: /srv/knee/multicoil_train/file1001746.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001746
   path: /srv/knee/multicoil_train/file1001746.h5
@@ -37,10 +33,6 @@
 - filename: file1002269
   path: /srv/knee/multicoil_train/file1002269.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002269
-  path: /srv/knee/multicoil_train/file1002269.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002269
   path: /srv/knee/multicoil_train/file1002269.h5
@@ -73,10 +65,6 @@
 - filename: file1001629
   path: /srv/knee/multicoil_train/file1001629.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001629
-  path: /srv/knee/multicoil_train/file1001629.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001629
   path: /srv/knee/multicoil_train/file1001629.h5
@@ -109,10 +97,6 @@
 - filename: file1002273
   path: /srv/knee/multicoil_train/file1002273.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002273
-  path: /srv/knee/multicoil_train/file1002273.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002273
   path: /srv/knee/multicoil_train/file1002273.h5
@@ -145,10 +129,6 @@
 - filename: file1000499
   path: /srv/knee/multicoil_train/file1000499.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000499
-  path: /srv/knee/multicoil_train/file1000499.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000499
   path: /srv/knee/multicoil_train/file1000499.h5
@@ -181,10 +161,6 @@
 - filename: file1002473
   path: /srv/knee/multicoil_train/file1002473.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002473
-  path: /srv/knee/multicoil_train/file1002473.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002473
   path: /srv/knee/multicoil_train/file1002473.h5
@@ -217,10 +193,6 @@
 - filename: file1001636
   path: /srv/knee/multicoil_train/file1001636.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001636
-  path: /srv/knee/multicoil_train/file1001636.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001636
   path: /srv/knee/multicoil_train/file1001636.h5
@@ -253,10 +225,6 @@
 - filename: file1001266
   path: /srv/knee/multicoil_train/file1001266.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001266
-  path: /srv/knee/multicoil_train/file1001266.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001266
   path: /srv/knee/multicoil_train/file1001266.h5
@@ -289,10 +257,6 @@
 - filename: file1001067
   path: /srv/knee/multicoil_train/file1001067.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001067
-  path: /srv/knee/multicoil_train/file1001067.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001067
   path: /srv/knee/multicoil_train/file1001067.h5
@@ -325,10 +289,6 @@
 - filename: file1002133
   path: /srv/knee/multicoil_train/file1002133.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002133
-  path: /srv/knee/multicoil_train/file1002133.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002133
   path: /srv/knee/multicoil_train/file1002133.h5
@@ -361,10 +321,6 @@
 - filename: file1000485
   path: /srv/knee/multicoil_train/file1000485.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000485
-  path: /srv/knee/multicoil_train/file1000485.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000485
   path: /srv/knee/multicoil_train/file1000485.h5
@@ -397,10 +353,6 @@
 - filename: file1000040
   path: /srv/knee/multicoil_train/file1000040.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000040
-  path: /srv/knee/multicoil_train/file1000040.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000040
   path: /srv/knee/multicoil_train/file1000040.h5
@@ -433,10 +385,6 @@
 - filename: file1000600
   path: /srv/knee/multicoil_train/file1000600.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000600
-  path: /srv/knee/multicoil_train/file1000600.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000600
   path: /srv/knee/multicoil_train/file1000600.h5
@@ -469,10 +417,6 @@
 - filename: file1002037
   path: /srv/knee/multicoil_train/file1002037.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002037
-  path: /srv/knee/multicoil_train/file1002037.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002037
   path: /srv/knee/multicoil_train/file1002037.h5
@@ -505,10 +449,6 @@
 - filename: file1000410
   path: /srv/knee/multicoil_train/file1000410.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000410
-  path: /srv/knee/multicoil_train/file1000410.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000410
   path: /srv/knee/multicoil_train/file1000410.h5
@@ -541,10 +481,6 @@
 - filename: file1001661
   path: /srv/knee/multicoil_train/file1001661.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001661
-  path: /srv/knee/multicoil_train/file1001661.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001661
   path: /srv/knee/multicoil_train/file1001661.h5
@@ -577,10 +513,6 @@
 - filename: file1001288
   path: /srv/knee/multicoil_train/file1001288.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001288
-  path: /srv/knee/multicoil_train/file1001288.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001288
   path: /srv/knee/multicoil_train/file1001288.h5
@@ -613,10 +545,6 @@
 - filename: file1000693
   path: /srv/knee/multicoil_train/file1000693.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000693
-  path: /srv/knee/multicoil_train/file1000693.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000693
   path: /srv/knee/multicoil_train/file1000693.h5
@@ -649,10 +577,6 @@
 - filename: file1002221
   path: /srv/knee/multicoil_train/file1002221.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002221
-  path: /srv/knee/multicoil_train/file1002221.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002221
   path: /srv/knee/multicoil_train/file1002221.h5
@@ -685,10 +609,6 @@
 - filename: file1000249
   path: /srv/knee/multicoil_train/file1000249.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000249
-  path: /srv/knee/multicoil_train/file1000249.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000249
   path: /srv/knee/multicoil_train/file1000249.h5
@@ -721,10 +641,6 @@
 - filename: file1000428
   path: /srv/knee/multicoil_train/file1000428.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000428
-  path: /srv/knee/multicoil_train/file1000428.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000428
   path: /srv/knee/multicoil_train/file1000428.h5
@@ -757,10 +673,6 @@
 - filename: file1002030
   path: /srv/knee/multicoil_train/file1002030.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002030
-  path: /srv/knee/multicoil_train/file1002030.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002030
   path: /srv/knee/multicoil_train/file1002030.h5
@@ -793,10 +705,6 @@
 - filename: file1001372
   path: /srv/knee/multicoil_train/file1001372.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001372
-  path: /srv/knee/multicoil_train/file1001372.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001372
   path: /srv/knee/multicoil_train/file1001372.h5
@@ -829,10 +737,6 @@
 - filename: file1000058
   path: /srv/knee/multicoil_train/file1000058.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000058
-  path: /srv/knee/multicoil_train/file1000058.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000058
   path: /srv/knee/multicoil_train/file1000058.h5
@@ -865,10 +769,6 @@
 - filename: file1000131
   path: /srv/knee/multicoil_train/file1000131.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000131
-  path: /srv/knee/multicoil_train/file1000131.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000131
   path: /srv/knee/multicoil_train/file1000131.h5
@@ -901,10 +801,6 @@
 - filename: file1001863
   path: /srv/knee/multicoil_train/file1001863.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001863
-  path: /srv/knee/multicoil_train/file1001863.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001863
   path: /srv/knee/multicoil_train/file1001863.h5
@@ -937,10 +833,6 @@
 - filename: file1001732
   path: /srv/knee/multicoil_train/file1001732.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001732
-  path: /srv/knee/multicoil_train/file1001732.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001732
   path: /srv/knee/multicoil_train/file1001732.h5
@@ -973,10 +865,6 @@
 - filename: file1002073
   path: /srv/knee/multicoil_train/file1002073.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002073
-  path: /srv/knee/multicoil_train/file1002073.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002073
   path: /srv/knee/multicoil_train/file1002073.h5
@@ -1009,10 +897,6 @@
 - filename: file1001139
   path: /srv/knee/multicoil_train/file1001139.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001139
-  path: /srv/knee/multicoil_train/file1001139.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001139
   path: /srv/knee/multicoil_train/file1001139.h5
@@ -1045,10 +929,6 @@
 - filename: file1000586
   path: /srv/knee/multicoil_train/file1000586.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000586
-  path: /srv/knee/multicoil_train/file1000586.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000586
   path: /srv/knee/multicoil_train/file1000586.h5
@@ -1081,10 +961,6 @@
 - filename: file1000256
   path: /srv/knee/multicoil_train/file1000256.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000256
-  path: /srv/knee/multicoil_train/file1000256.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000256
   path: /srv/knee/multicoil_train/file1000256.h5
@@ -1117,10 +993,6 @@
 - filename: file1001424
   path: /srv/knee/multicoil_train/file1001424.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001424
-  path: /srv/knee/multicoil_train/file1001424.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001424
   path: /srv/knee/multicoil_train/file1001424.h5
@@ -1153,10 +1025,6 @@
 - filename: file1000850
   path: /srv/knee/multicoil_train/file1000850.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000850
-  path: /srv/knee/multicoil_train/file1000850.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000850
   path: /srv/knee/multicoil_train/file1000850.h5
@@ -1189,10 +1057,6 @@
 - filename: file1001421
   path: /srv/knee/multicoil_train/file1001421.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001421
-  path: /srv/knee/multicoil_train/file1001421.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001421
   path: /srv/knee/multicoil_train/file1001421.h5
@@ -1225,10 +1089,6 @@
 - filename: file1001061
   path: /srv/knee/multicoil_train/file1001061.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001061
-  path: /srv/knee/multicoil_train/file1001061.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001061
   path: /srv/knee/multicoil_train/file1001061.h5
@@ -1261,10 +1121,6 @@
 - filename: file1000045
   path: /srv/knee/multicoil_train/file1000045.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000045
-  path: /srv/knee/multicoil_train/file1000045.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000045
   path: /srv/knee/multicoil_train/file1000045.h5
@@ -1297,10 +1153,6 @@
 - filename: file1001619
   path: /srv/knee/multicoil_train/file1001619.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001619
-  path: /srv/knee/multicoil_train/file1001619.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001619
   path: /srv/knee/multicoil_train/file1001619.h5
@@ -1333,10 +1185,6 @@
 - filename: file1002437
   path: /srv/knee/multicoil_train/file1002437.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002437
-  path: /srv/knee/multicoil_train/file1002437.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002437
   path: /srv/knee/multicoil_train/file1002437.h5
@@ -1369,10 +1217,6 @@
 - filename: file1000390
   path: /srv/knee/multicoil_train/file1000390.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000390
-  path: /srv/knee/multicoil_train/file1000390.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000390
   path: /srv/knee/multicoil_train/file1000390.h5
@@ -1405,10 +1249,6 @@
 - filename: file1000856
   path: /srv/knee/multicoil_train/file1000856.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000856
-  path: /srv/knee/multicoil_train/file1000856.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000856
   path: /srv/knee/multicoil_train/file1000856.h5
@@ -1441,10 +1281,6 @@
 - filename: file1001468
   path: /srv/knee/multicoil_train/file1001468.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001468
-  path: /srv/knee/multicoil_train/file1001468.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001468
   path: /srv/knee/multicoil_train/file1001468.h5
@@ -1477,10 +1313,6 @@
 - filename: file1000289
   path: /srv/knee/multicoil_train/file1000289.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000289
-  path: /srv/knee/multicoil_train/file1000289.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000289
   path: /srv/knee/multicoil_train/file1000289.h5
@@ -1513,10 +1345,6 @@
 - filename: file1002166
   path: /srv/knee/multicoil_train/file1002166.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002166
-  path: /srv/knee/multicoil_train/file1002166.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002166
   path: /srv/knee/multicoil_train/file1002166.h5
@@ -1549,10 +1377,6 @@
 - filename: file1000357
   path: /srv/knee/multicoil_train/file1000357.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000357
-  path: /srv/knee/multicoil_train/file1000357.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000357
   path: /srv/knee/multicoil_train/file1000357.h5
@@ -1585,10 +1409,6 @@
 - filename: file1001991
   path: /srv/knee/multicoil_train/file1001991.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001991
-  path: /srv/knee/multicoil_train/file1001991.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001991
   path: /srv/knee/multicoil_train/file1001991.h5
@@ -1621,10 +1441,6 @@
 - filename: file1002193
   path: /srv/knee/multicoil_train/file1002193.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002193
-  path: /srv/knee/multicoil_train/file1002193.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002193
   path: /srv/knee/multicoil_train/file1002193.h5
@@ -1657,10 +1473,6 @@
 - filename: file1001183
   path: /srv/knee/multicoil_train/file1001183.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001183
-  path: /srv/knee/multicoil_train/file1001183.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001183
   path: /srv/knee/multicoil_train/file1001183.h5
@@ -1693,10 +1505,6 @@
 - filename: file1000021
   path: /srv/knee/multicoil_train/file1000021.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000021
-  path: /srv/knee/multicoil_train/file1000021.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000021
   path: /srv/knee/multicoil_train/file1000021.h5
@@ -1729,10 +1537,6 @@
 - filename: file1002303
   path: /srv/knee/multicoil_train/file1002303.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002303
-  path: /srv/knee/multicoil_train/file1002303.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002303
   path: /srv/knee/multicoil_train/file1002303.h5
@@ -1765,10 +1569,6 @@
 - filename: file1000296
   path: /srv/knee/multicoil_train/file1000296.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000296
-  path: /srv/knee/multicoil_train/file1000296.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000296
   path: /srv/knee/multicoil_train/file1000296.h5
@@ -1801,10 +1601,6 @@
 - filename: file1000539
   path: /srv/knee/multicoil_train/file1000539.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000539
-  path: /srv/knee/multicoil_train/file1000539.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000539
   path: /srv/knee/multicoil_train/file1000539.h5
@@ -1837,10 +1633,6 @@
 - filename: file1002043
   path: /srv/knee/multicoil_train/file1002043.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002043
-  path: /srv/knee/multicoil_train/file1002043.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002043
   path: /srv/knee/multicoil_train/file1002043.h5
@@ -1873,10 +1665,6 @@
 - filename: file1001656
   path: /srv/knee/multicoil_train/file1001656.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001656
-  path: /srv/knee/multicoil_train/file1001656.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001656
   path: /srv/knee/multicoil_train/file1001656.h5
@@ -1909,10 +1697,6 @@
 - filename: file1001474
   path: /srv/knee/multicoil_train/file1001474.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001474
-  path: /srv/knee/multicoil_train/file1001474.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001474
   path: /srv/knee/multicoil_train/file1001474.h5
@@ -1945,10 +1729,6 @@
 - filename: file1001120
   path: /srv/knee/multicoil_train/file1001120.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001120
-  path: /srv/knee/multicoil_train/file1001120.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001120
   path: /srv/knee/multicoil_train/file1001120.h5
@@ -1981,10 +1761,6 @@
 - filename: file1002462
   path: /srv/knee/multicoil_train/file1002462.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002462
-  path: /srv/knee/multicoil_train/file1002462.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002462
   path: /srv/knee/multicoil_train/file1002462.h5
@@ -2017,10 +1793,6 @@
 - filename: file1002024
   path: /srv/knee/multicoil_train/file1002024.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002024
-  path: /srv/knee/multicoil_train/file1002024.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002024
   path: /srv/knee/multicoil_train/file1002024.h5
@@ -2053,10 +1825,6 @@
 - filename: file1001498
   path: /srv/knee/multicoil_train/file1001498.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001498
-  path: /srv/knee/multicoil_train/file1001498.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001498
   path: /srv/knee/multicoil_train/file1001498.h5
@@ -2089,10 +1857,6 @@
 - filename: file1001872
   path: /srv/knee/multicoil_train/file1001872.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001872
-  path: /srv/knee/multicoil_train/file1001872.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001872
   path: /srv/knee/multicoil_train/file1001872.h5
@@ -2125,10 +1889,6 @@
 - filename: file1000806
   path: /srv/knee/multicoil_train/file1000806.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000806
-  path: /srv/knee/multicoil_train/file1000806.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000806
   path: /srv/knee/multicoil_train/file1000806.h5
@@ -2161,10 +1921,6 @@
 - filename: file1001941
   path: /srv/knee/multicoil_train/file1001941.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001941
-  path: /srv/knee/multicoil_train/file1001941.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001941
   path: /srv/knee/multicoil_train/file1001941.h5
@@ -2197,10 +1953,6 @@
 - filename: file1000882
   path: /srv/knee/multicoil_train/file1000882.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000882
-  path: /srv/knee/multicoil_train/file1000882.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000882
   path: /srv/knee/multicoil_train/file1000882.h5
@@ -2233,10 +1985,6 @@
 - filename: file1001285
   path: /srv/knee/multicoil_train/file1001285.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001285
-  path: /srv/knee/multicoil_train/file1001285.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001285
   path: /srv/knee/multicoil_train/file1001285.h5
@@ -2269,10 +2017,6 @@
 - filename: file1001671
   path: /srv/knee/multicoil_train/file1001671.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001671
-  path: /srv/knee/multicoil_train/file1001671.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001671
   path: /srv/knee/multicoil_train/file1001671.h5
@@ -2305,10 +2049,6 @@
 - filename: file1001993
   path: /srv/knee/multicoil_train/file1001993.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001993
-  path: /srv/knee/multicoil_train/file1001993.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001993
   path: /srv/knee/multicoil_train/file1001993.h5
@@ -2341,10 +2081,6 @@
 - filename: file1000742
   path: /srv/knee/multicoil_train/file1000742.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000742
-  path: /srv/knee/multicoil_train/file1000742.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000742
   path: /srv/knee/multicoil_train/file1000742.h5
@@ -2377,10 +2113,6 @@
 - filename: file1002069
   path: /srv/knee/multicoil_train/file1002069.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002069
-  path: /srv/knee/multicoil_train/file1002069.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002069
   path: /srv/knee/multicoil_train/file1002069.h5
@@ -2413,10 +2145,6 @@
 - filename: file1001318
   path: /srv/knee/multicoil_train/file1001318.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001318
-  path: /srv/knee/multicoil_train/file1001318.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001318
   path: /srv/knee/multicoil_train/file1001318.h5
@@ -2449,10 +2177,6 @@
 - filename: file1002471
   path: /srv/knee/multicoil_train/file1002471.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002471
-  path: /srv/knee/multicoil_train/file1002471.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002471
   path: /srv/knee/multicoil_train/file1002471.h5
@@ -2485,10 +2209,6 @@
 - filename: file1001737
   path: /srv/knee/multicoil_train/file1001737.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001737
-  path: /srv/knee/multicoil_train/file1001737.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001737
   path: /srv/knee/multicoil_train/file1001737.h5
@@ -2521,10 +2241,6 @@
 - filename: file1001033
   path: /srv/knee/multicoil_train/file1001033.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001033
-  path: /srv/knee/multicoil_train/file1001033.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001033
   path: /srv/knee/multicoil_train/file1001033.h5
@@ -2557,10 +2273,6 @@
 - filename: file1000974
   path: /srv/knee/multicoil_train/file1000974.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000974
-  path: /srv/knee/multicoil_train/file1000974.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000974
   path: /srv/knee/multicoil_train/file1000974.h5
@@ -2593,10 +2305,6 @@
 - filename: file1000069
   path: /srv/knee/multicoil_train/file1000069.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000069
-  path: /srv/knee/multicoil_train/file1000069.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000069
   path: /srv/knee/multicoil_train/file1000069.h5
@@ -2629,10 +2337,6 @@
 - filename: file1002566
   path: /srv/knee/multicoil_train/file1002566.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002566
-  path: /srv/knee/multicoil_train/file1002566.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002566
   path: /srv/knee/multicoil_train/file1002566.h5
@@ -2665,10 +2369,6 @@
 - filename: file1001989
   path: /srv/knee/multicoil_train/file1001989.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001989
-  path: /srv/knee/multicoil_train/file1001989.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001989
   path: /srv/knee/multicoil_train/file1001989.h5
@@ -2701,10 +2401,6 @@
 - filename: file1001410
   path: /srv/knee/multicoil_train/file1001410.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001410
-  path: /srv/knee/multicoil_train/file1001410.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001410
   path: /srv/knee/multicoil_train/file1001410.h5
@@ -2737,10 +2433,6 @@
 - filename: file1001062
   path: /srv/knee/multicoil_train/file1001062.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001062
-  path: /srv/knee/multicoil_train/file1001062.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001062
   path: /srv/knee/multicoil_train/file1001062.h5
@@ -2773,10 +2465,6 @@
 - filename: file1001564
   path: /srv/knee/multicoil_train/file1001564.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001564
-  path: /srv/knee/multicoil_train/file1001564.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001564
   path: /srv/knee/multicoil_train/file1001564.h5
@@ -2809,10 +2497,6 @@
 - filename: file1000003
   path: /srv/knee/multicoil_train/file1000003.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000003
-  path: /srv/knee/multicoil_train/file1000003.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000003
   path: /srv/knee/multicoil_train/file1000003.h5
@@ -2845,10 +2529,6 @@
 - filename: file1002381
   path: /srv/knee/multicoil_train/file1002381.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002381
-  path: /srv/knee/multicoil_train/file1002381.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002381
   path: /srv/knee/multicoil_train/file1002381.h5
@@ -2881,10 +2561,6 @@
 - filename: file1001837
   path: /srv/knee/multicoil_train/file1001837.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001837
-  path: /srv/knee/multicoil_train/file1001837.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001837
   path: /srv/knee/multicoil_train/file1001837.h5
@@ -2917,10 +2593,6 @@
 - filename: file1000967
   path: /srv/knee/multicoil_train/file1000967.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000967
-  path: /srv/knee/multicoil_train/file1000967.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000967
   path: /srv/knee/multicoil_train/file1000967.h5
@@ -2953,10 +2625,6 @@
 - filename: file1002094
   path: /srv/knee/multicoil_train/file1002094.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002094
-  path: /srv/knee/multicoil_train/file1002094.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002094
   path: /srv/knee/multicoil_train/file1002094.h5
@@ -2989,10 +2657,6 @@
 - filename: file1002388
   path: /srv/knee/multicoil_train/file1002388.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002388
-  path: /srv/knee/multicoil_train/file1002388.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002388
   path: /srv/knee/multicoil_train/file1002388.h5
@@ -3025,10 +2689,6 @@
 - filename: file1002071
   path: /srv/knee/multicoil_train/file1002071.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002071
-  path: /srv/knee/multicoil_train/file1002071.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002071
   path: /srv/knee/multicoil_train/file1002071.h5
@@ -3061,10 +2721,6 @@
 - filename: file1000324
   path: /srv/knee/multicoil_train/file1000324.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000324
-  path: /srv/knee/multicoil_train/file1000324.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000324
   path: /srv/knee/multicoil_train/file1000324.h5
@@ -3097,10 +2753,6 @@
 - filename: file1001175
   path: /srv/knee/multicoil_train/file1001175.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001175
-  path: /srv/knee/multicoil_train/file1001175.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001175
   path: /srv/knee/multicoil_train/file1001175.h5
@@ -3133,10 +2785,6 @@
 - filename: file1000588
   path: /srv/knee/multicoil_train/file1000588.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000588
-  path: /srv/knee/multicoil_train/file1000588.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000588
   path: /srv/knee/multicoil_train/file1000588.h5
@@ -3169,10 +2817,6 @@
 - filename: file1000354
   path: /srv/knee/multicoil_train/file1000354.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000354
-  path: /srv/knee/multicoil_train/file1000354.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000354
   path: /srv/knee/multicoil_train/file1000354.h5
@@ -3205,10 +2849,6 @@
 - filename: file1000116
   path: /srv/knee/multicoil_train/file1000116.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000116
-  path: /srv/knee/multicoil_train/file1000116.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000116
   path: /srv/knee/multicoil_train/file1000116.h5
@@ -3241,10 +2881,6 @@
 - filename: file1000875
   path: /srv/knee/multicoil_train/file1000875.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000875
-  path: /srv/knee/multicoil_train/file1000875.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000875
   path: /srv/knee/multicoil_train/file1000875.h5
@@ -3277,10 +2913,6 @@
 - filename: file1000372
   path: /srv/knee/multicoil_train/file1000372.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000372
-  path: /srv/knee/multicoil_train/file1000372.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000372
   path: /srv/knee/multicoil_train/file1000372.h5
@@ -3313,10 +2945,6 @@
 - filename: file1000349
   path: /srv/knee/multicoil_train/file1000349.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000349
-  path: /srv/knee/multicoil_train/file1000349.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000349
   path: /srv/knee/multicoil_train/file1000349.h5
@@ -3349,10 +2977,6 @@
 - filename: file1001304
   path: /srv/knee/multicoil_train/file1001304.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001304
-  path: /srv/knee/multicoil_train/file1001304.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001304
   path: /srv/knee/multicoil_train/file1001304.h5
@@ -3385,10 +3009,6 @@
 - filename: file1002358
   path: /srv/knee/multicoil_train/file1002358.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002358
-  path: /srv/knee/multicoil_train/file1002358.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002358
   path: /srv/knee/multicoil_train/file1002358.h5
@@ -3421,10 +3041,6 @@
 - filename: file1001748
   path: /srv/knee/multicoil_train/file1001748.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001748
-  path: /srv/knee/multicoil_train/file1001748.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001748
   path: /srv/knee/multicoil_train/file1001748.h5
@@ -3457,10 +3073,6 @@
 - filename: file1000794
   path: /srv/knee/multicoil_train/file1000794.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000794
-  path: /srv/knee/multicoil_train/file1000794.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000794
   path: /srv/knee/multicoil_train/file1000794.h5
@@ -3493,10 +3105,6 @@
 - filename: file1002225
   path: /srv/knee/multicoil_train/file1002225.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002225
-  path: /srv/knee/multicoil_train/file1002225.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002225
   path: /srv/knee/multicoil_train/file1002225.h5
@@ -3529,10 +3137,6 @@
 - filename: file1001196
   path: /srv/knee/multicoil_train/file1001196.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001196
-  path: /srv/knee/multicoil_train/file1001196.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001196
   path: /srv/knee/multicoil_train/file1001196.h5
@@ -3565,10 +3169,6 @@
 - filename: file1001092
   path: /srv/knee/multicoil_train/file1001092.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001092
-  path: /srv/knee/multicoil_train/file1001092.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001092
   path: /srv/knee/multicoil_train/file1001092.h5
@@ -3601,10 +3201,6 @@
 - filename: file1000170
   path: /srv/knee/multicoil_train/file1000170.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000170
-  path: /srv/knee/multicoil_train/file1000170.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000170
   path: /srv/knee/multicoil_train/file1000170.h5
@@ -3637,10 +3233,6 @@
 - filename: file1002276
   path: /srv/knee/multicoil_train/file1002276.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002276
-  path: /srv/knee/multicoil_train/file1002276.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002276
   path: /srv/knee/multicoil_train/file1002276.h5
@@ -3673,10 +3265,6 @@
 - filename: file1000716
   path: /srv/knee/multicoil_train/file1000716.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000716
-  path: /srv/knee/multicoil_train/file1000716.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000716
   path: /srv/knee/multicoil_train/file1000716.h5
@@ -3709,10 +3297,6 @@
 - filename: file1001108
   path: /srv/knee/multicoil_train/file1001108.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001108
-  path: /srv/knee/multicoil_train/file1001108.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001108
   path: /srv/knee/multicoil_train/file1001108.h5
@@ -3745,10 +3329,6 @@
 - filename: file1000369
   path: /srv/knee/multicoil_train/file1000369.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000369
-  path: /srv/knee/multicoil_train/file1000369.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000369
   path: /srv/knee/multicoil_train/file1000369.h5
@@ -3781,10 +3361,6 @@
 - filename: file1002161
   path: /srv/knee/multicoil_train/file1002161.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002161
-  path: /srv/knee/multicoil_train/file1002161.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002161
   path: /srv/knee/multicoil_train/file1002161.h5
@@ -3817,10 +3393,6 @@
 - filename: file1002441
   path: /srv/knee/multicoil_train/file1002441.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002441
-  path: /srv/knee/multicoil_train/file1002441.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002441
   path: /srv/knee/multicoil_train/file1002441.h5
@@ -3853,10 +3425,6 @@
 - filename: file1002014
   path: /srv/knee/multicoil_train/file1002014.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002014
-  path: /srv/knee/multicoil_train/file1002014.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002014
   path: /srv/knee/multicoil_train/file1002014.h5
@@ -3889,10 +3457,6 @@
 - filename: file1000188
   path: /srv/knee/multicoil_train/file1000188.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000188
-  path: /srv/knee/multicoil_train/file1000188.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000188
   path: /srv/knee/multicoil_train/file1000188.h5
@@ -3925,10 +3489,6 @@
 - filename: file1001857
   path: /srv/knee/multicoil_train/file1001857.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001857
-  path: /srv/knee/multicoil_train/file1001857.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001857
   path: /srv/knee/multicoil_train/file1001857.h5
@@ -3961,10 +3521,6 @@
 - filename: file1001206
   path: /srv/knee/multicoil_train/file1001206.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001206
-  path: /srv/knee/multicoil_train/file1001206.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001206
   path: /srv/knee/multicoil_train/file1001206.h5
@@ -3997,10 +3553,6 @@
 - filename: file1002440
   path: /srv/knee/multicoil_train/file1002440.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002440
-  path: /srv/knee/multicoil_train/file1002440.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002440
   path: /srv/knee/multicoil_train/file1002440.h5
@@ -4033,10 +3585,6 @@
 - filename: file1001276
   path: /srv/knee/multicoil_train/file1001276.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001276
-  path: /srv/knee/multicoil_train/file1001276.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001276
   path: /srv/knee/multicoil_train/file1001276.h5
@@ -4069,10 +3617,6 @@
 - filename: file1002341
   path: /srv/knee/multicoil_train/file1002341.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002341
-  path: /srv/knee/multicoil_train/file1002341.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002341
   path: /srv/knee/multicoil_train/file1002341.h5
@@ -4105,10 +3649,6 @@
 - filename: file1001692
   path: /srv/knee/multicoil_train/file1001692.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001692
-  path: /srv/knee/multicoil_train/file1001692.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001692
   path: /srv/knee/multicoil_train/file1001692.h5
@@ -4141,10 +3681,6 @@
 - filename: file1000888
   path: /srv/knee/multicoil_train/file1000888.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000888
-  path: /srv/knee/multicoil_train/file1000888.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000888
   path: /srv/knee/multicoil_train/file1000888.h5
@@ -4177,10 +3713,6 @@
 - filename: file1001229
   path: /srv/knee/multicoil_train/file1001229.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001229
-  path: /srv/knee/multicoil_train/file1001229.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001229
   path: /srv/knee/multicoil_train/file1001229.h5
@@ -4213,10 +3745,6 @@
 - filename: file1000997
   path: /srv/knee/multicoil_train/file1000997.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000997
-  path: /srv/knee/multicoil_train/file1000997.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000997
   path: /srv/knee/multicoil_train/file1000997.h5
@@ -4249,10 +3777,6 @@
 - filename: file1000098
   path: /srv/knee/multicoil_train/file1000098.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000098
-  path: /srv/knee/multicoil_train/file1000098.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000098
   path: /srv/knee/multicoil_train/file1000098.h5
@@ -4285,10 +3809,6 @@
 - filename: file1002004
   path: /srv/knee/multicoil_train/file1002004.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002004
-  path: /srv/knee/multicoil_train/file1002004.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002004
   path: /srv/knee/multicoil_train/file1002004.h5
@@ -4321,10 +3841,6 @@
 - filename: file1000626
   path: /srv/knee/multicoil_train/file1000626.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000626
-  path: /srv/knee/multicoil_train/file1000626.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000626
   path: /srv/knee/multicoil_train/file1000626.h5
@@ -4357,10 +3873,6 @@
 - filename: file1002383
   path: /srv/knee/multicoil_train/file1002383.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002383
-  path: /srv/knee/multicoil_train/file1002383.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002383
   path: /srv/knee/multicoil_train/file1002383.h5
@@ -4393,10 +3905,6 @@
 - filename: file1000213
   path: /srv/knee/multicoil_train/file1000213.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000213
-  path: /srv/knee/multicoil_train/file1000213.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000213
   path: /srv/knee/multicoil_train/file1000213.h5
@@ -4429,10 +3937,6 @@
 - filename: file1000548
   path: /srv/knee/multicoil_train/file1000548.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000548
-  path: /srv/knee/multicoil_train/file1000548.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000548
   path: /srv/knee/multicoil_train/file1000548.h5
@@ -4465,10 +3969,6 @@
 - filename: file1002264
   path: /srv/knee/multicoil_train/file1002264.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002264
-  path: /srv/knee/multicoil_train/file1002264.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002264
   path: /srv/knee/multicoil_train/file1002264.h5
@@ -4501,10 +4001,6 @@
 - filename: file1002333
   path: /srv/knee/multicoil_train/file1002333.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002333
-  path: /srv/knee/multicoil_train/file1002333.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002333
   path: /srv/knee/multicoil_train/file1002333.h5
@@ -4537,10 +4033,6 @@
 - filename: file1002283
   path: /srv/knee/multicoil_train/file1002283.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002283
-  path: /srv/knee/multicoil_train/file1002283.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002283
   path: /srv/knee/multicoil_train/file1002283.h5
@@ -4573,10 +4065,6 @@
 - filename: file1001479
   path: /srv/knee/multicoil_train/file1001479.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001479
-  path: /srv/knee/multicoil_train/file1001479.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001479
   path: /srv/knee/multicoil_train/file1001479.h5
@@ -4609,10 +4097,6 @@
 - filename: file1001390
   path: /srv/knee/multicoil_train/file1001390.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001390
-  path: /srv/knee/multicoil_train/file1001390.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001390
   path: /srv/knee/multicoil_train/file1001390.h5
@@ -4645,10 +4129,6 @@
 - filename: file1000434
   path: /srv/knee/multicoil_train/file1000434.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000434
-  path: /srv/knee/multicoil_train/file1000434.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000434
   path: /srv/knee/multicoil_train/file1000434.h5
@@ -4681,10 +4161,6 @@
 - filename: file1000048
   path: /srv/knee/multicoil_train/file1000048.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000048
-  path: /srv/knee/multicoil_train/file1000048.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000048
   path: /srv/knee/multicoil_train/file1000048.h5
@@ -4717,10 +4193,6 @@
 - filename: file1002296
   path: /srv/knee/multicoil_train/file1002296.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002296
-  path: /srv/knee/multicoil_train/file1002296.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002296
   path: /srv/knee/multicoil_train/file1002296.h5
@@ -4753,10 +4225,6 @@
 - filename: file1001460
   path: /srv/knee/multicoil_train/file1001460.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001460
-  path: /srv/knee/multicoil_train/file1001460.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001460
   path: /srv/knee/multicoil_train/file1001460.h5
@@ -4789,10 +4257,6 @@
 - filename: file1001659
   path: /srv/knee/multicoil_train/file1001659.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001659
-  path: /srv/knee/multicoil_train/file1001659.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001659
   path: /srv/knee/multicoil_train/file1001659.h5
@@ -4825,10 +4289,6 @@
 - filename: file1000180
   path: /srv/knee/multicoil_train/file1000180.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000180
-  path: /srv/knee/multicoil_train/file1000180.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000180
   path: /srv/knee/multicoil_train/file1000180.h5
@@ -4861,10 +4321,6 @@
 - filename: file1000914
   path: /srv/knee/multicoil_train/file1000914.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000914
-  path: /srv/knee/multicoil_train/file1000914.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000914
   path: /srv/knee/multicoil_train/file1000914.h5
@@ -4897,10 +4353,6 @@
 - filename: file1001382
   path: /srv/knee/multicoil_train/file1001382.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001382
-  path: /srv/knee/multicoil_train/file1001382.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001382
   path: /srv/knee/multicoil_train/file1001382.h5
@@ -4933,10 +4385,6 @@
 - filename: file1002287
   path: /srv/knee/multicoil_train/file1002287.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002287
-  path: /srv/knee/multicoil_train/file1002287.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002287
   path: /srv/knee/multicoil_train/file1002287.h5
@@ -4969,10 +4417,6 @@
 - filename: file1001116
   path: /srv/knee/multicoil_train/file1001116.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001116
-  path: /srv/knee/multicoil_train/file1001116.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001116
   path: /srv/knee/multicoil_train/file1001116.h5
@@ -5005,10 +4449,6 @@
 - filename: file1001036
   path: /srv/knee/multicoil_train/file1001036.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001036
-  path: /srv/knee/multicoil_train/file1001036.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001036
   path: /srv/knee/multicoil_train/file1001036.h5
@@ -5041,10 +4481,6 @@
 - filename: file1001200
   path: /srv/knee/multicoil_train/file1001200.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001200
-  path: /srv/knee/multicoil_train/file1001200.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001200
   path: /srv/knee/multicoil_train/file1001200.h5
@@ -5077,10 +4513,6 @@
 - filename: file1000191
   path: /srv/knee/multicoil_train/file1000191.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000191
-  path: /srv/knee/multicoil_train/file1000191.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000191
   path: /srv/knee/multicoil_train/file1000191.h5
@@ -5113,10 +4545,6 @@
 - filename: file1002325
   path: /srv/knee/multicoil_train/file1002325.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002325
-  path: /srv/knee/multicoil_train/file1002325.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002325
   path: /srv/knee/multicoil_train/file1002325.h5
@@ -5149,10 +4577,6 @@
 - filename: file1000193
   path: /srv/knee/multicoil_train/file1000193.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000193
-  path: /srv/knee/multicoil_train/file1000193.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000193
   path: /srv/knee/multicoil_train/file1000193.h5
@@ -5185,10 +4609,6 @@
 - filename: file1000922
   path: /srv/knee/multicoil_train/file1000922.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000922
-  path: /srv/knee/multicoil_train/file1000922.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000922
   path: /srv/knee/multicoil_train/file1000922.h5
@@ -5221,10 +4641,6 @@
 - filename: file1001600
   path: /srv/knee/multicoil_train/file1001600.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001600
-  path: /srv/knee/multicoil_train/file1001600.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001600
   path: /srv/knee/multicoil_train/file1001600.h5
@@ -5257,10 +4673,6 @@
 - filename: file1001632
   path: /srv/knee/multicoil_train/file1001632.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001632
-  path: /srv/knee/multicoil_train/file1001632.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001632
   path: /srv/knee/multicoil_train/file1001632.h5
@@ -5293,10 +4705,6 @@
 - filename: file1000245
   path: /srv/knee/multicoil_train/file1000245.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000245
-  path: /srv/knee/multicoil_train/file1000245.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000245
   path: /srv/knee/multicoil_train/file1000245.h5
@@ -5329,10 +4737,6 @@
 - filename: file1002423
   path: /srv/knee/multicoil_train/file1002423.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002423
-  path: /srv/knee/multicoil_train/file1002423.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002423
   path: /srv/knee/multicoil_train/file1002423.h5
@@ -5365,10 +4769,6 @@
 - filename: file1002399
   path: /srv/knee/multicoil_train/file1002399.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002399
-  path: /srv/knee/multicoil_train/file1002399.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002399
   path: /srv/knee/multicoil_train/file1002399.h5
@@ -5401,10 +4801,6 @@
 - filename: file1000479
   path: /srv/knee/multicoil_train/file1000479.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000479
-  path: /srv/knee/multicoil_train/file1000479.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000479
   path: /srv/knee/multicoil_train/file1000479.h5
@@ -5437,10 +4833,6 @@
 - filename: file1000633
   path: /srv/knee/multicoil_train/file1000633.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000633
-  path: /srv/knee/multicoil_train/file1000633.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000633
   path: /srv/knee/multicoil_train/file1000633.h5
@@ -5473,10 +4865,6 @@
 - filename: file1001823
   path: /srv/knee/multicoil_train/file1001823.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001823
-  path: /srv/knee/multicoil_train/file1001823.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001823
   path: /srv/knee/multicoil_train/file1001823.h5
@@ -5509,10 +4897,6 @@
 - filename: file1001004
   path: /srv/knee/multicoil_train/file1001004.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001004
-  path: /srv/knee/multicoil_train/file1001004.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001004
   path: /srv/knee/multicoil_train/file1001004.h5
@@ -5545,10 +4929,6 @@
 - filename: file1001391
   path: /srv/knee/multicoil_train/file1001391.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001391
-  path: /srv/knee/multicoil_train/file1001391.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001391
   path: /srv/knee/multicoil_train/file1001391.h5
@@ -5581,10 +4961,6 @@
 - filename: file1001605
   path: /srv/knee/multicoil_train/file1001605.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001605
-  path: /srv/knee/multicoil_train/file1001605.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001605
   path: /srv/knee/multicoil_train/file1001605.h5
@@ -5617,10 +4993,6 @@
 - filename: file1002263
   path: /srv/knee/multicoil_train/file1002263.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002263
-  path: /srv/knee/multicoil_train/file1002263.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002263
   path: /srv/knee/multicoil_train/file1002263.h5
@@ -5653,10 +5025,6 @@
 - filename: file1002444
   path: /srv/knee/multicoil_train/file1002444.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002444
-  path: /srv/knee/multicoil_train/file1002444.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002444
   path: /srv/knee/multicoil_train/file1002444.h5
@@ -5689,10 +5057,6 @@
 - filename: file1002356
   path: /srv/knee/multicoil_train/file1002356.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002356
-  path: /srv/knee/multicoil_train/file1002356.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002356
   path: /srv/knee/multicoil_train/file1002356.h5
@@ -5725,10 +5089,6 @@
 - filename: file1000365
   path: /srv/knee/multicoil_train/file1000365.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000365
-  path: /srv/knee/multicoil_train/file1000365.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000365
   path: /srv/knee/multicoil_train/file1000365.h5
@@ -5761,10 +5121,6 @@
 - filename: file1001134
   path: /srv/knee/multicoil_train/file1001134.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001134
-  path: /srv/knee/multicoil_train/file1001134.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001134
   path: /srv/knee/multicoil_train/file1001134.h5
@@ -5797,10 +5153,6 @@
 - filename: file1000216
   path: /srv/knee/multicoil_train/file1000216.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000216
-  path: /srv/knee/multicoil_train/file1000216.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000216
   path: /srv/knee/multicoil_train/file1000216.h5
@@ -5833,10 +5185,6 @@
 - filename: file1002434
   path: /srv/knee/multicoil_train/file1002434.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002434
-  path: /srv/knee/multicoil_train/file1002434.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002434
   path: /srv/knee/multicoil_train/file1002434.h5
@@ -5869,10 +5217,6 @@
 - filename: file1000467
   path: /srv/knee/multicoil_train/file1000467.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000467
-  path: /srv/knee/multicoil_train/file1000467.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000467
   path: /srv/knee/multicoil_train/file1000467.h5
@@ -5905,10 +5249,6 @@
 - filename: file1001242
   path: /srv/knee/multicoil_train/file1001242.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001242
-  path: /srv/knee/multicoil_train/file1001242.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001242
   path: /srv/knee/multicoil_train/file1001242.h5
@@ -5941,10 +5281,6 @@
 - filename: file1002286
   path: /srv/knee/multicoil_train/file1002286.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002286
-  path: /srv/knee/multicoil_train/file1002286.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002286
   path: /srv/knee/multicoil_train/file1002286.h5
@@ -5977,10 +5313,6 @@
 - filename: file1000582
   path: /srv/knee/multicoil_train/file1000582.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000582
-  path: /srv/knee/multicoil_train/file1000582.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000582
   path: /srv/knee/multicoil_train/file1000582.h5
@@ -6013,10 +5345,6 @@
 - filename: file1002439
   path: /srv/knee/multicoil_train/file1002439.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002439
-  path: /srv/knee/multicoil_train/file1002439.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002439
   path: /srv/knee/multicoil_train/file1002439.h5
@@ -6049,10 +5377,6 @@
 - filename: file1001666
   path: /srv/knee/multicoil_train/file1001666.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001666
-  path: /srv/knee/multicoil_train/file1001666.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001666
   path: /srv/knee/multicoil_train/file1001666.h5
@@ -6085,10 +5409,6 @@
 - filename: file1001998
   path: /srv/knee/multicoil_train/file1001998.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001998
-  path: /srv/knee/multicoil_train/file1001998.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001998
   path: /srv/knee/multicoil_train/file1001998.h5
@@ -6121,10 +5441,6 @@
 - filename: file1002474
   path: /srv/knee/multicoil_train/file1002474.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002474
-  path: /srv/knee/multicoil_train/file1002474.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002474
   path: /srv/knee/multicoil_train/file1002474.h5
@@ -6157,10 +5473,6 @@
 - filename: file1001847
   path: /srv/knee/multicoil_train/file1001847.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001847
-  path: /srv/knee/multicoil_train/file1001847.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001847
   path: /srv/knee/multicoil_train/file1001847.h5
@@ -6193,10 +5505,6 @@
 - filename: file1000261
   path: /srv/knee/multicoil_train/file1000261.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000261
-  path: /srv/knee/multicoil_train/file1000261.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000261
   path: /srv/knee/multicoil_train/file1000261.h5
@@ -6229,10 +5537,6 @@
 - filename: file1001087
   path: /srv/knee/multicoil_train/file1001087.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001087
-  path: /srv/knee/multicoil_train/file1001087.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001087
   path: /srv/knee/multicoil_train/file1001087.h5
@@ -6265,10 +5569,6 @@
 - filename: file1001905
   path: /srv/knee/multicoil_train/file1001905.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001905
-  path: /srv/knee/multicoil_train/file1001905.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001905
   path: /srv/knee/multicoil_train/file1001905.h5
@@ -6301,10 +5601,6 @@
 - filename: file1002189
   path: /srv/knee/multicoil_train/file1002189.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002189
-  path: /srv/knee/multicoil_train/file1002189.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002189
   path: /srv/knee/multicoil_train/file1002189.h5
@@ -6337,10 +5633,6 @@
 - filename: file1001459
   path: /srv/knee/multicoil_train/file1001459.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001459
-  path: /srv/knee/multicoil_train/file1001459.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001459
   path: /srv/knee/multicoil_train/file1001459.h5
@@ -6373,10 +5665,6 @@
 - filename: file1002000
   path: /srv/knee/multicoil_train/file1002000.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002000
-  path: /srv/knee/multicoil_train/file1002000.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002000
   path: /srv/knee/multicoil_train/file1002000.h5
@@ -6409,10 +5697,6 @@
 - filename: file1000558
   path: /srv/knee/multicoil_train/file1000558.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000558
-  path: /srv/knee/multicoil_train/file1000558.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000558
   path: /srv/knee/multicoil_train/file1000558.h5
@@ -6445,10 +5729,6 @@
 - filename: file1001426
   path: /srv/knee/multicoil_train/file1001426.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001426
-  path: /srv/knee/multicoil_train/file1001426.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001426
   path: /srv/knee/multicoil_train/file1001426.h5
@@ -6481,10 +5761,6 @@
 - filename: file1002342
   path: /srv/knee/multicoil_train/file1002342.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002342
-  path: /srv/knee/multicoil_train/file1002342.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002342
   path: /srv/knee/multicoil_train/file1002342.h5
@@ -6517,10 +5793,6 @@
 - filename: file1002118
   path: /srv/knee/multicoil_train/file1002118.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002118
-  path: /srv/knee/multicoil_train/file1002118.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002118
   path: /srv/knee/multicoil_train/file1002118.h5
@@ -6553,10 +5825,6 @@
 - filename: file1002532
   path: /srv/knee/multicoil_train/file1002532.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002532
-  path: /srv/knee/multicoil_train/file1002532.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002532
   path: /srv/knee/multicoil_train/file1002532.h5
@@ -6589,10 +5857,6 @@
 - filename: file1002425
   path: /srv/knee/multicoil_train/file1002425.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002425
-  path: /srv/knee/multicoil_train/file1002425.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002425
   path: /srv/knee/multicoil_train/file1002425.h5
@@ -6625,10 +5889,6 @@
 - filename: file1002520
   path: /srv/knee/multicoil_train/file1002520.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002520
-  path: /srv/knee/multicoil_train/file1002520.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002520
   path: /srv/knee/multicoil_train/file1002520.h5
@@ -6661,10 +5921,6 @@
 - filename: file1001098
   path: /srv/knee/multicoil_train/file1001098.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001098
-  path: /srv/knee/multicoil_train/file1001098.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001098
   path: /srv/knee/multicoil_train/file1001098.h5
@@ -6697,10 +5953,6 @@
 - filename: file1000383
   path: /srv/knee/multicoil_train/file1000383.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000383
-  path: /srv/knee/multicoil_train/file1000383.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000383
   path: /srv/knee/multicoil_train/file1000383.h5
@@ -6733,10 +5985,6 @@
 - filename: file1000208
   path: /srv/knee/multicoil_train/file1000208.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000208
-  path: /srv/knee/multicoil_train/file1000208.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000208
   path: /srv/knee/multicoil_train/file1000208.h5
@@ -6769,10 +6017,6 @@
 - filename: file1001931
   path: /srv/knee/multicoil_train/file1001931.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001931
-  path: /srv/knee/multicoil_train/file1001931.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001931
   path: /srv/knee/multicoil_train/file1001931.h5
@@ -6805,10 +6049,6 @@
 - filename: file1000306
   path: /srv/knee/multicoil_train/file1000306.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000306
-  path: /srv/knee/multicoil_train/file1000306.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000306
   path: /srv/knee/multicoil_train/file1000306.h5
@@ -6841,10 +6081,6 @@
 - filename: file1002324
   path: /srv/knee/multicoil_train/file1002324.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002324
-  path: /srv/knee/multicoil_train/file1002324.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002324
   path: /srv/knee/multicoil_train/file1002324.h5
@@ -6877,10 +6113,6 @@
 - filename: file1000400
   path: /srv/knee/multicoil_train/file1000400.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000400
-  path: /srv/knee/multicoil_train/file1000400.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000400
   path: /srv/knee/multicoil_train/file1000400.h5
@@ -6913,10 +6145,6 @@
 - filename: file1000244
   path: /srv/knee/multicoil_train/file1000244.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000244
-  path: /srv/knee/multicoil_train/file1000244.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000244
   path: /srv/knee/multicoil_train/file1000244.h5
@@ -6949,10 +6177,6 @@
 - filename: file1002397
   path: /srv/knee/multicoil_train/file1002397.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002397
-  path: /srv/knee/multicoil_train/file1002397.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002397
   path: /srv/knee/multicoil_train/file1002397.h5
@@ -6985,10 +6209,6 @@
 - filename: file1002304
   path: /srv/knee/multicoil_train/file1002304.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002304
-  path: /srv/knee/multicoil_train/file1002304.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002304
   path: /srv/knee/multicoil_train/file1002304.h5
@@ -7021,10 +6241,6 @@
 - filename: file1000851
   path: /srv/knee/multicoil_train/file1000851.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000851
-  path: /srv/knee/multicoil_train/file1000851.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000851
   path: /srv/knee/multicoil_train/file1000851.h5
@@ -7057,10 +6273,6 @@
 - filename: file1001565
   path: /srv/knee/multicoil_train/file1001565.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001565
-  path: /srv/knee/multicoil_train/file1001565.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001565
   path: /srv/knee/multicoil_train/file1001565.h5
@@ -7093,10 +6305,6 @@
 - filename: file1000483
   path: /srv/knee/multicoil_train/file1000483.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000483
-  path: /srv/knee/multicoil_train/file1000483.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000483
   path: /srv/knee/multicoil_train/file1000483.h5
@@ -7129,10 +6337,6 @@
 - filename: file1000807
   path: /srv/knee/multicoil_train/file1000807.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000807
-  path: /srv/knee/multicoil_train/file1000807.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000807
   path: /srv/knee/multicoil_train/file1000807.h5
@@ -7162,10 +6366,6 @@
   path: /srv/knee/multicoil_train/file1000807.h5
   predefined_mask: null
   slice: 21
-- filename: file1000795
-  path: /srv/knee/multicoil_train/file1000795.h5
-  predefined_mask: null
-  slice: 13
 - filename: file1000795
   path: /srv/knee/multicoil_train/file1000795.h5
   predefined_mask: null
@@ -7201,10 +6401,6 @@
 - filename: file1000331
   path: /srv/knee/multicoil_train/file1000331.h5
   predefined_mask: null
-  slice: 13
-- filename: file1000331
-  path: /srv/knee/multicoil_train/file1000331.h5
-  predefined_mask: null
   slice: 14
 - filename: file1000331
   path: /srv/knee/multicoil_train/file1000331.h5
@@ -7234,10 +6430,6 @@
   path: /srv/knee/multicoil_train/file1000331.h5
   predefined_mask: null
   slice: 21
-- filename: file1000801
-  path: /srv/knee/multicoil_train/file1000801.h5
-  predefined_mask: null
-  slice: 13
 - filename: file1000801
   path: /srv/knee/multicoil_train/file1000801.h5
   predefined_mask: null
@@ -7273,10 +6465,6 @@
 - filename: file1002374
   path: /srv/knee/multicoil_train/file1002374.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002374
-  path: /srv/knee/multicoil_train/file1002374.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002374
   path: /srv/knee/multicoil_train/file1002374.h5
@@ -7306,10 +6494,6 @@
   path: /srv/knee/multicoil_train/file1002374.h5
   predefined_mask: null
   slice: 21
-- filename: file1001613
-  path: /srv/knee/multicoil_train/file1001613.h5
-  predefined_mask: null
-  slice: 13
 - filename: file1001613
   path: /srv/knee/multicoil_train/file1001613.h5
   predefined_mask: null
@@ -7345,10 +6529,6 @@
 - filename: file1001561
   path: /srv/knee/multicoil_train/file1001561.h5
   predefined_mask: null
-  slice: 13
-- filename: file1001561
-  path: /srv/knee/multicoil_train/file1001561.h5
-  predefined_mask: null
   slice: 14
 - filename: file1001561
   path: /srv/knee/multicoil_train/file1001561.h5
@@ -7381,10 +6561,6 @@
 - filename: file1002113
   path: /srv/knee/multicoil_train/file1002113.h5
   predefined_mask: null
-  slice: 13
-- filename: file1002113
-  path: /srv/knee/multicoil_train/file1002113.h5
-  predefined_mask: null
   slice: 14
 - filename: file1002113
   path: /srv/knee/multicoil_train/file1002113.h5
@@ -7414,10 +6590,6 @@
   path: /srv/knee/multicoil_train/file1002113.h5
   predefined_mask: null
   slice: 21
-- filename: file1000627
-  path: /srv/knee/multicoil_train/file1000627.h5
-  predefined_mask: null
-  slice: 13
 - filename: file1000627
   path: /srv/knee/multicoil_train/file1000627.h5
   predefined_mask: null
