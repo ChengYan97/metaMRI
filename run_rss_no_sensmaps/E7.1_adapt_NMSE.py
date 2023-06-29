@@ -2,7 +2,7 @@
 import random
 import numpy as np
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+os.environ['CUDA_VISIBLE_DEVICES'] = '2'
 import torch
 import learn2learn as l2l
 from tqdm import tqdm
@@ -24,25 +24,17 @@ from functions.training.losses import SSIMLoss
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 ####################################################################################
-SEED = 1
-experiment_name = 'E7.1_maml(1inner)_adapt_Q2'+'_seed'+str(SEED)
+SEED = 3
+experiment_name = 'E7.1_standard_appro_adapt_Q2'+'_seed'+str(SEED)
 
+# 'E7.1_maml(1inner)_appro_adapt_Q2'
 
-# 'E6.4_maml_adapt_Q1'
-# 'E6.4_maml_adapt_Q2'
-# 'E6.4_maml_adapt_Q3'
-# 'E6.4_standard_adapt_Q1'
-# 'E6.4_standard_adapt_Q2'
-# 'E6.4_standard_adapt_Q3'
-# 'E6.5_maml_adapt_Q1'
-# 'E6.3_maml(1inner)_adapt_Q1'
-
-checkpoint_path = '/cheng/metaMRI/metaMRI/save/E6/E6.3/E6.3_maml(NMSE)_T8x200_1inner_200epoch/E6.3_maml(NMSE)_T8x200_1inner_200epoch_E178_best.pth'
+checkpoint_path = '/cheng/metaMRI/metaMRI/save/E6/E6.3/E6.3_standard(NMSE)_T8x200_100epoch/E6.3_standard(NMSE)_T8x200_100epoch_E80_best.pth'
 # '/cheng/metaMRI/metaMRI/save/E6.4_standard(NMSE)_T8x200_100epoch/E6.4_standard(NMSE)_T8x200_100epoch_E98_best.pth' 
 # '/cheng/metaMRI/metaMRI/save/E6.4_maml(NMSE-lre-3)_T8x200_200epoch/E6.4_maml(NMSE-lre-3)_T8x200_200epoch_E190_best.pth'
 # '/cheng/metaMRI/metaMRI/save/E6.5_maml(NMSE-lre-3-4)_T8x200_200+50epoch/E6.5_maml(NMSE-lre-3-4)_T8x200_200+50epoch_E201_best.pth'
 
-path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_train_AXFLAIR_Skyra_5-8.yaml'
+path_adapt =  '/cheng/metaMRI/metaMRI/data_dict/E7.1/brain_train_FLAIR_Prisma_5-8.yaml'
 # '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_train_AXT1POST_TrioTim_5-8.yaml'
 # '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_train_AXFLAIR_Skyra_5-8.yaml'
 # '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_train_AXT2_Aera_5-8.yaml'
