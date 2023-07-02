@@ -1,6 +1,6 @@
 #%%
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+os.environ['CUDA_VISIBLE_DEVICES'] = '3'
 import random
 import numpy as np
 import copy
@@ -8,6 +8,7 @@ import torch
 import learn2learn as l2l
 from tqdm import tqdm
 from torch import nn, optim
+from torch.optim.lr_scheduler import CosineAnnealingLR
 from torch.utils.tensorboard import SummaryWriter
 # The corase reconstruction is the rss of the zerofilled multi-coil kspaces
 # after inverse FT.
@@ -24,7 +25,7 @@ from functions.training.losses import SSIMLoss
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 ########################### experiment name ###########################
-experiment_name = "E6'_maml(NMSE-lre-3)_T8x200_200epoch"
+experiment_name = 'E6.10_maml(lr_in4_out3)_T8x200_200epoch'
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -42,10 +43,10 @@ EPOCH = 200
 # enumalate the whole data once takes 180 outer loop
 Inner_EPOCH = 1
 
-K = 4      # K examples for inner loop training
+K = 9      # K examples for inner loop training
 K_update = 1
-adapt_steps = 5
-adapt_lr = 0.001   # adapt θ': α
+adapt_steps = 4
+adapt_lr = 0.0001   # adapt θ': α
 meta_lr = 0.001    # update real model θ: β
 
 ###########################  data & dataloader  ###########################
@@ -256,6 +257,8 @@ for iter_ in range(EPOCH):
         # we use the mean of 180 outer loop loss as the meta training loss
         meta_training_loss += total_update_loss.item()
         meta_adaptation_loss += total_adapt_loss
+
+    print('Learning rate: ', optimizer.param_groups[0]['lr'])
 
     print("Meta Adaptation NMSE (MAML)", meta_adaptation_loss/len(sample_list))
     writer.add_scalar("Meta Adaptation NMSE (MAML)", meta_adaptation_loss/len(sample_list), iter_+1)

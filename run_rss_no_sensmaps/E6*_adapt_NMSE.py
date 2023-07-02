@@ -24,45 +24,48 @@ from functions.training.losses import SSIMLoss
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 ####################################################################################
-SEED = 1
-experiment_name = "E6.6_maml_adapt(e-3)_Q1"+'_seed'+str(SEED)
+SEED = 3
+INIT = 'standard'   # 'standard', 'maml'
+TARGET = 'Q3'       # 'Q1', 'Q2', 'Q3'
+LR = 0.001 
 
-# "E6'_maml(in-out-1e-3)_adapt(e-3)_Q1"
-
-
-checkpoint_path = "/cheng/metaMRI/metaMRI/save/E6/E6.6/E6.6_maml(NMSE-lrAnneal)_T8x200_200epoch/E6.6_maml(NMSE-lrAnneal)_T8x200_200epoch_E168_best.pth"
-# "/cheng/metaMRI/metaMRI/save/E6''/E6.6_standard(NMSE-lrAnneal)_T8x200_100epoch_E85_best.pth"
-# "/cheng/metaMRI/metaMRI/save/E6/E6.4/E6.4_standard(NMSE)_T8x200_100epoch/E6.4_standard(NMSE)_T8x200_100epoch_E98_best.pth"
-# "/cheng/metaMRI/metaMRI/save/E6'_maml(NMSE-lre-3)_T8x200_200epoch/E6'_maml(NMSE-lre-3)_T8x200_200epoch_E191_best.pth"
-# '/cheng/metaMRI/metaMRI/save/E6.6_standard(NMSE-lr1e-4)_T8x200_100epoch/E6.6_standard(NMSE-lr1e-4)_T8x200_100epoch_E108_best.pth'
-# '/cheng/metaMRI/metaMRI/save/E6/E6.3/E6.3_maml(NMSE)_T8x200_1inner_200epoch/E6.3_maml(NMSE)_T8x200_1inner_200epoch_E178_best.pth'
-# '/cheng/metaMRI/metaMRI/save/E6.6_maml(NMSE-lrAnneal)_T8x200_200epoch/E6.6_maml(NMSE-lrAnneal)_T8x200_200epoch_E168_best.pth'
-path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_train_AXT1POST_TrioTim_5-8.yaml'
-# '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_train_AXT1POST_TrioTim_5-8.yaml'
-# '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_train_AXFLAIR_Skyra_5-8.yaml'
-# '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_train_AXT2_Aera_5-8.yaml'
-
-path_test = '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_test_AXT1POST_TrioTim_5-8.yaml'
-# '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_test_AXT1POST_TrioTim_5-8.yaml'
-# '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_test_AXFLAIR_Skyra_5-8.yaml'
-# '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_test_AXT2_Aera_5-8.yaml'
-####################################################################################
-
+experiment_name = "E6*_" + INIT + "_adapt_"+ TARGET +'_seed' + str(SEED)
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
 writer = SummaryWriter(experiment_path)
-
-# seed
-random.seed(SEED)
-np.random.seed(SEED)
-torch.cuda.manual_seed(SEED)
-torch.manual_seed(SEED)
 
 # hyperparameter
 TRAINING_EPOCH = 30
 sourse_shot = 200
 adapt_shot = 10
 
+####################################################################################
+# seed
+random.seed(SEED)
+np.random.seed(SEED)
+torch.cuda.manual_seed(SEED)
+torch.manual_seed(SEED)
+
+# different trained weight
+if INIT == 'standard':
+    checkpoint_path = "/cheng/metaMRI/metaMRI/save/E6*/E6.6_standard(NMSE-lrAnneal)_T8x200_100epoch_E85_best.pth"
+elif INIT == 'maml':
+    checkpoint_path = "/cheng/metaMRI/metaMRI/save/E6*/E6.4_maml(NMSE-lre-3)_T8x200_200epoch_E200_best.pth"
+else: 
+    print('Choose the initialization weight. ')
+
+# target domain
+if TARGET == 'Q1': 
+    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_train_AXT1POST_TrioTim_5-8.yaml'
+    path_test = '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_test_AXT1POST_TrioTim_5-8.yaml'
+elif TARGET == 'Q2': 
+    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_train_AXFLAIR_Skyra_5-8.yaml'
+    path_test = '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_test_AXFLAIR_Skyra_5-8.yaml'
+elif TARGET == 'Q3': 
+    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_train_AXT2_Aera_5-8.yaml'
+    path_test = '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_test_AXT2_Aera_5-8.yaml'
+ 
+####################################################################################
 # mask function and data transform
 mask_function = create_mask_for_mask_type(mask_type_str = 'random', self_sup = False, 
                     center_fraction = 0.08, acceleration = 4.0, acceleration_total = 3.0)
@@ -163,7 +166,7 @@ model = model.to(device)
 
 
 ##########################
-optimizer = torch.optim.Adam(model.parameters(),lr=0.001)
+optimizer = torch.optim.Adam(model.parameters(),lr=LR)
 l1_loss = torch.nn.L1Loss(reduction='sum')
 
 
