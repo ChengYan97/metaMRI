@@ -2,7 +2,7 @@
 import random
 import numpy as np
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '3'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import torch
 import learn2learn as l2l
 from tqdm import tqdm
@@ -24,12 +24,12 @@ from functions.training.losses import SSIMLoss
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 ####################################################################################
-SEED = 3
-INIT = 'standard'   # 'standard', 'maml'
-TARGET = 'Q3'       # 'Q1', 'Q2', 'Q3'
+SEED = 1
+INIT = 'maml'   # 'standard', 'maml'
+TARGET = 'Q1'       # 'Q1', 'Q2', 'Q3'
 LR = 0.001 
 
-experiment_name = "E6*_" + INIT + "_adapt_"+ TARGET +'_seed' + str(SEED)
+experiment_name = "test_E6*_" + INIT + "_adapt_"+ TARGET +'_seed' + str(SEED)
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
 writer = SummaryWriter(experiment_path)
@@ -125,6 +125,7 @@ def evaluate(model, dataloader):
     total_ssim_loss = 0.0
     total_psnr_loss = 0.0
     total_nmse_loss = 0.0
+    l1_loss = torch.nn.L1Loss(reduction='sum')
     ssim_fct = SSIMLoss()
     psner_mse_fct = torch.nn.MSELoss(reduction='mean')
     mse_fct = torch.nn.MSELoss(reduction='sum')
@@ -167,7 +168,6 @@ model = model.to(device)
 
 ##########################
 optimizer = torch.optim.Adam(model.parameters(),lr=LR)
-l1_loss = torch.nn.L1Loss(reduction='sum')
 
 
 validation_loss_l1, validation_loss_NMSE, validation_loss_PSNR, validation_loss_SSIM = evaluate(model, test_dataloader)
