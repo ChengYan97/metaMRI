@@ -494,3 +494,122 @@ class UnetDataTransform_norm:
         #input_image = input_image.clamp(-6, 6)
 
         return input_image, target_image, mean, std, fname, slice_num
+
+
+
+
+class UnetDataTransform_sens_TTT:
+    """
+    Data Transformer for training U-Net models.
+    """
+
+    def __init__(
+        self,
+        which_challenge: str,
+        mask_func: Optional[MaskFunc] = None,
+        use_seed: bool = True,
+
+        mode:str="train",
+    ):
+        """
+        Args:
+            which_challenge: Challenge from ("singlecoil", "multicoil").
+            mask_func: Optional; A function that can create a mask of
+                appropriate shape.
+            use_seed: If true, this class computes a pseudo random number
+                generator seed from the filename. This ensures that the same
+                mask is used for all the slices of a given volume every time.
+            mode: either train,val or test
+        """
+        if which_challenge not in ("singlecoil", "multicoil"):
+            raise ValueError("Challenge should either be 'singlecoil' or 'multicoil'")
+
+        self.mask_func = mask_func
+        self.which_challenge = which_challenge
+        self.use_seed = use_seed
+
+        self.mode = mode
+
+    def __call__(
+        self,
+        kspace: np.ndarray,
+        sens_maps: np.array,
+        target: np.ndarray,
+        attrs: Dict,
+        fname: str,
+        slice_num: int,
+    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, str, int, float]:
+        """
+        Args:
+            kspace: Input k-space of shape (num_coils, rows, cols) for
+                multi-coil data or (rows, cols) for single coil data.
+            sens_maps: Sensitivity maps of shape shape coils,height,width with complex valued entries
+            target: Target image.
+            attrs: Acquisition related information stored in the HDF5 object.
+            fname: File name.
+            slice_num: Serial number of the slice.
+
+        Returns:
+            tuple containing:
+                input_image: Zero-filled input image
+                input_kspace: Undersampled input kspace, can be used for data consistency steps
+                input_mask: input mask
+                target_image: target_image for training in image domain. Can be center cropped, have 1 or 2 channels, be rss or sens combine reconstruction
+                target_kspace: target_kspace for training
+                target_mask: target_mask
+                ground_truth_image: center cropped, real ground truth image for computing val and test scores in image domain.
+                sens_maps: sensitivity maps to compute expand operations
+                mean: for de-normalization
+                std: for de-normalization
+                fname: File name for logging
+                slice_num: Serial number of the slice for logging
+
+        """
+        # Convert sens_maps and kspace to tensors. Stack imaginary parts along the last dimension
+
+        sens_maps = to_tensor(sens_maps)
+        sens_maps_conj = complex_conj(sens_maps)
+        kspace = to_tensor(kspace)
+
+        #crop_size = (target.shape[-2], target.shape[-1])
+        
+        target_image = ifft2c(kspace)
+
+        target_image = complex_mul(target_image, sens_maps_conj)
+        target_image = target_image.sum(dim=0, keepdim=False)
+        # absolute value
+        target_image = complex_abs(target_image)
+        # add channel dimension
+        target_image = target_image.unsqueeze(0)
+
+        if self.mode=='train': # the last option only matters for self-supervised training. During training the input/taret split is random if self.hp_exp['use_mask_seed_for_training']=False and fixed otherwise. During validation and testin it is always fixed.
+            seed = None
+            input_kspace, input_mask, target_kspace, target_mask, target_mask_weighted = apply_mask(kspace, self.mask_func, seed)
+        if self.mode=='adapt': # the last option only matters for self-supervised training. During training the input/taret split is random if self.hp_exp['use_mask_seed_for_training']=False and fixed otherwise. During validation and testin it is always fixed.
+            # fix the mask
+            seed = tuple(map(ord, fname))
+            input_kspace, input_mask, target_kspace, target_mask, target_mask_weighted = apply_mask(kspace, self.mask_func, seed)
+        else:
+            # during validation and test we want to always use the same seed for the same slice
+            # fix the mask
+            seed = tuple(map(ord, fname))
+            input_kspace, input_mask, target_kspace, target_mask, target_mask_weighted = apply_mask(kspace, self.mask_func, seed)
+
+        # inverse Fourier transform to get zero filled solution
+
+        input_image = ifft2c(input_kspace) #shape: coils,height,width,2
+        
+        input_image = complex_mul(input_image, sens_maps_conj)
+        input_image = input_image.sum(dim=0, keepdim=False) #shape: height,width,2
+
+        #input_image = complex_center_crop(input_image, crop_size) 
+
+        # move complex channels to channel dimension
+        input_image = torch.moveaxis( input_image , -1, 0 ) 
+
+
+        # normalize input to have zero mean and std one
+        input_image, mean, std = normalize_separate_over_ch(input_image, eps=1e-11)
+        #input_image = input_image.clamp(-6, 6)
+
+        return input_image, target_image, mean, std, fname, slice_num, input_kspace, input_mask, target_kspace, target_mask, sens_maps
