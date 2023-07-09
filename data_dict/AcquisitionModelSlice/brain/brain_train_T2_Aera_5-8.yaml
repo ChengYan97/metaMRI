@@ -62,22 +62,6 @@
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050125.h5
   predefined_mask: null
   slice: 7
-- filename: file_brain_AXT2_206_6000257
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000257.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_206_6000257
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000257.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_206_6000257
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000257.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_206_6000257
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000257.h5
-  predefined_mask: null
-  slice: 7
 - filename: file_brain_AXT2_202_2020546
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020546.h5
   predefined_mask: null
@@ -366,22 +350,6 @@
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020137.h5
   predefined_mask: null
   slice: 7
-- filename: file_brain_AXT2_205_2050013
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050013.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_205_2050013
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050013.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_205_2050013
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050013.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_205_2050013
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050013.h5
-  predefined_mask: null
-  slice: 7
 - filename: file_brain_AXT2_202_2020148
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020148.h5
   predefined_mask: null
@@ -428,22 +396,6 @@
   slice: 6
 - filename: file_brain_AXT2_206_2060084
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_2060084.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_205_2050012
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050012.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_205_2050012
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050012.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_205_2050012
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050012.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_205_2050012
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050012.h5
   predefined_mask: null
   slice: 7
 - filename: file_brain_AXT2_206_2060033
@@ -590,22 +542,6 @@
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_2060074.h5
   predefined_mask: null
   slice: 7
-- filename: file_brain_AXT2_202_2020297
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020297.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020297
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020297.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020297
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020297.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020297
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020297.h5
-  predefined_mask: null
-  slice: 7
 - filename: file_brain_AXT2_202_2020258
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020258.h5
   predefined_mask: null
@@ -700,22 +636,6 @@
   slice: 6
 - filename: file_brain_AXT2_205_2050027
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050027.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_202_2020409
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020409.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020409
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020409.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020409
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020409.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020409
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020409.h5
   predefined_mask: null
   slice: 7
 - filename: file_brain_AXT2_205_2050054
@@ -974,22 +894,6 @@
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020265.h5
   predefined_mask: null
   slice: 7
-- filename: file_brain_AXT2_202_2020534
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020534.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020534
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020534.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020534
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020534.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020534
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020534.h5
-  predefined_mask: null
-  slice: 7
 - filename: file_brain_AXT2_202_2020321
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020321.h5
   predefined_mask: null
@@ -1036,22 +940,6 @@
   slice: 6
 - filename: file_brain_AXT2_205_2050151
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050151.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_202_2020074
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020074.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020074
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020074.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020074
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020074.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020074
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020074.h5
   predefined_mask: null
   slice: 7
 - filename: file_brain_AXT2_202_6000311
@@ -1150,22 +1038,6 @@
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050134.h5
   predefined_mask: null
   slice: 7
-- filename: file_brain_AXT2_205_2050003
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050003.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_205_2050003
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050003.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_205_2050003
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050003.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_205_2050003
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050003.h5
-  predefined_mask: null
-  slice: 7
 - filename: file_brain_AXT2_202_2020031
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020031.h5
   predefined_mask: null
@@ -1180,22 +1052,6 @@
   slice: 6
 - filename: file_brain_AXT2_202_2020031
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020031.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_202_2020463
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020463.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020463
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020463.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020463
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020463.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020463
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020463.h5
   predefined_mask: null
   slice: 7
 - filename: file_brain_AXT2_202_2020573
@@ -1388,22 +1244,6 @@
   slice: 6
 - filename: file_brain_AXT2_202_2020427
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020427.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_205_6000022
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000022.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_205_6000022
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000022.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_205_6000022
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000022.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_205_6000022
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000022.h5
   predefined_mask: null
   slice: 7
 - filename: file_brain_AXT2_206_2060030
@@ -1742,22 +1582,6 @@
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050109.h5
   predefined_mask: null
   slice: 7
-- filename: file_brain_AXT2_202_2020050
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020050.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020050
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020050.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020050
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020050.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020050
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020050.h5
-  predefined_mask: null
-  slice: 7
 - filename: file_brain_AXT2_202_2020210
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020210.h5
   predefined_mask: null
@@ -1948,22 +1772,6 @@
   slice: 6
 - filename: file_brain_AXT2_202_2020580
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020580.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_205_6000010
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000010.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_205_6000010
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000010.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_205_6000010
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000010.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_205_6000010
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000010.h5
   predefined_mask: null
   slice: 7
 - filename: file_brain_AXT2_202_2020274
@@ -2204,22 +2012,6 @@
   slice: 6
 - filename: file_brain_AXT2_205_2050173
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050173.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_202_2020545
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020545.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020545
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020545.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020545
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020545.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020545
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020545.h5
   predefined_mask: null
   slice: 7
 - filename: file_brain_AXT2_202_2020541
@@ -2526,22 +2318,6 @@
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050025.h5
   predefined_mask: null
   slice: 7
-- filename: file_brain_AXT2_202_2020399
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020399.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020399
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020399.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020399
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020399.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020399
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020399.h5
-  predefined_mask: null
-  slice: 7
 - filename: file_brain_AXT2_202_2020312
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020312.h5
   predefined_mask: null
@@ -2604,22 +2380,6 @@
   slice: 6
 - filename: file_brain_AXT2_205_6000032
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000032.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_202_2020206
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020206.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020206
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020206.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020206
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020206.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020206
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020206.h5
   predefined_mask: null
   slice: 7
 - filename: file_brain_AXT2_202_2020039
@@ -2700,22 +2460,6 @@
   slice: 6
 - filename: file_brain_AXT2_205_6000161
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000161.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_205_6000121
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000121.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_205_6000121
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000121.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_205_6000121
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000121.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_205_6000121
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000121.h5
   predefined_mask: null
   slice: 7
 - filename: file_brain_AXT2_202_2020428
@@ -3150,22 +2894,6 @@
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020403.h5
   predefined_mask: null
   slice: 7
-- filename: file_brain_AXT2_202_2020229
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020229.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020229
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020229.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020229
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020229.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020229
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020229.h5
-  predefined_mask: null
-  slice: 7
 - filename: file_brain_AXT2_205_2050185
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050185.h5
   predefined_mask: null
@@ -3212,22 +2940,6 @@
   slice: 6
 - filename: file_brain_AXT2_206_6000207
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000207.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_205_6000025
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000025.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_205_6000025
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000025.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_205_6000025
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000025.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_205_6000025
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000025.h5
   predefined_mask: null
   slice: 7
 - filename: file_brain_AXT2_205_2050219
@@ -3324,22 +3036,6 @@
   slice: 6
 - filename: file_brain_AXT2_202_2020451
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020451.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_205_6000122
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000122.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_205_6000122
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000122.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_205_6000122
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000122.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_205_6000122
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000122.h5
   predefined_mask: null
   slice: 7
 - filename: file_brain_AXT2_205_2050232
@@ -3534,22 +3230,6 @@
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020314.h5
   predefined_mask: null
   slice: 7
-- filename: file_brain_AXT2_202_2020245
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020245.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020245
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020245.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020245
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020245.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020245
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020245.h5
-  predefined_mask: null
-  slice: 7
 - filename: file_brain_AXT2_202_2020458
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020458.h5
   predefined_mask: null
@@ -3694,54 +3374,6 @@
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020279.h5
   predefined_mask: null
   slice: 7
-- filename: file_brain_AXT2_205_6000091
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000091.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_205_6000091
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000091.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_205_6000091
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000091.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_205_6000091
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000091.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_205_2050046
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050046.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_205_2050046
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050046.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_205_2050046
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050046.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_205_2050046
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050046.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_202_2020280
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020280.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020280
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020280.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020280
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020280.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020280
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020280.h5
-  predefined_mask: null
-  slice: 7
 - filename: file_brain_AXT2_202_2020467
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020467.h5
   predefined_mask: null
@@ -3788,22 +3420,6 @@
   slice: 6
 - filename: file_brain_AXT2_205_2050162
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050162.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_205_6000134
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000134.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_205_6000134
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000134.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_205_6000134
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000134.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_205_6000134
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000134.h5
   predefined_mask: null
   slice: 7
 - filename: file_brain_AXT2_205_6000167
@@ -3900,22 +3516,6 @@
   slice: 6
 - filename: file_brain_AXT2_202_2020157
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020157.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_206_6000188
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000188.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_206_6000188
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000188.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_206_6000188
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000188.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_206_6000188
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000188.h5
   predefined_mask: null
   slice: 7
 - filename: file_brain_AXT2_202_2020150
@@ -4526,22 +4126,6 @@
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_2060050.h5
   predefined_mask: null
   slice: 7
-- filename: file_brain_AXT2_202_2020554
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020554.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020554
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020554.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020554
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020554.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020554
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020554.h5
-  predefined_mask: null
-  slice: 7
 - filename: file_brain_AXT2_202_2020380
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020380.h5
   predefined_mask: null
@@ -4604,38 +4188,6 @@
   slice: 6
 - filename: file_brain_AXT2_205_6000027
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000027.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_205_6000142
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000142.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_205_6000142
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000142.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_205_6000142
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000142.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_205_6000142
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000142.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_202_2020499
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020499.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020499
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020499.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020499
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020499.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020499
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020499.h5
   predefined_mask: null
   slice: 7
 - filename: file_brain_AXT2_205_6000017
@@ -4748,22 +4300,6 @@
   slice: 6
 - filename: file_brain_AXT2_202_2020094
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020094.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_202_2020456
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020456.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020456
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020456.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020456
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020456.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020456
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020456.h5
   predefined_mask: null
   slice: 7
 - filename: file_brain_AXT2_205_2050118
@@ -4974,22 +4510,6 @@
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000119.h5
   predefined_mask: null
   slice: 7
-- filename: file_brain_AXT2_206_6000211
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000211.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_206_6000211
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000211.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_206_6000211
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000211.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_206_6000211
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000211.h5
-  predefined_mask: null
-  slice: 7
 - filename: file_brain_AXT2_202_2020424
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020424.h5
   predefined_mask: null
@@ -5102,22 +4622,6 @@
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000227.h5
   predefined_mask: null
   slice: 7
-- filename: file_brain_AXT2_202_2020008
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020008.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020008
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020008.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020008
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020008.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020008
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020008.h5
-  predefined_mask: null
-  slice: 7
 - filename: file_brain_AXT2_206_2060037
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_2060037.h5
   predefined_mask: null
@@ -5148,22 +4652,6 @@
   slice: 6
 - filename: file_brain_AXT2_202_2020569
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020569.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_206_6000216
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000216.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_206_6000216
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000216.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_206_6000216
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000216.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_206_6000216
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000216.h5
   predefined_mask: null
   slice: 7
 - filename: file_brain_AXT2_202_2020340
@@ -5406,22 +4894,6 @@
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000139.h5
   predefined_mask: null
   slice: 7
-- filename: file_brain_AXT2_202_2020263
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020263.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020263
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020263.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020263
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020263.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020263
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020263.h5
-  predefined_mask: null
-  slice: 7
 - filename: file_brain_AXT2_202_2020441
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020441.h5
   predefined_mask: null
@@ -5598,22 +5070,6 @@
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000133.h5
   predefined_mask: null
   slice: 7
-- filename: file_brain_AXT2_205_2050225
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050225.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_205_2050225
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050225.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_205_2050225
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050225.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_205_2050225
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050225.h5
-  predefined_mask: null
-  slice: 7
 - filename: file_brain_AXT2_205_2050144
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050144.h5
   predefined_mask: null
@@ -5724,22 +5180,6 @@
   slice: 6
 - filename: file_brain_AXT2_205_6000012
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000012.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_202_2020178
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020178.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020178
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020178.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020178
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020178.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020178
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020178.h5
   predefined_mask: null
   slice: 7
 - filename: file_brain_AXT2_202_2020537
@@ -6142,22 +5582,6 @@
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000104.h5
   predefined_mask: null
   slice: 7
-- filename: file_brain_AXT2_206_6000237
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000237.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_206_6000237
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000237.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_206_6000237
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000237.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_206_6000237
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000237.h5
-  predefined_mask: null
-  slice: 7
 - filename: file_brain_AXT2_202_2020121
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020121.h5
   predefined_mask: null
@@ -6204,22 +5628,6 @@
   slice: 6
 - filename: file_brain_AXT2_205_2050179
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050179.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_205_6000049
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000049.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_205_6000049
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000049.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_205_6000049
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000049.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_205_6000049
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000049.h5
   predefined_mask: null
   slice: 7
 - filename: file_brain_AXT2_205_2050112
@@ -6366,22 +5774,6 @@
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050208.h5
   predefined_mask: null
   slice: 7
-- filename: file_brain_AXT2_202_2020273
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020273.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020273
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020273.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020273
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020273.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020273
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020273.h5
-  predefined_mask: null
-  slice: 7
 - filename: file_brain_AXT2_202_2020106
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020106.h5
   predefined_mask: null
@@ -6508,22 +5900,6 @@
   slice: 6
 - filename: file_brain_AXT2_202_2020329
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020329.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_206_6000259
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000259.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_206_6000259
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000259.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_206_6000259
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000259.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_206_6000259
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000259.h5
   predefined_mask: null
   slice: 7
 - filename: file_brain_AXT2_206_6000253
@@ -6686,38 +6062,6 @@
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050131.h5
   predefined_mask: null
   slice: 7
-- filename: file_brain_AXT2_202_2020269
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020269.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020269
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020269.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020269
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020269.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020269
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020269.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_202_2020358
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020358.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020358
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020358.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020358
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020358.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020358
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020358.h5
-  predefined_mask: null
-  slice: 7
 - filename: file_brain_AXT2_205_2050058
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_2050058.h5
   predefined_mask: null
@@ -6796,86 +6140,6 @@
   slice: 6
 - filename: file_brain_AXT2_202_2020578
   path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020578.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_205_6000166
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000166.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_205_6000166
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000166.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_205_6000166
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000166.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_205_6000166
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000166.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_206_6000242
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000242.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_206_6000242
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000242.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_206_6000242
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000242.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_206_6000242
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_206_6000242.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_205_6000137
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000137.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_205_6000137
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000137.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_205_6000137
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000137.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_205_6000137
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000137.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_205_6000100
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000100.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_205_6000100
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000100.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_205_6000100
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000100.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_205_6000100
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_205_6000100.h5
-  predefined_mask: null
-  slice: 7
-- filename: file_brain_AXT2_202_2020505
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020505.h5
-  predefined_mask: null
-  slice: 4
-- filename: file_brain_AXT2_202_2020505
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020505.h5
-  predefined_mask: null
-  slice: 5
-- filename: file_brain_AXT2_202_2020505
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020505.h5
-  predefined_mask: null
-  slice: 6
-- filename: file_brain_AXT2_202_2020505
-  path: /media/hdd1/fastMRIdata/brain/multicoil_train/file_brain_AXT2_202_2020505.h5
   predefined_mask: null
   slice: 7
 - filename: file_brain_AXT2_202_2020419
