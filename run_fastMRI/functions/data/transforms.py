@@ -177,6 +177,7 @@ def normalize_separate_over_ch(
 
     return (x - mean) / (std + eps), mean, std
 
+
 def apply_mask(
     data: torch.Tensor,
     mask_func: MaskFunc,
