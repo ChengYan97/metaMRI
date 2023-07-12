@@ -44,7 +44,7 @@ def adapt(model, dataloader, optimizer):
 ###         evaluation
 #################################################################################################
 
-def evaluate2c_imagepair(model, input_image, target_image, mean, std):
+def evaluate2c_imagepair(model, input_image, target_image, mean, std, ground_truth_image):
     model.eval()
     l1_loss = torch.nn.L1Loss(reduction='sum')
     ssim_fct = SSIMLoss()
@@ -55,10 +55,11 @@ def evaluate2c_imagepair(model, input_image, target_image, mean, std):
     target_image = target_image.to(device)
     std = std.to(device)
     mean = mean.to(device)
-
+    ground_truth_image = ground_truth_image.squeeze(0).to(device)
+    
     # time start
     start_time = time.time()
-    output_image = model(input_image.unsqueeze(0))
+    output_image = model(input_image)
     output_image = output_image * std + mean
 
     # Move complex dim to end, apply complex abs, insert channel dimension
@@ -68,14 +69,16 @@ def evaluate2c_imagepair(model, input_image, target_image, mean, std):
     end_time = time.time()
     elapsed_time = end_time - start_time
     print('Inference time: ', elapsed_time)
+    # for NMAE/NMSE: complex image [2, 640, 320]
     # NMAE
-    nmae_loss = (l1_loss(output_image_1c, target_image) / torch.sum(torch.abs(target_image))).item()
+    nmae_loss = (l1_loss(output_image, target_image) / torch.sum(torch.abs(target_image))).item()
     # NMSE 
-    nmse_loss = (mse_fct(output_image_1c, target_image) / torch.sum(torch.abs(target_image)**2)).item()
+    nmse_loss = (mse_fct(output_image, target_image) / torch.sum(torch.abs(target_image)**2)).item()
+    # for PSNR/SSIM: real image [1, 640, 320]
     # PSNR
-    psnr_loss = (20*torch.log10(torch.tensor(target_image.max().unsqueeze(0).item()))-10*torch.log10(psner_mse_fct(output_image_1c, target_image))).item()
+    psnr_loss = (20*torch.log10(torch.tensor(ground_truth_image.max().unsqueeze(0).item()))-10*torch.log10(psner_mse_fct(output_image_1c, ground_truth_image))).item()
     # SSIM = 1 - loss
-    ssim_loss = 1 - ssim_fct(output_image_1c, target_image, data_range = target_image.max().unsqueeze(0)).item()
+    ssim_loss = 1 - ssim_fct(output_image_1c, ground_truth_image, data_range = ground_truth_image.max().unsqueeze(0)).item()
 
     return nmae_loss, nmse_loss, psnr_loss, ssim_loss, output_image, output_image_1c
 

@@ -567,21 +567,41 @@ class UnetDataTransform_sens_TTT:
 
         """
         # Convert sens_maps and kspace to tensors. Stack imaginary parts along the last dimension
-
         sens_maps = to_tensor(sens_maps)
         sens_maps_conj = complex_conj(sens_maps)
+
+        # for score computation
+        binary_background_mask = torch.round(torch.sum(complex_mul(sens_maps_conj,sens_maps),0)[:,:,0:1])
+        binary_background_mask = torch.moveaxis( binary_background_mask , -1, 0 ) 
+
+        set = torch.unique(binary_background_mask)
+        if binary_background_mask.max() != 1.0 or binary_background_mask.min() != 0.0 or set.shape[0] != 2:
+            print(binary_background_mask.max(),binary_background_mask.min())
+            print(fname, slice_num)
+            for i in range(set.shape[0]):
+                print(set[i].item())
+            raise ValueError("Warning: The real part of the sensitivity maps times their complex conjugate is not a binary mask!")
+
+
         kspace = to_tensor(kspace)
-
-        #crop_size = (target.shape[-2], target.shape[-1])
-        
+        crop_size = (target.shape[-2], target.shape[-1])
         target_image = ifft2c(kspace)
-
+        
         target_image = complex_mul(target_image, sens_maps_conj)
         target_image = target_image.sum(dim=0, keepdim=False)
-        # absolute value
-        target_image = complex_abs(target_image)
-        # add channel dimension
-        target_image = target_image.unsqueeze(0)
+        # [640, 372, 2] .permute(1, 2, 3, 0)
+        # ground truth image: no-complex to evaluate no center crop
+        # ground_truth_image = complex_center_crop(target_image, crop_size)
+        ground_truth_image = complex_abs(target_image)
+        ground_truth_image = ground_truth_image.unsqueeze(0)
+
+        # binary_background_mask_cropped, _ = center_crop_to_smallest(binary_background_mask, ground_truth_image)
+        # ground_truth_image = ground_truth_image * binary_background_mask_cropped
+
+        target_image = torch.moveaxis( target_image , -1, 0 ) 
+        # [2, 640, 372]
+
+
 
         if self.mode=='train': # the last option only matters for self-supervised training. During training the input/taret split is random if self.hp_exp['use_mask_seed_for_training']=False and fixed otherwise. During validation and testin it is always fixed.
             seed = None
@@ -613,4 +633,4 @@ class UnetDataTransform_sens_TTT:
         input_image, mean, std = normalize_separate_over_ch(input_image, eps=1e-11)
         #input_image = input_image.clamp(-6, 6)
 
-        return input_image, target_image, mean, std, fname, slice_num, input_kspace, input_mask, target_kspace, target_mask, sens_maps
+        return input_image, target_image, ground_truth_image, mean, std, fname, slice_num, input_kspace, input_mask, target_kspace, target_mask, sens_maps, binary_background_mask
