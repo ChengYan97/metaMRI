@@ -53,7 +53,32 @@ elif TARGET == 'Q2':
     path_val = '/cheng/metaMRI/metaMRI/data_dict/E-part1/Q/brain_val_FLAIR_Skyra_5-8.yaml'
 elif TARGET == 'Q3': 
     path_train = '/cheng/metaMRI/metaMRI/data_dict/E-part1/Q/brain_train_T2_Aera_5-8.yaml'
-    path_val = '/cheng/metaMRI/metaMRI/data_dict/E-part1/Q/brain_test_T2_Aera_5-8.yaml'
+    path_val = '/cheng/metaMRI/metaMRI/data_dict/E-part1/Q/brain_val_T2_Aera_5-8.yaml'
+elif TARGET == 'P1': 
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_train_PD_Aera_2-9.yaml'
+    path_val = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PD_Aera_2-9.yaml'
+elif TARGET == 'P2': 
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_train_PD_Aera_15-22.yaml'
+    path_val = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PD_Aera_15-22.yaml'
+elif TARGET == 'P3': 
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_train_PD_Biograph_15-22.yaml'
+    path_val = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PD_Biograph_15-22.yaml'
+elif TARGET == 'P4': 
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_train_PD_Skyra_15-22.yaml'
+    path_val = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PD_Skyra_15-22.yaml'
+elif TARGET == 'P5': 
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_train_PDFS_Aera_2-9.yaml'
+    path_val = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PDFS_Aera_2-9.yaml'
+elif TARGET == 'P6': 
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_train_PDFS_Aera_15-22.yaml'
+    path_val = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PDFS_Aera_15-22.yaml'
+elif TARGET == 'P7': 
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_train_PDFS_Biograph_15-22.yaml'
+    path_val = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PDFS_Biograph_15-22.yaml'
+elif TARGET == 'P8': 
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_train_PDFS_Skyra_15-22.yaml'
+    path_val = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PDFS_Skyra_15-22.yaml'
+
 
 
 

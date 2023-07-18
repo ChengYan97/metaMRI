@@ -1,6 +1,6 @@
 #%%
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import random
 import numpy as np
 import copy
@@ -28,7 +28,7 @@ from functions.training.losses import SSIMLoss
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 ########################### experiment name ###########################
-experiment_name = 'E11.2_maml(l1_CA-1e-3-4_P)_T300_200epoch'
+experiment_name = 'E11.3_maml(l1_CA-1e-3-4_P)_adapt10_T300_200epoch'
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -47,7 +47,7 @@ EPOCH = 200
 Inner_EPOCH = 1
 
 K = 1      # the same examples for both inner loop and outer loop training
-adapt_steps = 5
+adapt_steps = 10
 adapt_lr = 0.0001   # adapt θ': α
 meta_lr = 0.001    # update real model θ: β
 
@@ -55,7 +55,9 @@ meta_lr = 0.001    # update real model θ: β
 
 # data path
 path_train = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/knee_train_PD_Aera_15-19.yaml'
+path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/sensmap_train/'
 path_val = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/knee_val_PD_Aera_15-19.yaml'
+path_to_val_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/sensmap_val/'
 
 
 # mask function and data transform
@@ -67,9 +69,8 @@ data_transform = UnetDataTransform_sens_TTT('multicoil', mask_func = mask_functi
 
 # training dataset and data loader
 trainset = SliceDataset(dataset = path_train, path_to_dataset='', 
-                path_to_sensmaps='/cheng/metaMRI/metaMRI/data_dict/E11.1/P/sensmap_train/', provide_senmaps=True, 
-                challenge="multicoil", 
-                transform = data_transform_train, 
+                path_to_sensmaps = path_to_train_sensmaps, provide_senmaps=True, 
+                challenge="multicoil", transform = data_transform_train, 
                 use_dataset_cache=True)
 
 train_dataloader = torch.utils.data.DataLoader(dataset = trainset, batch_size = K,
@@ -78,9 +79,8 @@ print("Training date number: ", len(train_dataloader.dataset))
 
 # validation dataset and data loader
 validationset = SliceDataset(dataset = path_val, path_to_dataset='', 
-                path_to_sensmaps='/cheng/metaMRI/metaMRI/data_dict/E11.1/P/sensmap_val/', provide_senmaps=True, 
-                challenge="multicoil", 
-                transform=data_transform, 
+                path_to_sensmaps = path_to_val_sensmaps, provide_senmaps=True, 
+                challenge="multicoil", transform = data_transform, 
                 use_dataset_cache=True)
 
 val_dataloader = torch.utils.data.DataLoader(dataset = validationset, batch_size = 1, 
@@ -199,7 +199,7 @@ for iter_ in range(EPOCH):
             update_self_loss = l1_loss(update_Fimg_forward, input_kspace) / torch.sum(torch.abs(input_kspace))
 
             # joint loss
-            update_loss = update_sup_loss + update_self_loss
+            update_loss = update_sup_loss + 0.05 * update_self_loss
 
             # ∑Ti∼p(T)LTi(fθ′i): Ti only contain one task
             total_update_loss += update_loss
