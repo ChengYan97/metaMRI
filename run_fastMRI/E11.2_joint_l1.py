@@ -2,7 +2,7 @@
 import random
 import numpy as np
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import torch
 import learn2learn as l2l
 from tqdm import tqdm
@@ -28,7 +28,7 @@ from functions.math import complex_abs, complex_mul, complex_conj
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 
-experiment_name = 'E11.2_joint(l1_CA-1e-3-4_P)_T300_120epoch'
+experiment_name = 'E11.2_joint(l1_CA-1e-3-4_Q)_T300_120epoch'
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -48,8 +48,15 @@ LR = 1e-3
 # FIX_SCALE = 0.005
 
 # data path
-path_train = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/knee_train_PD_Aera_15-19.yaml'
-path_val = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/knee_val_PD_Aera_15-19.yaml'
+# path_train = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/knee_train_PD_Aera_15-19.yaml'
+# path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/sensmap_train/'
+# path_val = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/knee_val_PD_Aera_15-19.yaml'
+# path_to_val_sensmap = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/sensmap_val/'
+
+path_train = '/cheng/metaMRI/metaMRI/data_dict/E11.1/Q/brain_train_AXT1POST_Skyra_5-8.yaml'
+path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/E11.1/Q/sensmap_train/'
+path_val = '/cheng/metaMRI/metaMRI/data_dict/E11.1/Q/brain_val_AXT1POST_Skyra_5-8.yaml'
+path_to_val_sensmap = '/cheng/metaMRI/metaMRI/data_dict/E11.1/Q/sensmap_val/'
 
 
 # mask function and data transform
@@ -61,7 +68,7 @@ data_transform = UnetDataTransform_sens_TTT('multicoil', mask_func = mask_functi
 
 # training dataset and data loader
 trainset = SliceDataset(dataset = path_train, path_to_dataset='', 
-                path_to_sensmaps='/cheng/metaMRI/metaMRI/data_dict/E11.1/P/sensmap_train/', provide_senmaps=True, 
+                path_to_sensmaps = path_to_train_sensmaps , provide_senmaps=True, 
                 challenge="multicoil", 
                 transform = data_transform_train, 
                 use_dataset_cache=True)
@@ -72,7 +79,7 @@ print("Training date number: ", len(train_dataloader.dataset))
 
 # validation dataset and data loader
 validationset = SliceDataset(dataset = path_val, path_to_dataset='', 
-                path_to_sensmaps='/cheng/metaMRI/metaMRI/data_dict/E11.1/P/sensmap_val/', provide_senmaps=True, 
+                path_to_sensmaps = path_to_val_sensmap, provide_senmaps=True, 
                 challenge="multicoil", 
                 transform=data_transform, 
                 use_dataset_cache=True)

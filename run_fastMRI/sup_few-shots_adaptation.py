@@ -24,7 +24,7 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 
 ####################################################################################
 SEED = 5            # 1,2,3,4,5 repeat # for Q2 using seed 1,3,4,5,6, cause seed 2 is much different than others
-INIT = 'maml'       # 'standard', 'maml'
+INIT = 'standardE10.2'       # 'standard', 'maml'
 TARGET = 'Q3'       # 'Q1', 'Q2', 'Q3'
 adapt_shot = 5
 
@@ -55,8 +55,10 @@ if INIT == 'standard':
     checkpoint_path = "/cheng/metaMRI/metaMRI/save/E6*/E6.6_standard(NMSE-lrAnneal)_T8x200_100epoch_E85_best.pth"
 elif INIT == 'maml':
     checkpoint_path = "/cheng/metaMRI/metaMRI/save/E6*/E6.4_maml(NMSE-lre-3)_T8x200_200epoch_E200_best.pth"
-elif INIT == 'TEST':
-    checkpoint_path = "/cheng/metaMRI/metaMRI/save/E6.10_maml(lr_in4_out3)_T8x200_200epoch/E6.10_maml(lr_in4_out3)_T8x200_200epoch_E196.pth"
+elif INIT == 'standardE10.2':
+    checkpoint_path = "/cheng/metaMRI/metaMRI/save/E10.2_standard(NMSE-lr1e-3CA4)_T8x200_120epoch/E10.2_standard(NMSE-lr1e-3CA4)_T8x200_120epoch_E87_best.pth"
+elif INIT == 'mamlE10.2':
+    checkpoint_path = "/cheng/metaMRI/metaMRI/save/E10.2_maml(NMSE-lre-3)_T8x200_250epoch/E10.2_maml(NMSE-lre-3)_T8x200_250epoch_E238_best.pth"
 else: 
     print('Choose the initialization weight. ')
 

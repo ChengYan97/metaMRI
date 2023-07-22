@@ -28,7 +28,7 @@ from functions.math import complex_abs, complex_mul, complex_conj
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 
-experiment_name = 'E11.3_joint(l1_CA-1e-3-4_Q)_T300_120epoch'
+experiment_name = 'E11.5_joint(l1_CA-1e-3-4_Q)_T300_150epoch'
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -42,21 +42,21 @@ torch.cuda.manual_seed(SEED)
 torch.manual_seed(SEED)
 
 # hyperparameter
-TRAINING_EPOCH = 120
+TRAINING_EPOCH = 150
 BATCH_SIZE = 1
 LR = 1e-3
 # FIX_SCALE = 0.005
 
 # data path
-# path_train = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/knee_train_PD_Aera_15-19.yaml'
-# path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/sensmap_train/'
-# path_val = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/knee_val_PD_Aera_15-19.yaml'
-# path_to_val_sensmap = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/sensmap_val/'
+# path_train = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_knee_train.yaml'
+# path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_knee_train/'
+# path_val = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_knee_val.yaml'
+# path_to_val_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_knee_val/'
 
-path_train = '/cheng/metaMRI/metaMRI/data_dict/E11.1/Q/brain_train_AXT1POST_Skyra_5-8.yaml'
-path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/E11.1/Q/sensmap_train/'
-path_val = '/cheng/metaMRI/metaMRI/data_dict/E11.1/Q/brain_val_AXT1POST_Skyra_5-8.yaml'
-path_to_val_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/E11.1/Q/sensmap_val/'
+path_train = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_brain_train.yaml'
+path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_brain_train/'
+path_val = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_brain_val.yaml'
+path_to_val_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_brain_val/'
 
 
 # mask function and data transform
@@ -86,7 +86,8 @@ val_dataloader = torch.utils.data.DataLoader(dataset = validationset, batch_size
                 shuffle = False, generator = torch.Generator().manual_seed(1), pin_memory = False)
 print("Validation date number: ", len(val_dataloader.dataset))
 
-#%%
+
+
 def train(model, dataloader, optimizer): 
     model.train()
     train_loss = 0.0
@@ -122,7 +123,7 @@ def train(model, dataloader, optimizer):
         loss_self = l1_loss(Fimg_forward, input_kspace) / torch.sum(torch.abs(input_kspace))
         
         # loss
-        loss = loss_sup + 0.05 * loss_self
+        loss = loss_sup + loss_self
 
         optimizer.zero_grad()
         loss.backward()

@@ -1,6 +1,6 @@
 #%%
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+os.environ['CUDA_VISIBLE_DEVICES'] = '3'
 import random
 import numpy as np
 import copy
@@ -28,7 +28,7 @@ from functions.training.losses import SSIMLoss
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 ########################### experiment name ###########################
-experiment_name = 'E11.2_maml(l1_CA-1e-3-4_Q)_T300_200epoch'
+experiment_name = 'E11.5_maml(l1_CA-1e-3-4_Q)_T300_200epoch'
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -54,15 +54,15 @@ meta_lr = 0.001    # update real model θ: β
 ###########################  data & dataloader  ###########################
 
 # data path
-# path_train = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/knee_train_PD_Aera_15-19.yaml'
-# path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/sensmap_train/'
-# path_val = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/knee_val_PD_Aera_15-19.yaml'
-# path_to_val_sensmap = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/sensmap_val/'
+# path_train = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_knee_train.yaml'
+# path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_knee_train/'
+# path_val = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_knee_val.yaml'
+# path_to_val_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_knee_val/'
 
-path_train = '/cheng/metaMRI/metaMRI/data_dict/E11.1/Q/brain_train_AXT1POST_Skyra_5-8.yaml'
-path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/E11.1/Q/sensmap_train/'
-path_val = '/cheng/metaMRI/metaMRI/data_dict/E11.1/Q/brain_val_AXT1POST_Skyra_5-8.yaml'
-path_to_val_sensmap = '/cheng/metaMRI/metaMRI/data_dict/E11.1/Q/sensmap_val/'
+path_train = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_brain_train.yaml'
+path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_brain_train/'
+path_val = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_brain_val.yaml'
+path_to_val_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_brain_val/'
 
 # mask function and data transform
 mask_function = create_mask_for_mask_type(mask_type_str = 'random', self_sup = False, 
@@ -84,7 +84,7 @@ print("Training date number: ", len(train_dataloader.dataset))
 
 # validation dataset and data loader
 validationset = SliceDataset(dataset = path_val, path_to_dataset='', 
-                path_to_sensmaps=path_to_val_sensmap, provide_senmaps=True, 
+                path_to_sensmaps=path_to_val_sensmaps, provide_senmaps=True, 
                 challenge="multicoil", 
                 transform=data_transform, 
                 use_dataset_cache=True)

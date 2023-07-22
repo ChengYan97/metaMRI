@@ -1,6 +1,6 @@
 #%%
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import random
 import numpy as np
 import copy
@@ -28,7 +28,7 @@ from functions.training.losses import SSIMLoss
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 ########################### experiment name ###########################
-experiment_name = 'E11.2_maml(l1_CA-1e-3-4_Q)_T300_200epoch'
+experiment_name = 'E11.4_maml(l1_CA-1e-3-4_P)_T300_150epoch'
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -42,7 +42,7 @@ torch.cuda.manual_seed(SEED)
 torch.manual_seed(SEED)
 
 ###########################  hyperparametes  ###########################
-EPOCH = 200   
+EPOCH = 150   
 # enumalate the whole data once takes 180 outer loop
 Inner_EPOCH = 1
 
@@ -54,15 +54,11 @@ meta_lr = 0.001    # update real model θ: β
 ###########################  data & dataloader  ###########################
 
 # data path
-# path_train = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/knee_train_PD_Aera_15-19.yaml'
-# path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/sensmap_train/'
-# path_val = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/knee_val_PD_Aera_15-19.yaml'
-# path_to_val_sensmap = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/sensmap_val/'
+path_train = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/knee_train_PD_Aera_15-19.yaml'
+path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/sensmap_train/'
+path_val = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/knee_val_PD_Aera_15-19.yaml'
+path_to_val_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/sensmap_val/'
 
-path_train = '/cheng/metaMRI/metaMRI/data_dict/E11.1/Q/brain_train_AXT1POST_Skyra_5-8.yaml'
-path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/E11.1/Q/sensmap_train/'
-path_val = '/cheng/metaMRI/metaMRI/data_dict/E11.1/Q/brain_val_AXT1POST_Skyra_5-8.yaml'
-path_to_val_sensmap = '/cheng/metaMRI/metaMRI/data_dict/E11.1/Q/sensmap_val/'
 
 # mask function and data transform
 mask_function = create_mask_for_mask_type(mask_type_str = 'random', self_sup = False, 
@@ -73,9 +69,8 @@ data_transform = UnetDataTransform_sens_TTT('multicoil', mask_func = mask_functi
 
 # training dataset and data loader
 trainset = SliceDataset(dataset = path_train, path_to_dataset='', 
-                path_to_sensmaps=path_to_train_sensmaps, provide_senmaps=True, 
-                challenge="multicoil", 
-                transform = data_transform_train, 
+                path_to_sensmaps = path_to_train_sensmaps, provide_senmaps=True, 
+                challenge="multicoil", transform = data_transform_train, 
                 use_dataset_cache=True)
 
 train_dataloader = torch.utils.data.DataLoader(dataset = trainset, batch_size = K,
@@ -84,9 +79,8 @@ print("Training date number: ", len(train_dataloader.dataset))
 
 # validation dataset and data loader
 validationset = SliceDataset(dataset = path_val, path_to_dataset='', 
-                path_to_sensmaps=path_to_val_sensmap, provide_senmaps=True, 
-                challenge="multicoil", 
-                transform=data_transform, 
+                path_to_sensmaps = path_to_val_sensmaps, provide_senmaps=True, 
+                challenge="multicoil", transform = data_transform, 
                 use_dataset_cache=True)
 
 val_dataloader = torch.utils.data.DataLoader(dataset = validationset, batch_size = 1, 
@@ -167,10 +161,14 @@ for iter_ in range(EPOCH):
             # adapt learner several step in a self-supervised manner
             for _ in range(adapt_steps): 
                 ###### 5. Evaluate ∇θLTi(fθ) with respect to K examples ######
-                # self-supervised loss
-                # fθ(A†y)
                 adapt_output = learner(input_image)
                 adapt_output = adapt_output * std + mean
+
+                # supervised loss
+                loss_sup = l1_loss(adapt_output, target_image) / torch.sum(torch.abs(target_image))
+
+                # self-supervised loss
+                # fθ(A†y)
                 adapt_output = torch.moveaxis(adapt_output, 1, -1 )
                 # S fθ(A†y)
                 output_sens_image = complex_mul(adapt_output, sens_maps)
@@ -181,8 +179,9 @@ for iter_ in range(EPOCH):
                 # self-supervised loss [y, Afθ(A†y)] as adapt loss
                 loss_self = l1_loss(Fimg_forward, input_kspace) / torch.sum(torch.abs(input_kspace))
 
+                loss = loss_self + loss_sup
                 ###### 6. Compute  adapted  parameters  with  gradient  descent: θ′i = θ − α∇θLTi(fθ) ######
-                learner.adapt(loss_self)
+                learner.adapt(loss)
             
             ###### 7: inner loop end ######
             # for calculation efficient, some loss are still cumputed in this loop

@@ -2,7 +2,7 @@
 import random
 import numpy as np
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 import torch
 import learn2learn as l2l
 from tqdm import tqdm
@@ -28,7 +28,7 @@ from functions.math import complex_abs, complex_mul, complex_conj
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 
-experiment_name = 'E11.3_joint(l1_CA-1e-3-4_Q)_T300_120epoch'
+experiment_name = 'E11.5_sup(l1_CA-1e-3-4_Q)_T300_120epoch'
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -45,18 +45,17 @@ torch.manual_seed(SEED)
 TRAINING_EPOCH = 120
 BATCH_SIZE = 1
 LR = 1e-3
-# FIX_SCALE = 0.005
 
 # data path
-# path_train = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/knee_train_PD_Aera_15-19.yaml'
-# path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/sensmap_train/'
-# path_val = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/knee_val_PD_Aera_15-19.yaml'
-# path_to_val_sensmap = '/cheng/metaMRI/metaMRI/data_dict/E11.1/P/sensmap_val/'
+# path_train = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_knee_train.yaml'
+# path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_knee_train/'
+# path_val = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_knee_val.yaml'
+# path_to_val_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_knee_val/'
 
-path_train = '/cheng/metaMRI/metaMRI/data_dict/E11.1/Q/brain_train_AXT1POST_Skyra_5-8.yaml'
-path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/E11.1/Q/sensmap_train/'
-path_val = '/cheng/metaMRI/metaMRI/data_dict/E11.1/Q/brain_val_AXT1POST_Skyra_5-8.yaml'
-path_to_val_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/E11.1/Q/sensmap_val/'
+path_train = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_brain_train.yaml'
+path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_brain_train/'
+path_val = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_brain_val.yaml'
+path_to_val_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_brain_val/'
 
 
 # mask function and data transform
@@ -68,8 +67,9 @@ data_transform = UnetDataTransform_sens_TTT('multicoil', mask_func = mask_functi
 
 # training dataset and data loader
 trainset = SliceDataset(dataset = path_train, path_to_dataset='', 
-                path_to_sensmaps = path_to_train_sensmaps, provide_senmaps=True, 
-                challenge="multicoil", transform = data_transform_train, 
+                path_to_sensmaps=path_to_train_sensmaps, provide_senmaps=True, 
+                challenge="multicoil", 
+                transform = data_transform_train, 
                 use_dataset_cache=True)
 
 train_dataloader = torch.utils.data.DataLoader(dataset = trainset, batch_size = BATCH_SIZE,
@@ -78,8 +78,9 @@ print("Training date number: ", len(train_dataloader.dataset))
 
 # validation dataset and data loader
 validationset = SliceDataset(dataset = path_val, path_to_dataset='', 
-                path_to_sensmaps = path_to_val_sensmaps, provide_senmaps=True, 
-                challenge="multicoil", transform = data_transform, 
+                path_to_sensmaps=path_to_val_sensmaps, provide_senmaps=True, 
+                challenge="multicoil", 
+                transform=data_transform, 
                 use_dataset_cache=True)
 
 val_dataloader = torch.utils.data.DataLoader(dataset = validationset, batch_size = 1, 
@@ -107,27 +108,12 @@ def train(model, dataloader, optimizer):
         
         # supervised loss [x, fθ(A†y)]
         loss_sup = l1_loss(train_outputs, train_targets) / torch.sum(torch.abs(train_targets))
-        
-        # self-supervised loss
-        # fθ(A†y)
-        train_outputs = torch.moveaxis(train_outputs, 1, -1 )
-        # S fθ(A†y)
-        sens_maps = sens_maps.to(device)
-        output_sens_image = complex_mul(train_outputs, sens_maps)
-        # FS fθ(A†y)
-        Fimg = fft2c(output_sens_image)
-        # MFS fθ(A†y) = A fθ(A†y)
-        Fimg_forward = Fimg * input_mask
-        # self-supervised loss [y, Afθ(A†y)]
-        loss_self = l1_loss(Fimg_forward, input_kspace) / torch.sum(torch.abs(input_kspace))
-        
-        # loss
-        loss = loss_sup + 0.05 * loss_self
+    
 
         optimizer.zero_grad()
-        loss.backward()
+        loss_sup.backward()
         optimizer.step()
-        train_loss += loss.item()
+        train_loss += loss_sup.item()
 
     avg_train_loss = train_loss / len(dataloader)
     return avg_train_loss
@@ -187,6 +173,7 @@ for iteration in range(TRAINING_EPOCH):
         print('Model saved to', save_path)
     else:
         pass
+    
     scheduler.step()
     #print('Learning rate: ', optimizer.param_groups[0]['lr'])
 
