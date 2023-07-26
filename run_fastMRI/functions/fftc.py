@@ -208,3 +208,58 @@ def ifftshift(x: torch.Tensor, dim: Optional[List[int]] = None) -> torch.Tensor:
         shift[i] = (x.shape[dim_num] + 1) // 2
 
     return roll(x, shift, dim)
+
+
+# for test-time training scale normalization
+def fft(input, signal_ndim, normalized=False):
+    # This function is called from the fft2 function below
+    if signal_ndim < 1 or signal_ndim > 3:
+        print("Signal ndim out of range, was", signal_ndim, "but expected a value between 1 and 3, inclusive")
+        return
+
+    dims = (-1)
+    if signal_ndim == 2:
+        dims = (-2, -1)
+    if signal_ndim == 3:
+        dims = (-3, -2, -1)
+
+    norm = "backward"
+    if normalized:
+        norm = "ortho"
+
+def ifft(input, signal_ndim, normalized=False):
+    # This function is called from the ifft2 function below
+    if signal_ndim < 1 or signal_ndim > 3:
+        print("Signal ndim out of range, was", signal_ndim, "but expected a value between 1 and 3, inclusive")
+        return
+
+    dims = (-1)
+    if signal_ndim == 2:
+        dims = (-2, -1)
+    if signal_ndim == 3:
+        dims = (-3, -2, -1)
+
+    norm = "backward"
+    if normalized:
+        norm = "ortho"
+
+    return torch.view_as_real(torch.fft.ifftn(torch.view_as_complex(input), dim=dims, norm=norm))
+
+def ifft2(data):
+    """
+    ref: https://github.com/facebookresearch/fastMRI/tree/master/fastmri
+    Apply centered 2-dimensional Inverse Fast Fourier Transform. It calls the ifft function above to make it compatible with the latest version of pytorch.
+
+    Args:
+        data (torch.Tensor): Complex valued input data containing at least 3 dimensions: dimensions
+            -3 & -2 are spatial dimensions and dimension -1 has size 2. All other dimensions are
+            assumed to be batch dimensions.
+
+    Returns:
+        torch.Tensor: The IFFT of the input.
+    """
+    assert data.size(-1) == 2
+    data = ifftshift(data, dim=(-3, -2))
+    data = ifft(data, 2, normalized=True)
+    data = fftshift(data, dim=(-3, -2))
+    return data

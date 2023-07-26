@@ -23,7 +23,7 @@ else:
     from functions.fftc import fft2c_old as fft2c
     from functions.fftc import ifft2c_old as ifft2c
 
-
+from functions.fftc import ifft2
 
 from functions.data.subsample import MaskFunc
 
@@ -497,6 +497,129 @@ class UnetDataTransform_norm:
         return input_image, target_image, mean, std, fname, slice_num
 
 
+class UnetDataTransform_TTTpaper:
+    """
+    Data Transformer for training U-Net models.
+    """
+
+    def __init__(
+        self,
+        which_challenge: str,
+        mask_func: Optional[MaskFunc] = None,
+        use_seed: bool = True,
+
+        mode:str="train",
+    ):
+        """
+        Args:
+            which_challenge: Challenge from ("singlecoil", "multicoil").
+            mask_func: Optional; A function that can create a mask of
+                appropriate shape.
+            use_seed: If true, this class computes a pseudo random number
+                generator seed from the filename. This ensures that the same
+                mask is used for all the slices of a given volume every time.
+            mode: either train,val or test
+        """
+        if which_challenge not in ("singlecoil", "multicoil"):
+            raise ValueError("Challenge should either be 'singlecoil' or 'multicoil'")
+
+        self.mask_func = mask_func
+        self.which_challenge = which_challenge
+        self.use_seed = use_seed
+
+        self.mode = mode
+
+    def __call__(
+        self,
+        kspace: np.ndarray,
+        sens_maps: np.array,
+        target: np.ndarray,
+        attrs: Dict,
+        fname: str,
+        slice_num: int,
+    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, str, int, float]:
+        """
+        Args:
+            kspace: Input k-space of shape (num_coils, rows, cols) for
+                multi-coil data or (rows, cols) for single coil data.
+            sens_maps: Sensitivity maps of shape shape coils,height,width with complex valued entries
+            target: Target image.
+            attrs: Acquisition related information stored in the HDF5 object.
+            fname: File name.
+            slice_num: Serial number of the slice.
+
+        Returns:
+            tuple containing:
+                input_image: Zero-filled input image
+                input_kspace: Undersampled input kspace, can be used for data consistency steps
+                input_mask: input mask
+                target_image: target_image for training in image domain. Can be center cropped, have 1 or 2 channels, be rss or sens combine reconstruction
+                target_kspace: target_kspace for training
+                target_mask: target_mask
+                ground_truth_image: center cropped, real ground truth image for computing val and test scores in image domain.
+                sens_maps: sensitivity maps to compute expand operations
+                mean: for de-normalization
+                std: for de-normalization
+                fname: File name for logging
+                slice_num: Serial number of the slice for logging
+
+        """
+        # Convert sens_maps and kspace to tensors. Stack imaginary parts along the last dimension
+        sens_maps = to_tensor(sens_maps)
+        sens_maps_conj = complex_conj(sens_maps)
+
+        # for score computation
+        binary_background_mask = torch.round(torch.sum(complex_mul(sens_maps_conj,sens_maps),0)[:,:,0:1])
+        binary_background_mask = torch.moveaxis( binary_background_mask , -1, 0 ) 
+
+        set = torch.unique(binary_background_mask)
+        if binary_background_mask.max() != 1.0 or binary_background_mask.min() != 0.0 or set.shape[0] != 2:
+            print(binary_background_mask.max(),binary_background_mask.min())
+            print(fname, slice_num)
+            for i in range(set.shape[0]):
+                print(set[i].item())
+            raise ValueError("Warning: The real part of the sensitivity maps times their complex conjugate is not a binary mask!")
+
+
+        kspace = to_tensor(kspace)
+        crop_size = (target.shape[-2], target.shape[-1])
+        target_image = ifft2c(kspace)
+        
+        target_image = complex_mul(target_image, sens_maps_conj)
+        target_image = target_image.sum(dim=0, keepdim=False)
+        # [640, 372, 2] .permute(1, 2, 3, 0)
+        # ground truth image: no-complex to evaluate no center crop
+        # ground_truth_image = complex_center_crop(target_image, crop_size)
+        ground_truth_image = complex_abs(target_image)
+        ground_truth_image = ground_truth_image.unsqueeze(0)
+
+        # binary_background_mask_cropped, _ = center_crop_to_smallest(binary_background_mask, ground_truth_image)
+        # ground_truth_image = ground_truth_image * binary_background_mask_cropped
+
+        target_image = torch.moveaxis( target_image , -1, 0 ) 
+        # [2, 640, 372]
+
+        seed = tuple(map(ord, fname))
+        input_kspace, input_mask, target_kspace, target_mask, target_mask_weighted = apply_mask(kspace, self.mask_func, seed)
+
+        # inverse Fourier transform to get zero filled solution
+
+        input_image = ifft2c(input_kspace) #shape: coils,height,width,2
+        
+        input_image = complex_mul(input_image, sens_maps_conj)
+        input_image = input_image.sum(dim=0, keepdim=False) #shape: height,width,2
+
+        #input_image = complex_center_crop(input_image, crop_size) 
+
+        # move complex channels to channel dimension
+        input_image = torch.moveaxis( input_image , -1, 0 ) 
+
+
+        # normalize input to have zero mean and std one
+        input_image, mean, std = normalize_separate_over_ch(input_image, eps=1e-11)
+        #input_image = input_image.clamp(-6, 6)
+
+        return input_image, target_image, ground_truth_image, mean, std, fname, slice_num, input_kspace, input_mask, target_kspace, target_mask, sens_maps, binary_background_mask
 
 
 class UnetDataTransform_sens_TTT:
@@ -634,3 +757,46 @@ class UnetDataTransform_sens_TTT:
         #input_image = input_image.clamp(-6, 6)
 
         return input_image, target_image, ground_truth_image, mean, std, fname, slice_num, input_kspace, input_mask, target_kspace, target_mask, sens_maps, binary_background_mask
+
+
+
+# test-time traing scale normalization
+
+def rss_torch(im):
+    '''
+    Apply the root sum of squares algorithm to coil images
+    '''
+    return torch.sqrt(torch.sum(torch.abs(im) ** 2, 0))
+
+def scale(slice, model): 
+    input = torch.moveaxis( rss_torch(ifft2(slice))[None,:] , -1, 1 )
+    for k in range(5):
+        ###
+        output = torch.moveaxis( model(input) , 1, -1 ) 
+        if k == 0:
+            slice_tt_scale = slice * torch.norm(output.detach()) / torch.norm(input.detach())
+        else:
+            slice_tt_scale *= torch.norm(output.detach()) / torch.norm(input.detach())
+        input = torch.moveaxis( rss_torch(ifft2(slice_tt_scale))[None,:] , -1, 1 )
+
+    scale = (torch.norm(slice_tt_scale) / torch.norm(slice)).data.cpu().numpy()[np.newaxis][0]
+    return scale 
+
+def center_crop(data, shape):
+    """
+    Apply a center crop to the input real image or batch of real images.
+    Args:
+        data (torch.Tensor): The input tensor to be center cropped. It should have at
+            least 2 dimensions and the cropping is applied along the last two dimensions.
+        shape (int, int): The output shape. The shape should be smaller than the
+            corresponding dimensions of data.
+    Returns:
+        torch.Tensor: The center cropped image
+    """
+    assert 0 < shape[0] <= data.shape[-2]
+    assert 0 < shape[1] <= data.shape[-1]
+    w_from = (data.shape[-2] - shape[0]) // 2
+    h_from = (data.shape[-1] - shape[1]) // 2
+    w_to = w_from + shape[0]
+    h_to = h_from + shape[1]
+    return data[..., w_from:w_to, h_from:h_to]
