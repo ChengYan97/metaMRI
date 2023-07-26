@@ -1,6 +1,6 @@
 #%%
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '3'
+os.environ['CUDA_VISIBLE_DEVICES'] = '2'
 import random
 import numpy as np
 import copy
@@ -28,7 +28,7 @@ from functions.training.losses import SSIMLoss
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 ########################### experiment name ###########################
-experiment_name = 'E11.5_maml(l1_CA-1e-3-4_Q)_T300_200epoch'
+experiment_name = 'E11.5_TESTmaml(l1_CA-1e-3-4_Q)_T300_200epoch'
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -165,7 +165,7 @@ for iter_ in range(EPOCH):
             learner = maml.clone()      #learner = torch.nn.DataParallel(learner, device_ids=[0,1,2,3])
 
             # adapt learner several step in a self-supervised manner
-            for _ in range(adapt_steps): 
+            for step in range(adapt_steps): 
                 ###### 5. Evaluate ∇θLTi(fθ) with respect to K examples ######
                 # self-supervised loss
                 # fθ(A†y)
@@ -180,7 +180,10 @@ for iter_ in range(EPOCH):
                 Fimg_forward = Fimg * input_mask
                 # self-supervised loss [y, Afθ(A†y)] as adapt loss
                 loss_self = l1_loss(Fimg_forward, input_kspace) / torch.sum(torch.abs(input_kspace))
-
+                if fname == ['file_brain_AXT2_204_2040100']:
+                    print("Record one example")
+                    combined_iter = (iter_+1) * 10 + (step + 1) 
+                    writer.add_scalar("Inner loop one example adapt L1 (MAML)", loss_self.item(), combined_iter)
                 ###### 6. Compute  adapted  parameters  with  gradient  descent: θ′i = θ − α∇θLTi(fθ) ######
                 learner.adapt(loss_self)
             
