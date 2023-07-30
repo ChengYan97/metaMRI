@@ -23,9 +23,9 @@ from functions.helper import average_early_stopping_epoch, evaluate_loss_dataloa
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 ####################################################################################
-SEED = 5            # 1,2,3,4,5 repeat # for Q2 using seed 1,3,4,5,6, cause seed 2 is much different than others
-INIT = 'standardE10.2'       # 'standard', 'maml'
-TARGET = 'Q3'       # 'Q1', 'Q2', 'Q3'
+SEED = 4            # 1,2,3,4,5 repeat # for Q2 using seed 1,3,4,5,6, cause seed 2 is much different than others
+INIT = 'mamlE10.2'       # 'standard', 'maml'
+TARGET = 'Q5'       # 'Q1', 'Q2', 'Q3'
 adapt_shot = 5
 
 LR = 1e-3 
@@ -63,15 +63,21 @@ else:
     print('Choose the initialization weight. ')
 
 # target domain
-if TARGET == 'Q1': 
+if TARGET == 'Q1' or TARGET == 'P9': 
     path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E-part1/Q/brain_train_T1POST_TrioTim_5-8.yaml'
     path_test = '/cheng/metaMRI/metaMRI/data_dict/E-part1/Q/brain_test_T1POST_TrioTim_5-8.yaml'
-elif TARGET == 'Q2': 
+elif TARGET == 'Q2' or TARGET == 'P10': 
     path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E-part1/Q/brain_train_FLAIR_Skyra_5-8.yaml'
     path_test = '/cheng/metaMRI/metaMRI/data_dict/E-part1/Q/brain_test_FLAIR_Skyra_5-8.yaml'
 elif TARGET == 'Q3': 
     path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E-part1/Q/brain_train_T2_Aera_5-8.yaml'
     path_test = '/cheng/metaMRI/metaMRI/data_dict/E-part1/Q/brain_test_T2_Aera_5-8.yaml'
+elif TARGET == 'Q4': 
+    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E10.2/Q/brain_train_T1_Aera_5-8.yaml'
+    path_test = '/cheng/metaMRI/metaMRI/data_dict/E10.2/Q/brain_test_T1_Aera_5-8.yaml'
+elif TARGET == 'Q5': 
+    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E10.2/Q/brain_train_T1POST_Avanto_5-8.yaml'
+    path_test = '/cheng/metaMRI/metaMRI/data_dict/E10.2/Q/brain_test_T1POST_Avanto_5-8.yaml'
 elif TARGET == 'P1': 
     path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PD_Aera_2-9.yaml'
     path_test = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_test_PD_Aera_2-9.yaml'
@@ -97,6 +103,7 @@ elif TARGET == 'P8':
     path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PDFS_Skyra_15-22.yaml'
     path_test = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_test_PDFS_Skyra_15-22.yaml'
 
+print(path_test)
 #############################################################################################
 ### data
 #############################################################################################
