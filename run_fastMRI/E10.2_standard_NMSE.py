@@ -2,7 +2,7 @@
 import random
 import numpy as np
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import torch
 import learn2learn as l2l
 from tqdm import tqdm
@@ -24,7 +24,7 @@ from functions.training.losses import SSIMLoss
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 
-experiment_name = 'E10.2_standard(NMSE-lr1e-3CA4)_T8x200_120epoch'
+experiment_name = 'E10.2_standard(NMSE-lr1e-3CA4)_T8x200_200epoch'
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -38,10 +38,10 @@ torch.cuda.manual_seed(SEED)
 torch.manual_seed(SEED)
 
 # hyperparameter
-TRAINING_EPOCH = 120
+TRAINING_EPOCH = 200
 num_sample_train = 200
 num_sample_val = 100
-BATCH_SIZE = 5
+BATCH_SIZE = 1
 
 # data path
 path_train1 = '/cheng/metaMRI/metaMRI/data_dict/E10.2/P/knee_train_PD_Aera_2-9.yaml'
