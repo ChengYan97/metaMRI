@@ -202,3 +202,13 @@ print("Testing average L1 loss: ", sum(best_loss_l1_history) / len(best_loss_l1_
 print("Testing average L1 loss epoch: ", sum(best_loss_l1_index_history) / len(best_loss_l1_index_history))
 print("Testing average SSIM loss: ", sum(best_loss_ssim_history) / len(best_loss_ssim_history))
 print("Testing average SSIM loss epoch: ", sum(best_loss_ssim_index_history) / len(best_loss_ssim_index_history))
+
+print("Testing average L1 loss: ", sum(best_loss_l1_history) / len(best_loss_l1_history))
+print("Testing average L1 loss epoch: ", sum(best_loss_l1_index_history) / len(best_loss_l1_index_history))
+print("Testing average SSIM loss: ", sum(best_loss_ssim_history) / len(best_loss_ssim_history))
+print("Testing average SSIM loss epoch: ", sum(best_loss_ssim_index_history) / len(best_loss_ssim_index_history))
+
+print("Testing average L1 loss: ", sum(best_loss_l1_history) / len(best_loss_l1_history))
+print("Testing average L1 loss epoch: ", sum(best_loss_l1_index_history) / len(best_loss_l1_index_history))
+print("Testing average SSIM loss: ", sum(best_loss_ssim_history) / len(best_loss_ssim_history))
+print("Testing average SSIM loss epoch: ", sum(best_loss_ssim_index_history) / len(best_loss_ssim_index_history))

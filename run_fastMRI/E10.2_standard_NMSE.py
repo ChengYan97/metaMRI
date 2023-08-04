@@ -41,7 +41,7 @@ torch.manual_seed(SEED)
 TRAINING_EPOCH = 200
 num_sample_train = 200
 num_sample_val = 100
-BATCH_SIZE = 1
+BATCH_SIZE = 5
 
 # data path
 path_train1 = '/cheng/metaMRI/metaMRI/data_dict/E10.2/P/knee_train_PD_Aera_2-9.yaml'

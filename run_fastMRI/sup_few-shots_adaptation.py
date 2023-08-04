@@ -23,9 +23,9 @@ from functions.helper import average_early_stopping_epoch, evaluate_loss_dataloa
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 ####################################################################################
-SEED = 4            # 1,2,3,4,5 repeat # for Q2 using seed 1,3,4,5,6, cause seed 2 is much different than others
-INIT = 'mamlE10.2'       # 'standard', 'maml'
-TARGET = 'Q5'       # 'Q1', 'Q2', 'Q3'
+SEED = 5            # 1,2,3,4,5 repeat # for Q2 using seed 1,3,4,5,6, cause seed 2 is much different than others
+INIT = 'mamlE10.3'       # 'standard', 'maml'
+TARGET = 'Q3'       # 'Q1', 'Q2', 'Q3'
 adapt_shot = 5
 
 LR = 1e-3 
@@ -57,8 +57,12 @@ elif INIT == 'maml':
     checkpoint_path = "/cheng/metaMRI/metaMRI/save/E6*/E6.4_maml(NMSE-lre-3)_T8x200_200epoch_E200_best.pth"
 elif INIT == 'standardE10.2':
     checkpoint_path = "/cheng/metaMRI/metaMRI/save/E10.2_standard(NMSE-lr1e-3CA4)_T8x200_120epoch/E10.2_standard(NMSE-lr1e-3CA4)_T8x200_120epoch_E87_best.pth"
+elif INIT == 'standardE10.3':
+    checkpoint_path = "/cheng/metaMRI/metaMRI/save/Conclusion 1.2 (E10.3)/E10.3_standard(NMSE-lr1e-3CA4)_T8x200_200epoch/E10.3_standard(NMSE-lr1e-3CA4)_T8x200_200epoch_E64_best.pth"
 elif INIT == 'mamlE10.2':
     checkpoint_path = "/cheng/metaMRI/metaMRI/save/E10.2_maml(NMSE-lre-3)_T8x200_250epoch/E10.2_maml(NMSE-lre-3)_T8x200_250epoch_E238_best.pth"
+elif INIT == 'mamlE10.3':
+    checkpoint_path = "/cheng/metaMRI/metaMRI/save/E10.3_maml(NMSE-lre-3)_T8x200_250epoch/E10.3_maml(NMSE-lre-3)_T8x200_250epoch_E98_best.pth"
 else: 
     print('Choose the initialization weight. ')
 
