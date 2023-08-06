@@ -29,10 +29,10 @@ from functions.math import complex_abs, complex_mul, complex_conj
 
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
-LOSS = 'joint'      # 'sup', 'joint'
+LOSS = 'sup'      # 'sup', 'joint'
 DOMAIN = 'Q'        # 'P', 'Q'
 
-experiment_name = 'E11.12_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_150epoch'
+experiment_name = 'E11.12_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
 # 'E11.10_joint(l1_CA-1e-3-4_Q)_T300_150epoch'
 print('Experiment: ', experiment_name)
 
@@ -49,7 +49,7 @@ torch.cuda.manual_seed(SEED)
 torch.manual_seed(SEED)
 
 # hyperparameter
-TRAINING_EPOCH = 150
+TRAINING_EPOCH = 300
 BATCH_SIZE = 1
 LR = 1e-5
 
@@ -70,10 +70,7 @@ elif DOMAIN == 'Q':
 
 
 # mask function and data transform
-mask_function = create_mask_for_mask_type(mask_type_str = 'random', self_sup = False, 
-                    center_fraction = 0.08, acceleration = 4.0, acceleration_total = 3.0)
-
-data_transform = UnetDataTransform_TTTpaper_fixMask('multicoil', mask_func = mask_function, use_seed=True)
+data_transform = UnetDataTransform_TTTpaper_fixMask('multicoil')
 
 # training dataset and data loader
 trainset = SliceDataset(dataset = path_train, path_to_dataset='', 

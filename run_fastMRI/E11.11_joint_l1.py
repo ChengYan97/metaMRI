@@ -30,9 +30,9 @@ from functions.math import complex_abs, complex_mul, complex_conj
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 LOSS = 'sup'      # 'sup', 'joint'
-DOMAIN = 'P'        # 'P', 'Q'
+DOMAIN = 'Q'        # 'P', 'Q'
 
-experiment_name = 'testE11.11_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_150epoch'
+experiment_name = 'E11.11_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
 # 'E11.10_joint(l1_CA-1e-3-4_Q)_T300_150epoch'
 print('Experiment: ', experiment_name)
 
@@ -49,7 +49,7 @@ torch.cuda.manual_seed(SEED)
 torch.manual_seed(SEED)
 
 # hyperparameter
-TRAINING_EPOCH = 150
+TRAINING_EPOCH = 300
 BATCH_SIZE = 1
 LR = 1e-5
 
@@ -69,11 +69,8 @@ elif DOMAIN == 'Q':
     path_mask = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/brain_mask'
 
 
-# mask function and data transform
-mask_function = create_mask_for_mask_type(mask_type_str = 'random', self_sup = False, 
-                    center_fraction = 0.08, acceleration = 4.0, acceleration_total = 3.0)
-
-data_transform = UnetDataTransform_TTTpaper_fixMask('multicoil', mask_func = mask_function, use_seed=True)
+# data transform
+data_transform = UnetDataTransform_TTTpaper_fixMask('multicoil')
 
 # training dataset and data loader
 trainset = SliceDataset(dataset = path_train, path_to_dataset='', 
@@ -82,7 +79,7 @@ trainset = SliceDataset(dataset = path_train, path_to_dataset='',
                 use_dataset_cache=True)
 
 train_dataloader = torch.utils.data.DataLoader(dataset = trainset, batch_size = BATCH_SIZE,
-                shuffle = True, generator = torch.Generator().manual_seed(SEED), pin_memory = True)
+                shuffle = False, generator = torch.Generator().manual_seed(SEED), pin_memory = True)
 print("Training date number: ", len(train_dataloader.dataset))
 
 # validation dataset and data loader
@@ -100,10 +97,6 @@ print("Training date number: ", len(train_dataloader.dataset))
 def train(model, dataloader, optimizer, scales_list): 
     model.train()
     train_loss = 0.0
-    with open(path_mask,'rb') as fn:
-        mask2d = pickle.load(fn)
-    mask = torch.tensor(mask2d[0]).unsqueeze(0).unsqueeze(0).unsqueeze(-1)
-    mask = mask.to(device)   
 
     for iter, batch in tqdm(enumerate(dataloader)):
         kspace, sens_maps, sens_maps_conj, _, fname, slice_num = batch
@@ -113,12 +106,9 @@ def train(model, dataloader, optimizer, scales_list):
 
         # input k space
         input_kspace = kspace * mask + 0.0
-        input_kspace = input_kspace.to(device)
 
         # gt image: x
-        target_image = ifft2c(scales_list[iter] * kspace)
-        # rss combine
-        target_image = rss_torch(target_image)
+        target_image_1c = rss_torch(complex_abs(ifft2c(kspace * scales_list[iter]))).unsqueeze(0)
         # sensmap combine
         # target_image = complex_mul(target_image, sens_maps_conj).sum(dim=0, keepdim=False)
 
@@ -136,8 +126,8 @@ def train(model, dataloader, optimizer, scales_list):
         # supervised loss [x, fθ(A†y)]
         # [1, 2, 768, 392] -> [1, 768, 392]
         train_outputs_1c = complex_abs(torch.moveaxis(train_outputs.squeeze(0), 0, -1 )).unsqueeze(0)
-        train_targets_1c = complex_abs(target_image).unsqueeze(0)
-        loss_sup = l1_loss(train_outputs_1c, train_targets_1c) / torch.sum(torch.abs(train_targets_1c))
+
+        loss_sup = l1_loss(train_outputs_1c, target_image_1c) / torch.sum(torch.abs(target_image_1c))
         
         # self-supervised loss
         if LOSS == 'sup': 
@@ -186,7 +176,7 @@ mask = mask.to(device)
 
 print('Compute the scale factor for entire training data: ')
 scales_list = []
-for iter, batch in tqdm(enumerate(train_dataloader)):
+for iter, batch in enumerate(train_dataloader):
     kspace, sens_maps, sens_maps_conj, _, fname, slice_num = batch
     kspace = kspace.squeeze(0).to(device)
     sens_maps = sens_maps.squeeze(0).to(device)
@@ -194,11 +184,11 @@ for iter, batch in tqdm(enumerate(train_dataloader)):
 
     # input k space
     input_kspace = kspace * mask + 0.0
-    input_kspace = input_kspace.to(device)
 
     # scale normalization
     scale_factor = scale_rss(input_kspace, model)
     scales_list.append(scale_factor)
+    print('{}/{} samples normalized.'.format(iter+1,len(train_dataloader)),'\r',end='')
 
 print('Training: ')
 best_loss = 10.000

@@ -795,8 +795,6 @@ class UnetDataTransform_TTTpaper_fixMask:
     def __init__(
         self,
         which_challenge: str,
-        mask_func: Optional[MaskFunc] = None,
-        use_seed: bool = True,
 
     ):
         """
@@ -812,9 +810,7 @@ class UnetDataTransform_TTTpaper_fixMask:
         if which_challenge not in ("singlecoil", "multicoil"):
             raise ValueError("Challenge should either be 'singlecoil' or 'multicoil'")
 
-        self.mask_func = mask_func
         self.which_challenge = which_challenge
-        self.use_seed = use_seed
 
 
     def __call__(
