@@ -2,7 +2,7 @@
 import random
 import numpy as np
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '3'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
@@ -24,7 +24,7 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 
 ####################################################################################
 SEED = 5            # 1,2,3,4,5 repeat # for Q2 using seed 1,3,4,5,6, cause seed 2 is much different than others
-INIT = 'mamlE10.3'       # 'standard', 'maml'
+INIT = 'standardE10.4'       # 'standard', 'maml'
 TARGET = 'Q3'       # 'Q1', 'Q2', 'Q3'
 adapt_shot = 5
 
@@ -63,6 +63,10 @@ elif INIT == 'mamlE10.2':
     checkpoint_path = "/cheng/metaMRI/metaMRI/save/E10.2_maml(NMSE-lre-3)_T8x200_250epoch/E10.2_maml(NMSE-lre-3)_T8x200_250epoch_E238_best.pth"
 elif INIT == 'mamlE10.3':
     checkpoint_path = "/cheng/metaMRI/metaMRI/save/E10.3_maml(NMSE-lre-3)_T8x200_250epoch/E10.3_maml(NMSE-lre-3)_T8x200_250epoch_E98_best.pth"
+elif INIT == 'mamlE10.4':
+    checkpoint_path = "/cheng/metaMRI/metaMRI/save/E10.4_maml(NMSE-lre-3)_T8x50_250epoch/E10.4_maml(NMSE-lre-3)_T8x50_250epoch_E247_best.pth"
+elif INIT == 'standardE10.4':
+    checkpoint_path = "/cheng/metaMRI/metaMRI/save/E10.4_standard(NMSE-lr1e-3CA4)_T8x50_200epoch/E10.4_standard(NMSE-lr1e-3CA4)_T8x50_200epoch_E93_best.pth"
 else: 
     print('Choose the initialization weight. ')
 
