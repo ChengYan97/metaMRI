@@ -30,9 +30,9 @@ from functions.math import complex_abs, complex_mul, complex_conj
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 LOSS = 'joint'      # 'sup', 'joint'
-DOMAIN = 'P'        # 'P', 'Q'
+DOMAIN = 'Q'        # 'P', 'Q'
 
-experiment_name = 'E_TTT_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
+experiment_name = 'E_12.1_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
 
 print('Experiment: ', experiment_name)
 
@@ -42,7 +42,7 @@ experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
 writer = SummaryWriter(experiment_path)
 
 # seed
-SEED = 1
+SEED = 2
 random.seed(SEED)
 np.random.seed(SEED)
 torch.cuda.manual_seed(SEED)
@@ -138,7 +138,7 @@ def train(model, dataloader, optimizer, scales_list):
             output_sens_image = torch.zeros(sens_maps.shape).to(device) 
             for j,s in enumerate(sens_maps):
                 ss = s.clone()
-                ss[torch.abs(ss)==0.0] = torch.abs(ss).max()
+                ss[torch.abs(ss)==0.0] = torch.abs(ss).max()#######
                 output_sens_image[j,:,:,0] = train_outputs[0,:,:,0] * ss[:,:,0] - train_outputs[0,:,:,1] * ss[:,:,1]
                 output_sens_image[j,:,:,1] = train_outputs[0,:,:,0] * ss[:,:,1] + train_outputs[0,:,:,1] * ss[:,:,0]
             # FS fθ(A†y)
@@ -215,6 +215,6 @@ for iteration in range(TRAINING_EPOCH):
     #     pass
     #scheduler.step()
     #print('Learning rate: ', optimizer.param_groups[0]['lr'])
+
     save_path = '/cheng/metaMRI/metaMRI/save/'+ experiment_name + '/' + experiment_name + '_E' + str(iteration+1) + '_best.pth'
     torch.save((model.state_dict()), save_path)
-
