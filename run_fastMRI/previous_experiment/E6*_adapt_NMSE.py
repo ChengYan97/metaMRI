@@ -26,7 +26,7 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 ####################################################################################
 SEED = 1
 INIT = 'maml'   # 'standard', 'maml'
-TARGET = 'Q1'       # 'Q1', 'Q2', 'Q3'
+TARGET = 'Q3'       # 'Q1', 'Q2', 'Q3'
 LR = 0.001 
 
 experiment_name = "test_E6*_" + INIT + "_adapt_"+ TARGET +'_seed' + str(SEED)

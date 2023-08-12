@@ -2,7 +2,7 @@
 import random
 import numpy as np
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
@@ -24,7 +24,7 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 
 ####################################################################################
 SEED = 5            # 1,2,3,4,5 repeat # for Q2 using seed 1,3,4,5,6, cause seed 2 is much different than others
-INIT = 'standardE10.4'       # 'standard', 'maml'
+INIT = 'maml'       # 'standard', 'maml'
 TARGET = 'Q3'       # 'Q1', 'Q2', 'Q3'
 adapt_shot = 5
 
@@ -51,10 +51,12 @@ torch.cuda.manual_seed(SEED)
 torch.manual_seed(SEED)
 
 # different trained weight
-if INIT == 'standard':
+if INIT == 'standard_5batchsize':
     checkpoint_path = "/cheng/metaMRI/metaMRI/save/E6*/E6.6_standard(NMSE-lrAnneal)_T8x200_100epoch_E85_best.pth"
+elif INIT == 'standard':
+    checkpoint_path = "/cheng/metaMRI/metaMRI/save/Conclusion 1.3/setup_8knee/checkpoints/E6.6+_standard(NMSE-lr1e-4)_T8x200_100epoch/E6.6+_standard(NMSE-lr1e-4)_T8x200_100epoch_E55_best.pth"
 elif INIT == 'maml':
-    checkpoint_path = "/cheng/metaMRI/metaMRI/save/E6*/E6.4_maml(NMSE-lre-3)_T8x200_200epoch_E200_best.pth"
+    checkpoint_path = "/cheng/metaMRI/metaMRI/save/Conclusion 1.3/setup_8knee/checkpoints/E6.4_maml(NMSE-lr-in1e-3-out1e-4)_T8x200_200epoch_E200_best.pth"
 elif INIT == 'standardE10.2':
     checkpoint_path = "/cheng/metaMRI/metaMRI/save/E10.2_standard(NMSE-lr1e-3CA4)_T8x200_120epoch/E10.2_standard(NMSE-lr1e-3CA4)_T8x200_120epoch_E87_best.pth"
 elif INIT == 'standardE10.3':
@@ -80,6 +82,8 @@ elif TARGET == 'Q2' or TARGET == 'P10':
 elif TARGET == 'Q3': 
     path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E-part1/Q/brain_train_T2_Aera_5-8.yaml'
     path_test = '/cheng/metaMRI/metaMRI/data_dict/E-part1/Q/brain_test_T2_Aera_5-8.yaml'
+    # path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_train_AXT2_Aera_5-8.yaml'
+    # path_test = '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_test_AXT2_Aera_5-8.yaml'
 elif TARGET == 'Q4': 
     path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E10.2/Q/brain_train_T1_Aera_5-8.yaml'
     path_test = '/cheng/metaMRI/metaMRI/data_dict/E10.2/Q/brain_test_T1_Aera_5-8.yaml'
