@@ -25,7 +25,7 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 ####################################################################################
 SEED = 5            # 1,2,3,4,5 repeat # for Q2 using seed 1,3,4,5,6, cause seed 2 is much different than others
 INIT = 'maml'       # 'standard', 'maml'
-TARGET = 'Q3'       # 'Q1', 'Q2', 'Q3'
+TARGET = 'Q4'       # 'Q1', 'Q2', 'Q3'
 adapt_shot = 5
 
 LR = 1e-3 
