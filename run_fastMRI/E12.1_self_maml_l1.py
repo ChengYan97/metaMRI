@@ -31,7 +31,7 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 ########################### experiment name ###########################
 DOMAIN = 'P'
 
-experiment_name = 'E12.1_maml(l1_out-4_in-5)'+DOMAIN+'_T300_300epoch'
+experiment_name = 'E12.1_maml(l1_out-3-5_in-5)'+DOMAIN+'_T300_300epoch'
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -52,7 +52,7 @@ BATCH_SIZE = 1
 K = 1      # the same examples for both inner loop and outer loop training
 adapt_steps = 5
 adapt_lr = 0.00001   # adapt θ': α
-meta_lr = 0.00001    # update real model θ: β
+meta_lr = 0.001    # update real model θ: β
 
 ###########################  data & dataloader  ###########################
 
@@ -107,6 +107,7 @@ maml = l2l.algorithms.MAML(model, lr=adapt_lr, first_order=False, allow_unused=T
 
 ###########################  MAML training  ###########################
 optimizer = optim.Adam(maml.parameters(), meta_lr)
+scheduler = CosineAnnealingLR(optimizer, EPOCH/1, eta_min=0.00001, last_epoch=-1)
 l1_loss = nn.L1Loss(reduction='sum')
 
 
@@ -145,7 +146,7 @@ for iter_ in range(EPOCH):
     meta_adaptation_loss = 0.0
 
     ###### 3. Sample batch of tasks Ti ~ p(T) ######
-    for iter, batch in tqdm(enumerate(train_dataloader)):
+    for iter, batch in enumerate(train_dataloader):
         kspace, sens_maps, sens_maps_conj, _, fname, slice_num = batch
         kspace = kspace.squeeze(0).to(device)
         sens_maps = sens_maps.squeeze(0).to(device)
@@ -168,8 +169,6 @@ for iter_ in range(EPOCH):
         ###### 4: inner loop ######
         # Ti only contain one task; one task is exactly 1 data point
         for inner_iter in range(Inner_EPOCH):
-            print('Inner loop: ', inner_iter+1)
-
             # base learner
             learner = maml.clone()      #learner = torch.nn.DataParallel(learner, device_ids=[0,1,2,3])
 
@@ -245,6 +244,8 @@ for iter_ in range(EPOCH):
         meta_training_loss += total_update_loss.item()
         meta_adaptation_loss += total_adapt_loss
 
+    scheduler.step()
+    
     print("Meta Adaptation L1 (MAML)", meta_adaptation_loss/len(train_dataloader))
     writer.add_scalar("Meta Adaptation L1 (MAML)", meta_adaptation_loss/len(train_dataloader), iter_+1)
 

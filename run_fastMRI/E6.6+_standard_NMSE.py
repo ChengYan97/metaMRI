@@ -24,7 +24,7 @@ from functions.training.losses import SSIMLoss
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 
-experiment_name = 'E6.6+_standard(NMSE-lr1e-4)_T8x200_100epoch'
+experiment_name = 'E6.6+_standard(NMSE-lrAnneal)_T8x200_120epoch'
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -152,7 +152,8 @@ model = model.to(device)
 
 
 ##########################
-optimizer = torch.optim.Adam(model.parameters(),lr=0.0001)
+optimizer = torch.optim.Adam(model.parameters(),lr=0.001)
+scheduler = CosineAnnealingLR(optimizer, TRAINING_EPOCH/1, eta_min=0.0001, last_epoch=-1)
 lossfn = torch.nn.MSELoss(reduction='sum')
 
 best_loss = 10.000

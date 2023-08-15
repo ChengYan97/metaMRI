@@ -2,7 +2,7 @@
 import random
 import numpy as np
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+os.environ['CUDA_VISIBLE_DEVICES'] = '2'
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
@@ -23,7 +23,7 @@ from functions.helper import average_early_stopping_epoch, evaluate_loss_dataloa
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 ####################################################################################
-SEED = 5            # 1,2,3,4,5 repeat # for Q2 using seed 1,3,4,5,6, cause seed 2 is much different than others
+SEED = 6            # 1,2,3,4,5 repeat # for Q2 using seed 1,3,4,5,6
 INIT = 'maml'       # 'standard', 'maml'
 TARGET = 'Q4'       # 'Q1', 'Q2', 'Q3'
 adapt_shot = 5
@@ -54,7 +54,7 @@ torch.manual_seed(SEED)
 if INIT == 'standard_5batchsize':
     checkpoint_path = "/cheng/metaMRI/metaMRI/save/E6*/E6.6_standard(NMSE-lrAnneal)_T8x200_100epoch_E85_best.pth"
 elif INIT == 'standard':
-    checkpoint_path = "/cheng/metaMRI/metaMRI/save/Conclusion 1.3/setup_8knee/checkpoints/E6.6+_standard(NMSE-lr1e-4)_T8x200_100epoch/E6.6+_standard(NMSE-lr1e-4)_T8x200_100epoch_E55_best.pth"
+    checkpoint_path = "/cheng/metaMRI/metaMRI/save/E6.6+_standard(NMSE-lrAnneal)_T8x200_120epoch/E6.6+_standard(NMSE-lrAnneal)_T8x200_120epoch_E64_best.pth"
 elif INIT == 'maml':
     checkpoint_path = "/cheng/metaMRI/metaMRI/save/Conclusion 1.3/setup_8knee/checkpoints/E6.4_maml(NMSE-lr-in1e-3-out1e-4)_T8x200_200epoch_E200_best.pth"
 elif INIT == 'standardE10.2':
