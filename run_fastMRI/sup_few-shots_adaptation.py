@@ -82,8 +82,6 @@ elif TARGET == 'Q2' or TARGET == 'P10':
 elif TARGET == 'Q3': 
     path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E-part1/Q/brain_train_T2_Aera_5-8.yaml'
     path_test = '/cheng/metaMRI/metaMRI/data_dict/E-part1/Q/brain_test_T2_Aera_5-8.yaml'
-    # path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_train_AXT2_Aera_5-8.yaml'
-    # path_test = '/cheng/metaMRI/metaMRI/data_dict/E6.2/brain_test_AXT2_Aera_5-8.yaml'
 elif TARGET == 'Q4': 
     path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E10.2/Q/brain_train_T1_Aera_5-8.yaml'
     path_test = '/cheng/metaMRI/metaMRI/data_dict/E10.2/Q/brain_test_T1_Aera_5-8.yaml'
