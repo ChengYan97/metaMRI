@@ -1,6 +1,6 @@
 #%%
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 import random
 import numpy as np
 import copy
@@ -31,7 +31,7 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 ########################### experiment name ###########################
 DOMAIN = 'P'
 
-experiment_name = 'E12.1_maml(l1_out-3-5_in-5)'+DOMAIN+'_T300_300epoch'
+experiment_name = 'resume_E12.1_maml(l1_out-5_in-5)'+DOMAIN+'_T300_300+epoch'
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -45,14 +45,14 @@ torch.cuda.manual_seed(SEED)
 torch.manual_seed(SEED)
 
 ###########################  hyperparametes  ###########################
-EPOCH = 300   
+EPOCH = 100   
 # enumalate the whole data once takes 180 outer loop
 Inner_EPOCH = 1
 BATCH_SIZE = 1
 K = 1      # the same examples for both inner loop and outer loop training
 adapt_steps = 5
 adapt_lr = 0.00001   # adapt θ': α
-meta_lr = 0.001    # update real model θ: β
+meta_lr = 0.00001    # update real model θ: β
 
 ###########################  data & dataloader  ###########################
 
@@ -100,6 +100,8 @@ print("Training date number: ", len(train_dataloader.dataset))
 ###########################  model  ###########################
 # complex
 model = Unet(in_chans = 2,out_chans = 2,chans = 64, num_pool_layers = 4,drop_prob = 0.0)
+checkpoint = '/cheng/metaMRI/metaMRI/save/E12.1_maml(l1_out-3-5_in-5)P_T300_300epoch/E12.1_maml(l1_out-3-5_in-5)P_T300_300epoch_E300.pth'
+model.load_state_dict(torch.load(checkpoint))
 model = model.to(device)
 maml = l2l.algorithms.MAML(model, lr=adapt_lr, first_order=False, allow_unused=True)
 

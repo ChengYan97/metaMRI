@@ -1,6 +1,6 @@
 #%%
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import random
 import numpy as np
 import copy
@@ -29,9 +29,9 @@ from functions.training.losses import SSIMLoss
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 ########################### experiment name ###########################
-DOMAIN = 'Q'
+DOMAIN = 'P'
 
-experiment_name = 'E12.3_outsup_maml(l1_out-5_in-5)'+DOMAIN+'_T300_200epoch'
+experiment_name = 'E12.3_outsup_maml(l1_out-3_in-5)'+DOMAIN+'_T300_150epoch'
 #'E12.3_outsup_maml(l1_out-3-5_in-5)'+DOMAIN+'_T300_200epoch'
 
 # tensorboard dir
@@ -46,14 +46,14 @@ torch.cuda.manual_seed(SEED)
 torch.manual_seed(SEED)
 
 ###########################  hyperparametes  ###########################
-EPOCH = 200   
+EPOCH = 150   
 # enumalate the whole data once takes 180 outer loop
 Inner_EPOCH = 1
 BATCH_SIZE = 1
 K = 1      # the same examples for both inner loop and outer loop training
 adapt_steps = 5
 adapt_lr = 0.00001   # adapt θ': α
-meta_lr = 0.00001    # update real model θ: β
+meta_lr = 0.001    # update real model θ: β
 
 ###########################  data & dataloader  ###########################
 
@@ -87,15 +87,6 @@ train_dataloader = torch.utils.data.DataLoader(dataset = trainset, batch_size = 
 print("Training date number: ", len(train_dataloader.dataset))
 
 
-# # validation dataset and data loader
-# validationset = SliceDataset(dataset = path_val, path_to_dataset='', 
-#                 path_to_sensmaps = path_to_val_sensmaps, provide_senmaps=True, 
-#                 challenge="multicoil", transform = data_transform, 
-#                 use_dataset_cache=True)
-
-# val_dataloader = torch.utils.data.DataLoader(dataset = validationset, batch_size = 1, 
-#                 shuffle = False, generator = torch.Generator().manual_seed(1), pin_memory = False)
-# print("Validation date number: ", len(val_dataloader.dataset))
 
 #%% Check the data 
 ###########################  model  ###########################
@@ -134,7 +125,6 @@ for iter, batch in enumerate(train_dataloader):
     print('{}/{} samples normalized.'.format(iter+1,len(train_dataloader)),'\r',end='')
 
 
-best_loss = 10.000
 ### one training loop include 180 outer loop
 for iter_ in range(EPOCH):    
     print('Iteration:', iter_+1)
@@ -236,17 +226,6 @@ for iter_ in range(EPOCH):
     print("Meta Training L1 (MAML)", meta_training_loss/len(train_dataloader))
     writer.add_scalar("Meta Training L1 (MAML)", meta_training_loss/len(train_dataloader), iter_+1)
     
-    # # validate each epoch
-    # validation_loss = evaluate(model, val_dataloader)
-    # print('Validation normalized L1', validation_loss) 
-    # writer.add_scalar("Validation normalized L1", validation_loss, iter_+1)
-    # if best_loss > validation_loss:
-    #     best_loss = validation_loss
-    #     save_path = '/cheng/metaMRI/metaMRI/save/'+ experiment_name + '/' + experiment_name + '_E' + str(iter_+1) + '_best.pth'
-    #     torch.save((model.state_dict()), save_path)
-    #     print('Model saved to', save_path)
-    # else:
-    #     pass
 
     save_path = '/cheng/metaMRI/metaMRI/save/'+ experiment_name + '/' + experiment_name + '_E' + str(iter_+1) + '.pth'
     torch.save((model.state_dict()), save_path)

@@ -11,7 +11,7 @@ from torch.utils.tensorboard import SummaryWriter
 from torch.optim.lr_scheduler import StepLR, CosineAnnealingLR
 # The corase reconstruction is the rss of the zerofilled multi-coil kspaces
 # after inverse FT.
-from functions.data.transforms import UnetDataTransform_TTTpaper_fixMask,normalize_separate_over_ch, rss_torch, scale_rss
+from functions.data.transforms import UnetDataTransform_TTTpaper_fixMask, normalize_separate_over_ch, rss_torch
 # Import a torch.utils.data.Dataset class that takes a list of data examples, a path to those examples
 # a data transform and outputs a torch dataset.
 from functions.data.mri_dataset import SliceDataset
