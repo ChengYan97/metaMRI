@@ -3,7 +3,7 @@ import random
 import numpy as np
 import pickle
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '3'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import torch
 import learn2learn as l2l
 from tqdm import tqdm
@@ -30,9 +30,9 @@ from functions.math import complex_abs, complex_mul, complex_conj
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 LOSS = 'joint'      # 'sup', 'joint'
-DOMAIN = 'Q'        # 'P', 'Q'
+DOMAIN = 'P'        # 'P', 'Q'
 
-experiment_name = 'E_12.1_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
+experiment_name = 'E_12.5_W_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
 
 print('Experiment: ', experiment_name)
 
@@ -42,7 +42,7 @@ experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
 writer = SummaryWriter(experiment_path)
 
 # seed
-SEED = 2
+SEED = 1
 random.seed(SEED)
 np.random.seed(SEED)
 torch.cuda.manual_seed(SEED)
@@ -141,7 +141,7 @@ def train(model, dataloader, optimizer, scales_list):
             loss_self = l1_loss(Fimg_forward, scale_input_kspace) / torch.sum(torch.abs(scale_input_kspace))
         
         # loss
-        loss = loss_sup + loss_self
+        loss = loss_sup + loss_self / 8 
 
         optimizer.zero_grad()
         loss.backward()
@@ -194,17 +194,6 @@ for iteration in range(TRAINING_EPOCH):
     print('Training normalized L1', training_loss) 
     writer.add_scalar("Training normalized L1", training_loss, iteration+1)
   
-    # val
-    # validation_loss = evaluate(model, val_dataloader)
-    # print('Validation normalized L1', validation_loss) 
-    # writer.add_scalar("Validation normalized L1", validation_loss, iteration+1)
-    # if best_loss > validation_loss:
-    #     best_loss = validation_loss
-    #     save_path = '/cheng/metaMRI/metaMRI/save/'+ experiment_name + '/' + experiment_name + '_E' + str(iteration+1) + '_best.pth'
-    #     torch.save((model.state_dict()), save_path)
-    #     print('Model saved to', save_path)
-    # else:
-    #     pass
     #scheduler.step()
     #print('Learning rate: ', optimizer.param_groups[0]['lr'])
 

@@ -694,7 +694,7 @@ def center_crop(data, shape):
     h_to = h_from + shape[1]
     return data[..., w_from:w_to, h_from:h_to]
 
-class UnetDataTransform_TTTpaper:
+class UnetDataTransform_TTTpaper_randomMask:
     """
     Data Transformer for training U-Net models.
     """
@@ -704,8 +704,6 @@ class UnetDataTransform_TTTpaper:
         which_challenge: str,
         mask_func: Optional[MaskFunc] = None,
         use_seed: bool = True,
-
-        mode:str="train",
     ):
         """
         Args:
@@ -723,8 +721,6 @@ class UnetDataTransform_TTTpaper:
         self.mask_func = mask_func
         self.which_challenge = which_challenge
         self.use_seed = use_seed
-
-        self.mode = mode
 
     def __call__(
         self,
