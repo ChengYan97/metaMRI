@@ -126,10 +126,6 @@
   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001793.h5
   predefined_mask: null
   slice: 17
-- filename: file1001122
-  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001122.h5
-  predefined_mask: null
-  slice: 18
 - filename: file1001104
   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001104.h5
   predefined_mask: null

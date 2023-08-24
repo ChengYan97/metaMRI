@@ -29,12 +29,10 @@ from functions.math import complex_abs, complex_mul, complex_conj
 
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
-LOSS = 'sup'      # 'sup', 'joint'
 DOMAIN = 'P'        # 'P', 'Q'
-LR = 1e-5
-background_flippping = False
 
-experiment_name = 'E13.1_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
+experiment_name = 'E13.1_image_sup(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
+
 print('Experiment: ', experiment_name)
 
 
@@ -52,7 +50,7 @@ torch.manual_seed(SEED)
 # hyperparameter
 TRAINING_EPOCH = 300
 BATCH_SIZE = 1
-
+LR = 1e-5
 
 # data path
 if DOMAIN == 'P': 
@@ -83,16 +81,15 @@ train_dataloader = torch.utils.data.DataLoader(dataset = trainset, batch_size = 
                 shuffle = True, generator = torch.Generator().manual_seed(SEED), pin_memory = True)
 print("Training date number: ", len(train_dataloader.dataset))
 
-if LOSS == 'sup':
-    valset = SliceDataset(dataset = path_val, path_to_dataset='', 
-                    path_to_sensmaps = path_to_val_sensmaps, provide_senmaps=True, 
-                    challenge="multicoil", transform = data_transform, 
-                    use_dataset_cache=True)
+# validation dataset and data loader
+validationset = SliceDataset(dataset = path_val, path_to_dataset='', 
+                path_to_sensmaps = path_to_val_sensmaps, provide_senmaps=True, 
+                challenge="multicoil", transform = data_transform, 
+                use_dataset_cache=True)
 
-    valset_dataloader = torch.utils.data.DataLoader(dataset = valset, batch_size = BATCH_SIZE,
-                    shuffle = True, generator = torch.Generator().manual_seed(SEED), pin_memory = True)
-    print("Validation date number: ", len(valset_dataloader.dataset))
-
+val_dataloader = torch.utils.data.DataLoader(dataset = validationset, batch_size = 1, 
+                shuffle = False, generator = torch.Generator().manual_seed(1), pin_memory = False)
+print("Validation date number: ", len(val_dataloader.dataset))
 
 #%%
 
@@ -101,7 +98,7 @@ def train(model, dataloader, optimizer, mask):
     train_loss = 0.0
 
     for iter, batch in tqdm(enumerate(dataloader)):
-        kspace, sens_maps, sens_maps_conj, binary_background_mask, fname, slice_num = batch
+        kspace, sens_maps, sens_maps_conj, _, fname, slice_num = batch
         kspace = kspace.squeeze(0).to(device)
         sens_maps = sens_maps.squeeze(0).to(device)
         sens_maps_conj = sens_maps_conj.squeeze(0).to(device)
@@ -111,13 +108,16 @@ def train(model, dataloader, optimizer, mask):
         input_kspace = input_kspace.to(device)
 
         # gt image: x
-        # [coils,height,width,2] -> [height,width,2]
+        target_image = ifft2c(kspace)
+        # rss combine
+        target_image = rss_torch(target_image)
         # sensmap combine
-        #target_image = complex_mul(ifft2c(kspace), sens_maps_conj).sum(dim=0, keepdim=False)
+        # target_image = complex_mul(target_image, sens_maps_conj).sum(dim=0, keepdim=False)
 
         # A†y
-        # [coils,height,width,2] -> [height,width,2]
-        train_inputs = complex_mul(ifft2c(input_kspace), sens_maps_conj).sum(dim=0, keepdim=False)
+        train_inputs = ifft2c(input_kspace) #shape: coils,height,width,2
+        train_inputs = rss_torch(train_inputs)
+        # train_inputs = complex_mul(train_inputs, sens_maps_conj).sum(dim=0, keepdim=False) #shape: height,width,2
         train_inputs = torch.moveaxis( train_inputs , -1, 0 ) # move complex channels to channel dimension
         # normalize input to have zero mean and std one
         train_inputs, mean, std = normalize_separate_over_ch(train_inputs, eps=1e-11)
@@ -125,34 +125,15 @@ def train(model, dataloader, optimizer, mask):
         # fθ(A†y)
         train_outputs = model(train_inputs.unsqueeze(0))
         train_outputs = train_outputs.squeeze(0) * std + mean
+
+        # normalize the input
         
-        # supervised loss 
-        # fθ(A†y)
-        train_outputs = torch.moveaxis(train_outputs.unsqueeze(0), 1, -1 )
-        # S fθ(A†y)
-        if background_flippping == True: 
-            train_output_sens_image = torch.zeros(sens_maps.shape).to(device) 
-            for j,s in enumerate(sens_maps):
-                ss = s.clone()
-                ss[torch.abs(ss)==0.0] = torch.abs(ss).max()#######
-                train_output_sens_image[j,:,:,0] = train_outputs[0,:,:,0] * ss[:,:,0] - train_outputs[0,:,:,1] * ss[:,:,1]
-                train_output_sens_image[j,:,:,1] = train_outputs[0,:,:,0] * ss[:,:,1] + train_outputs[0,:,:,1] * ss[:,:,0]
-        else:     
-            train_output_sens_image = complex_mul(train_outputs, sens_maps)
-        kspace_output = fft2c(train_output_sens_image)
-        loss_sup = l1_loss(kspace_output, kspace) / torch.sum(torch.abs(kspace))
-        
-        # self-supervised loss
-        if LOSS == 'sup': 
-            loss_self = 0
-        elif LOSS == 'joint':
-            # MFS fθ(A†y) = A fθ(A†y)
-            Fimg_forward = kspace_output * mask
-            # self-supervised loss [y, Afθ(A†y)]
-            loss_self = l1_loss(Fimg_forward, input_kspace) / torch.sum(torch.abs(input_kspace))
-        
-        # loss
-        loss = loss_sup + loss_self
+        # supervised loss [x, fθ(A†y)]
+        # [1, 2, 768, 392] -> [1, 768, 392]
+        train_outputs_1c = complex_abs(torch.moveaxis(train_outputs.squeeze(0), 0, -1 )).unsqueeze(0)
+        train_targets_1c = complex_abs(target_image).unsqueeze(0)
+        loss = l1_loss(train_outputs_1c, train_targets_1c) / torch.sum(torch.abs(train_targets_1c))
+    
 
         optimizer.zero_grad()
         loss.backward()
@@ -164,37 +145,49 @@ def train(model, dataloader, optimizer, mask):
 
 def val(model, dataloader, mask): 
     model.eval()
-    val_loss = 0.0
+    train_loss = 0.0
 
     for iter, batch in tqdm(enumerate(dataloader)):
-        kspace, sens_maps, sens_maps_conj, binary_background_mask, fname, slice_num = batch
+        kspace, sens_maps, sens_maps_conj, _, fname, slice_num = batch
         kspace = kspace.squeeze(0).to(device)
         sens_maps = sens_maps.squeeze(0).to(device)
         sens_maps_conj = sens_maps_conj.squeeze(0).to(device)
 
         # input k space
         input_kspace = kspace * mask + 0.0
+        input_kspace = input_kspace.to(device)
 
-        inputs = complex_mul(ifft2c(input_kspace), sens_maps_conj).sum(dim=0, keepdim=False)
-        inputs = torch.moveaxis( inputs , -1, 0 ) # move complex channels to channel dimension
+        # gt image: x
+        target_image = ifft2c(kspace)
+        # rss combine
+        target_image = rss_torch(target_image)
+        # sensmap combine
+        # target_image = complex_mul(target_image, sens_maps_conj).sum(dim=0, keepdim=False)
+
+        # A†y
+        train_inputs = ifft2c(input_kspace) #shape: coils,height,width,2
+        train_inputs = rss_torch(train_inputs)
+        # train_inputs = complex_mul(train_inputs, sens_maps_conj).sum(dim=0, keepdim=False) #shape: height,width,2
+        train_inputs = torch.moveaxis( train_inputs , -1, 0 ) # move complex channels to channel dimension
         # normalize input to have zero mean and std one
-        inputs, mean, std = normalize_separate_over_ch(inputs, eps=1e-11)
+        train_inputs, mean, std = normalize_separate_over_ch(train_inputs, eps=1e-11)
         
         # fθ(A†y)
-        outputs = model(inputs.unsqueeze(0))
-        outputs = outputs.squeeze(0) * std + mean
-        
-        # supervised loss 
-        # fθ(A†y)
-        outputs = torch.moveaxis(outputs.unsqueeze(0), 1, -1 )
-        output_sens_image = complex_mul(outputs, sens_maps)
-        kspace_output = fft2c(output_sens_image)
-        loss_sup = l1_loss(kspace_output, kspace) / torch.sum(torch.abs(kspace))
-        
-        val_loss += loss_sup.item()
+        train_outputs = model(train_inputs.unsqueeze(0))
+        train_outputs = train_outputs.squeeze(0) * std + mean
 
-    avg_val_loss = val_loss / len(dataloader)
-    return avg_val_loss
+        # normalize the input
+        
+        # supervised loss [x, fθ(A†y)]
+        # [1, 2, 768, 392] -> [1, 768, 392]
+        train_outputs_1c = complex_abs(torch.moveaxis(train_outputs.squeeze(0), 0, -1 )).unsqueeze(0)
+        train_targets_1c = complex_abs(target_image).unsqueeze(0)
+        loss = l1_loss(train_outputs_1c, train_targets_1c) / torch.sum(torch.abs(train_targets_1c))
+    
+        train_loss += loss.item()
+
+    avg_train_loss = train_loss / len(dataloader)
+    return avg_train_loss
 
 
 model = Unet(in_chans=2, out_chans=2, chans=64, num_pool_layers=4, drop_prob=0.0)
@@ -221,12 +214,22 @@ for iteration in range(TRAINING_EPOCH):
     training_loss = train(model, train_dataloader, optimizer, mask)
     print('Training normalized L1', training_loss) 
     writer.add_scalar("Training normalized L1", training_loss, iteration+1)
-    if LOSS == 'sup':
-        val_loss = val(model, valset_dataloader, mask)
-        print("Validation normalized L1", val_loss) 
-        writer.add_scalar("Validation normalized L1", val_loss, iteration+1)
+    val_loss = val(model, val_dataloader, mask)
+    print("Validation normalized L1", val_loss) 
+    writer.add_scalar("Validation normalized L1", val_loss, iteration+1)
+    # val
+    # validation_loss = evaluate(model, val_dataloader)
+    # print('Validation normalized L1', validation_loss) 
+    # writer.add_scalar("Validation normalized L1", validation_loss, iteration+1)
+    # if best_loss > validation_loss:
+    #     best_loss = validation_loss
+    #     save_path = '/cheng/metaMRI/metaMRI/save/'+ experiment_name + '/' + experiment_name + '_E' + str(iteration+1) + '_best.pth'
+    #     torch.save((model.state_dict()), save_path)
+    #     print('Model saved to', save_path)
+    # else:
+    #     pass
     #scheduler.step()
     #print('Learning rate: ', optimizer.param_groups[0]['lr'])
-    save_path = '/cheng/metaMRI/metaMRI/save/'+ experiment_name + '/' + experiment_name + '_E' + str(iteration+1) + '.pth'
+    save_path = '/cheng/metaMRI/metaMRI/save/'+ experiment_name + '/' + experiment_name + '_E' + str(iteration+1) + '_best.pth'
     torch.save((model.state_dict()), save_path)
 
