@@ -3,7 +3,7 @@ import random
 import numpy as np
 import pickle
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import torch
 import learn2learn as l2l
 from tqdm import tqdm
@@ -11,7 +11,7 @@ from torch.utils.tensorboard import SummaryWriter
 from torch.optim.lr_scheduler import StepLR, CosineAnnealingLR
 # The corase reconstruction is the rss of the zerofilled multi-coil kspaces
 # after inverse FT.
-from functions.data.transforms import UnetDataTransform_TTTpaper_fixMask, rss_torch, scale_rss, scale_sensmap
+from functions.data.transforms import UnetDataTransform_TTTpaper_fixMask, normalize_separate_over_ch, rss_torch, scale_rss, scale_sensmap
 # Import a torch.utils.data.Dataset class that takes a list of data examples, a path to those examples
 # a data transform and outputs a torch dataset.
 from functions.data.mri_dataset import SliceDataset
@@ -30,10 +30,11 @@ from functions.math import complex_abs, complex_mul, complex_conj
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 LOSS = 'sup'      # 'sup', 'joint'
-DOMAIN = 'P'        # 'P', 'Q'
-COIL = 'sensmap'   # 'rss', 'sensmap'
+DOMAIN = 'Q'        # 'P', 'Q'
+COIL = 'sensmap'   # 'sensmap'
+background_flippping = True
 
-experiment_name = 'E_tttpaper_' + COIL + '_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
+experiment_name = 'E_tttkspace_' + COIL + '_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
 
 print('Experiment: ', experiment_name)
 
@@ -83,7 +84,7 @@ print("Training date number: ", len(train_dataloader.dataset))
 
 #%%
 
-def train(model, dataloader, optimizer, scales_list): 
+def train(model, dataloader, optimizer, mask): 
     model.train()
     train_loss = 0.0
 
@@ -96,12 +97,8 @@ def train(model, dataloader, optimizer, scales_list):
         # input k space
         input_kspace = kspace * mask + 0.0
 
-        # gt image: x
-        if COIL == 'rss':
-            target_image_1c = rss_torch(complex_abs(ifft2c(kspace * scales_list[iter]))).unsqueeze(0)
-        elif COIL == 'sensmap':
-            target_image_1c = complex_abs(complex_mul(ifft2c(kspace * scales_list[iter]), sens_maps_conj).sum(dim=0, keepdim=False)).unsqueeze(0)
-
+        # gt kspace: y*
+        scale_kspace = scales_list[iter] * kspace
 
         # A†y
         scale_input_kspace = scales_list[iter] * input_kspace
@@ -112,31 +109,36 @@ def train(model, dataloader, optimizer, scales_list):
         # [height, width, 2]
         train_inputs = torch.moveaxis( train_inputs , -1, 0 ) # move complex channels to channel dimension
         # [2, height, width]
+        # normalize input to have zero mean and std one
+        # train_inputs, mean, std = normalize_separate_over_ch(train_inputs, eps=1e-11)
 
         # fθ(A†y)
         train_outputs = model(train_inputs.unsqueeze(0)) # [1, 2, height, width]
-        train_outputs_1c = complex_abs(torch.moveaxis(train_outputs.squeeze(0), 0, -1 )).unsqueeze(0) # [1, height, width]
+        # train_outputs = train_outputs.squeeze(0) * std + mean
 
+        # supervised loss 
+        # fθ(A†y)
+        train_outputs = torch.moveaxis(train_outputs, 1, -1 )
+        # S fθ(A†y)
+        if background_flippping == True: 
+            train_output_sens_image = torch.zeros(sens_maps.shape).to(device) 
+            for j,s in enumerate(sens_maps):
+                ss = s.clone()
+                ss[torch.abs(ss)==0.0] = torch.abs(ss).max()#######
+                train_output_sens_image[j,:,:,0] = train_outputs[0,:,:,0] * ss[:,:,0] - train_outputs[0,:,:,1] * ss[:,:,1]
+                train_output_sens_image[j,:,:,1] = train_outputs[0,:,:,0] * ss[:,:,1] + train_outputs[0,:,:,1] * ss[:,:,0]
+        else:     
+            train_output_sens_image = complex_mul(train_outputs, sens_maps)
+        kspace_output = fft2c(train_output_sens_image)
         # supervised loss [x, fθ(A†y)]: one channel image domain in TTT paper
-        loss_sup = l1_loss(train_outputs_1c, target_image_1c) / torch.sum(torch.abs(target_image_1c))
+        loss_sup = l1_loss(kspace_output, scale_kspace) / torch.sum(torch.abs(scale_kspace))
         
         # self-supervised loss
         if LOSS == 'sup': 
             loss_self = 0
         elif LOSS == 'joint':
-            # fθ(A†y)
-            train_outputs = torch.moveaxis(train_outputs, 1, -1)    #[1, height, width, 2]
-            # S fθ(A†y)
-            output_sens_image = torch.zeros(sens_maps.shape).to(device) 
-            for j,s in enumerate(sens_maps):
-                ss = s.clone()
-                ss[torch.abs(ss)==0.0] = torch.abs(ss).max()#######
-                output_sens_image[j,:,:,0] = train_outputs[0,:,:,0] * ss[:,:,0] - train_outputs[0,:,:,1] * ss[:,:,1]
-                output_sens_image[j,:,:,1] = train_outputs[0,:,:,0] * ss[:,:,1] + train_outputs[0,:,:,1] * ss[:,:,0]
-            # FS fθ(A†y)
-            Fimg = fft2c(output_sens_image)            # FS fθ(A†y)
             # MFS fθ(A†y) = A fθ(A†y)
-            Fimg_forward = Fimg * mask
+            Fimg_forward = kspace_output * mask
             # self-supervised loss [y, Afθ(A†y)]
             loss_self = l1_loss(Fimg_forward, scale_input_kspace) / torch.sum(torch.abs(scale_input_kspace))
         
@@ -185,11 +187,12 @@ for iter, batch in enumerate(train_dataloader):
     scales_list.append(scale_factor)
     print('{}/{} samples normalized.'.format(iter+1,len(train_dataloader)),'\r',end='')
 
+
 print('Training: ')
 for iteration in range(TRAINING_EPOCH):
     print('Iteration:', iteration+1)
     # training
-    training_loss = train(model, train_dataloader, optimizer, scales_list)
+    training_loss = train(model, train_dataloader, optimizer, mask)
     print('Training normalized L1', training_loss) 
     writer.add_scalar("Training normalized L1", training_loss, iteration+1)
   
