@@ -13,7 +13,7 @@ from torch.utils.tensorboard import SummaryWriter
 from torch.optim.lr_scheduler import StepLR, CosineAnnealingLR
 # The corase reconstruction is the rss of the zerofilled multi-coil kspaces
 # after inverse FT.
-from functions.data.transforms import UnetDataTransform_TTTpaper_fixMask, rss_torch, scale_rss
+from functions.data.transforms import UnetDataTransform_TTTpaper_fixMask, rss_torch, scale_sensmap
 from functions.fftc import fft2c_new as fft2c
 from functions.fftc import ifft2c_new as ifft2c
 from functions.math import complex_abs, complex_mul, complex_conj
@@ -31,7 +31,7 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 ########################### experiment name ###########################
 DOMAIN = 'P'
 
-experiment_name = 'E12.1_resume_maml(l1_out-5_in-5)'+DOMAIN+'_T300_300+epoch'
+experiment_name = 'resume_E12.1_maml(l1_out-5_in-5)'+DOMAIN+'_T300_300+epoch'
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -96,11 +96,11 @@ print("Training date number: ", len(train_dataloader.dataset))
 #                 shuffle = False, generator = torch.Generator().manual_seed(1), pin_memory = False)
 # print("Validation date number: ", len(val_dataloader.dataset))
 
-# Check the data 
+#%% Check the data 
 ###########################  model  ###########################
 # complex
 model = Unet(in_chans = 2,out_chans = 2,chans = 64, num_pool_layers = 4,drop_prob = 0.0)
-checkpoint = '/cheng/metaMRI/metaMRI/save/E12.1_joint(l1_1e-5)P_T300_300epoch/E_12.1_joint(l1_1e-5)P_T300_300epoch_E300_best.pth'
+checkpoint = '/cheng/metaMRI/metaMRI/save/E12.1_maml(l1_out-3-5_in-5)P_T300_300epoch/E12.1_maml(l1_out-3-5_in-5)P_T300_300epoch_E300.pth'
 model.load_state_dict(torch.load(checkpoint))
 model = model.to(device)
 maml = l2l.algorithms.MAML(model, lr=adapt_lr, first_order=False, allow_unused=True)
@@ -118,7 +118,6 @@ with open(path_mask,'rb') as fn:
 mask = torch.tensor(mask2d[0]).unsqueeze(0).unsqueeze(0).unsqueeze(-1)
 mask = mask.to(device)
 
-#%%
 print('Compute the scale factor for entire training data: ')
 scales_list = []
 for iter, batch in enumerate(train_dataloader):
@@ -131,7 +130,7 @@ for iter, batch in enumerate(train_dataloader):
     input_kspace = kspace * mask + 0.0
 
     # scale normalization
-    scale_factor = scale_rss(input_kspace, model)
+    scale_factor = scale_sensmap(input_kspace, model)
     scales_list.append(scale_factor)
     print('{}/{} samples normalized.'.format(iter+1,len(train_dataloader)),'\r',end='')
 
@@ -146,11 +145,7 @@ for iter_ in range(EPOCH):
     ###### 2: outer loop ######
     # here we consider 180 outer loop as one training loop
     meta_training_loss = 0.0
-    meta_adaptation_loss_0 = 0.0
-    meta_adaptation_loss_1 = 0.0
-    meta_adaptation_loss_2 = 0.0
-    meta_adaptation_loss_3 = 0.0
-    meta_adaptation_loss_4 = 0.0
+    meta_adaptation_loss = 0.0
 
     ###### 3. Sample batch of tasks Ti ~ p(T) ######
     for iter, batch in enumerate(train_dataloader):
@@ -172,14 +167,8 @@ for iter_ in range(EPOCH):
 
 
         total_update_loss = 0.0
-        total_adapt_loss_0 = 0.0
-        total_adapt_loss_1 = 0.0
-        total_adapt_loss_2 = 0.0
-        total_adapt_loss_3 = 0.0
-        total_adapt_loss_4 = 0.0
-
+        total_adapt_loss = 0.0
         ###### 4: inner loop ######
-        adapt_step_loss = []
         # Ti only contain one task; one task is exactly 1 data point
         for inner_iter in range(Inner_EPOCH):
             # base learner
@@ -206,7 +195,7 @@ for iter_ in range(EPOCH):
                 Fimg_forward = Fimg * mask
                 # self-supervised loss [y, Afθ(A†y)]
                 loss_self = l1_loss(Fimg_forward, scale_input_kspace) / torch.sum(torch.abs(scale_input_kspace))
-                adapt_step_loss.append(loss_self.item())
+
                 ###### 6. Compute  adapted  parameters  with  gradient  descent: θ′i = θ − α∇θLTi(fθ) ######
                 learner.adapt(loss_self)
             
@@ -242,11 +231,7 @@ for iter_ in range(EPOCH):
 
             # ∑Ti∼p(T)LTi(fθ′i): Ti only contain one task
             total_update_loss += update_loss
-            total_adapt_loss_0 += adapt_step_loss[0]
-            total_adapt_loss_1 += adapt_step_loss[1]
-            total_adapt_loss_2 += adapt_step_loss[2]
-            total_adapt_loss_3 += adapt_step_loss[3]
-            total_adapt_loss_4 += adapt_step_loss[4]
+            total_adapt_loss += loss_self.item()
 
         # del task_batch  # avoid cpu memory leak
         # del learner     # gpu
@@ -259,19 +244,12 @@ for iter_ in range(EPOCH):
         # but we want some value can evaluate the training through whole dataset
         # we use the mean of 180 outer loop loss as the meta training loss
         meta_training_loss += total_update_loss.item()
-        meta_adaptation_loss_0 += total_adapt_loss_0
-        meta_adaptation_loss_1 += total_adapt_loss_1
-        meta_adaptation_loss_2 += total_adapt_loss_2
-        meta_adaptation_loss_3 += total_adapt_loss_3
-        meta_adaptation_loss_4 += total_adapt_loss_4
+        meta_adaptation_loss += total_adapt_loss
 
     scheduler.step()
     
-    writer.add_scalar("Meta 0-step Adaptation Loss (MAML)", meta_adaptation_loss_0/len(train_dataloader), iter_+1)
-    writer.add_scalar("Meta 1-step Adaptation Loss (MAML)", meta_adaptation_loss_1/len(train_dataloader), iter_+1)
-    writer.add_scalar("Meta 2-step Adaptation Loss (MAML))", meta_adaptation_loss_2/len(train_dataloader), iter_+1)
-    writer.add_scalar("Meta 3-step Adaptation Loss (MAML)", meta_adaptation_loss_3/len(train_dataloader), iter_+1)
-    writer.add_scalar("Meta 4-step Adaptation Loss (MAML)", meta_adaptation_loss_4/len(train_dataloader), iter_+1)
+    print("Meta Adaptation L1 (MAML)", meta_adaptation_loss/len(train_dataloader))
+    writer.add_scalar("Meta Adaptation L1 (MAML)", meta_adaptation_loss/len(train_dataloader), iter_+1)
 
     print("Meta Training L1 (MAML)", meta_training_loss/len(train_dataloader))
     writer.add_scalar("Meta Training L1 (MAML)", meta_training_loss/len(train_dataloader), iter_+1)

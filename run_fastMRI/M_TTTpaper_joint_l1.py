@@ -3,7 +3,7 @@ import random
 import numpy as np
 import pickle
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+os.environ['CUDA_VISIBLE_DEVICES'] = '2'
 import torch
 import learn2learn as l2l
 from tqdm import tqdm
@@ -11,7 +11,7 @@ from torch.utils.tensorboard import SummaryWriter
 from torch.optim.lr_scheduler import StepLR, CosineAnnealingLR
 # The corase reconstruction is the rss of the zerofilled multi-coil kspaces
 # after inverse FT.
-from functions.data.transforms import UnetDataTransform_TTTpaper_fixMask, rss_torch, scale_rss, scale_sensmap
+from functions.data.transforms import UnetDataTransform_TTTpaper_fixMask, rss_torch, scale_rss, scale_sensmap, scale_sensmap
 # Import a torch.utils.data.Dataset class that takes a list of data examples, a path to those examples
 # a data transform and outputs a torch dataset.
 from functions.data.mri_dataset import SliceDataset
@@ -29,8 +29,8 @@ from functions.math import complex_abs, complex_mul, complex_conj
 
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
-LOSS = 'sup'      # 'sup', 'joint'
-DOMAIN = 'P'        # 'P', 'Q'
+LOSS = 'joint'      # 'sup', 'joint'
+DOMAIN = 'Q'        # 'P', 'Q'
 COIL = 'sensmap'   # 'rss', 'sensmap'
 
 experiment_name = 'E_tttpaper_' + COIL + '_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
@@ -86,7 +86,8 @@ print("Training date number: ", len(train_dataloader.dataset))
 def train(model, dataloader, optimizer, scales_list): 
     model.train()
     train_loss = 0.0
-
+    train_loss_sup = 0.0
+    train_loss_self = 0.0
     for iter, batch in tqdm(enumerate(dataloader)):
         kspace, sens_maps, sens_maps_conj, _, fname, slice_num = batch
         kspace = kspace.squeeze(0).to(device)
@@ -122,7 +123,7 @@ def train(model, dataloader, optimizer, scales_list):
         
         # self-supervised loss
         if LOSS == 'sup': 
-            loss_self = 0
+            loss_self = torch.tensor(0.0)
         elif LOSS == 'joint':
             # fθ(A†y)
             train_outputs = torch.moveaxis(train_outputs, 1, -1)    #[1, height, width, 2]
@@ -147,9 +148,13 @@ def train(model, dataloader, optimizer, scales_list):
         loss.backward()
         optimizer.step()
         train_loss += loss.item()
+        train_loss_sup += loss_sup.item()
+        train_loss_self += loss_self.item()
 
     avg_train_loss = train_loss / len(dataloader)
-    return avg_train_loss
+    avg_train_loss_sup = train_loss_sup / len(dataloader)
+    avg_train_loss_self = train_loss_self / len(dataloader)
+    return avg_train_loss, avg_train_loss_sup, avg_train_loss_self
 
 
 model = Unet(in_chans=2, out_chans=2, chans=64, num_pool_layers=4, drop_prob=0.0)
@@ -189,9 +194,11 @@ print('Training: ')
 for iteration in range(TRAINING_EPOCH):
     print('Iteration:', iteration+1)
     # training
-    training_loss = train(model, train_dataloader, optimizer, scales_list)
+    training_loss, training_loss_sup, training_loss_self = train(model, train_dataloader, optimizer, scales_list)
     print('Training normalized L1', training_loss) 
     writer.add_scalar("Training normalized L1", training_loss, iteration+1)
+    writer.add_scalar("Training normalized L1 - sup loss", training_loss_sup, iteration+1)
+    writer.add_scalar("Training normalized L1 - self loss", training_loss_self, iteration+1)
   
     save_path = '/cheng/metaMRI/metaMRI/save/'+ experiment_name + '/' + experiment_name + '_E' + str(iteration+1) + '.pth'
     torch.save((model.state_dict()), save_path)

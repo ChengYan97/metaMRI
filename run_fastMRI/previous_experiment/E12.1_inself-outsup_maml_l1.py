@@ -1,6 +1,6 @@
 #%%
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+os.environ['CUDA_VISIBLE_DEVICES'] = '3'
 import random
 import numpy as np
 import copy
@@ -13,7 +13,7 @@ from torch.utils.tensorboard import SummaryWriter
 from torch.optim.lr_scheduler import StepLR, CosineAnnealingLR
 # The corase reconstruction is the rss of the zerofilled multi-coil kspaces
 # after inverse FT.
-from functions.data.transforms import UnetDataTransform_TTTpaper_fixMask, rss_torch, scale_rss
+from functions.data.transforms import UnetDataTransform_TTTpaper_fixMask, rss_torch, scale_sensmap
 from functions.fftc import fft2c_new as fft2c
 from functions.fftc import ifft2c_new as ifft2c
 from functions.math import complex_abs, complex_mul, complex_conj
@@ -31,7 +31,7 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 ########################### experiment name ###########################
 DOMAIN = 'P'
 
-experiment_name = 'resume_E12.1_maml(l1_out-5_in-5)'+DOMAIN+'_T300_300+epoch'
+experiment_name = 'E12.1_outsup-maml(l1_-5)'+DOMAIN+'_T300_300epoch'
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -45,7 +45,7 @@ torch.cuda.manual_seed(SEED)
 torch.manual_seed(SEED)
 
 ###########################  hyperparametes  ###########################
-EPOCH = 100   
+EPOCH = 300   
 # enumalate the whole data once takes 180 outer loop
 Inner_EPOCH = 1
 BATCH_SIZE = 1
@@ -100,8 +100,6 @@ print("Training date number: ", len(train_dataloader.dataset))
 ###########################  model  ###########################
 # complex
 model = Unet(in_chans = 2,out_chans = 2,chans = 64, num_pool_layers = 4,drop_prob = 0.0)
-checkpoint = '/cheng/metaMRI/metaMRI/save/E12.1_maml(l1_out-3-5_in-5)P_T300_300epoch/E12.1_maml(l1_out-3-5_in-5)P_T300_300epoch_E300.pth'
-model.load_state_dict(torch.load(checkpoint))
 model = model.to(device)
 maml = l2l.algorithms.MAML(model, lr=adapt_lr, first_order=False, allow_unused=True)
 
@@ -109,7 +107,6 @@ maml = l2l.algorithms.MAML(model, lr=adapt_lr, first_order=False, allow_unused=T
 
 ###########################  MAML training  ###########################
 optimizer = optim.Adam(maml.parameters(), meta_lr)
-scheduler = CosineAnnealingLR(optimizer, EPOCH/1, eta_min=0.00001, last_epoch=-1)
 l1_loss = nn.L1Loss(reduction='sum')
 
 
@@ -130,7 +127,7 @@ for iter, batch in enumerate(train_dataloader):
     input_kspace = kspace * mask + 0.0
 
     # scale normalization
-    scale_factor = scale_rss(input_kspace, model)
+    scale_factor = scale_sensmap(input_kspace, model)
     scales_list.append(scale_factor)
     print('{}/{} samples normalized.'.format(iter+1,len(train_dataloader)),'\r',end='')
 
@@ -148,7 +145,7 @@ for iter_ in range(EPOCH):
     meta_adaptation_loss = 0.0
 
     ###### 3. Sample batch of tasks Ti ~ p(T) ######
-    for iter, batch in enumerate(train_dataloader):
+    for iter, batch in tqdm(enumerate(train_dataloader)):
         kspace, sens_maps, sens_maps_conj, _, fname, slice_num = batch
         kspace = kspace.squeeze(0).to(device)
         sens_maps = sens_maps.squeeze(0).to(device)
@@ -171,6 +168,8 @@ for iter_ in range(EPOCH):
         ###### 4: inner loop ######
         # Ti only contain one task; one task is exactly 1 data point
         for inner_iter in range(Inner_EPOCH):
+            print('Inner loop: ', inner_iter+1)
+
             # base learner
             learner = maml.clone()      #learner = torch.nn.DataParallel(learner, device_ids=[0,1,2,3])
 
@@ -210,21 +209,22 @@ for iter_ in range(EPOCH):
             update_output_1c = complex_abs(torch.moveaxis(update_output.squeeze(0), 0, -1 )).unsqueeze(0)
             update_sup_loss = l1_loss(update_output_1c, target_image_1c) / torch.sum(torch.abs(target_image_1c))
             # update self-supervised loss
+            update_self_loss = 0
             # fθ(A†y)
-            update_output = torch.moveaxis(update_output, 1, -1)    #[1, height, width, 2]
-            # S fθ(A†y)
-            output_sens_image = torch.zeros(sens_maps.shape).to(device) 
-            for j,s in enumerate(sens_maps):
-                ss = s.clone()
-                ss[torch.abs(ss)==0.0] = torch.abs(ss).max()
-                output_sens_image[j,:,:,0] = update_output[0,:,:,0] * ss[:,:,0] - update_output[0,:,:,1] * ss[:,:,1]
-                output_sens_image[j,:,:,1] = update_output[0,:,:,0] * ss[:,:,1] + update_output[0,:,:,1] * ss[:,:,0]
-            # FS fθ(A†y)
-            Fimg = fft2c(output_sens_image)
-            # MFS fθ(A†y) = A fθ(A†y)
-            Fimg_forward = Fimg * mask
-            # self-supervised loss [y, Afθ(A†y)]
-            update_self_loss = l1_loss(Fimg_forward, scale_input_kspace) / torch.sum(torch.abs(scale_input_kspace))
+            # update_output = torch.moveaxis(update_output, 1, -1)    #[1, height, width, 2]
+            # # S fθ(A†y)
+            # output_sens_image = torch.zeros(sens_maps.shape).to(device) 
+            # for j,s in enumerate(sens_maps):
+            #     ss = s.clone()
+            #     ss[torch.abs(ss)==0.0] = torch.abs(ss).max()
+            #     output_sens_image[j,:,:,0] = update_output[0,:,:,0] * ss[:,:,0] - update_output[0,:,:,1] * ss[:,:,1]
+            #     output_sens_image[j,:,:,1] = update_output[0,:,:,0] * ss[:,:,1] + update_output[0,:,:,1] * ss[:,:,0]
+            # # FS fθ(A†y)
+            # Fimg = fft2c(output_sens_image)
+            # # MFS fθ(A†y) = A fθ(A†y)
+            # Fimg_forward = Fimg * mask
+            # # self-supervised loss [y, Afθ(A†y)]
+            # update_self_loss = l1_loss(Fimg_forward, scale_input_kspace) / torch.sum(torch.abs(scale_input_kspace))
 
             # joint loss
             update_loss = update_sup_loss + update_self_loss
@@ -246,8 +246,6 @@ for iter_ in range(EPOCH):
         meta_training_loss += total_update_loss.item()
         meta_adaptation_loss += total_adapt_loss
 
-    scheduler.step()
-    
     print("Meta Adaptation L1 (MAML)", meta_adaptation_loss/len(train_dataloader))
     writer.add_scalar("Meta Adaptation L1 (MAML)", meta_adaptation_loss/len(train_dataloader), iter_+1)
 
@@ -266,6 +264,18 @@ for iter_ in range(EPOCH):
     # else:
     #     pass
 
-    save_path = '/cheng/metaMRI/metaMRI/save/'+ experiment_name + '/' + experiment_name + '_E' + str(iter_+1) + '.pth'
-    torch.save((model.state_dict()), save_path)
-    
+    if iter_ == 100-1: 
+        save_path = '/cheng/metaMRI/metaMRI/save/'+ experiment_name + '/' + experiment_name + '_E' + str(iter_+1) + '.pth'
+        torch.save((model.state_dict()), save_path)
+    if iter_ == 150-1: 
+        save_path = '/cheng/metaMRI/metaMRI/save/'+ experiment_name + '/' + experiment_name + '_E' + str(iter_+1) + '.pth'
+        torch.save((model.state_dict()), save_path)
+    if iter_ == 200-1: 
+        save_path = '/cheng/metaMRI/metaMRI/save/'+ experiment_name + '/' + experiment_name + '_E' + str(iter_+1) + '.pth'
+        torch.save((model.state_dict()), save_path)
+    if iter_ == 250-1: 
+        save_path = '/cheng/metaMRI/metaMRI/save/'+ experiment_name + '/' + experiment_name + '_E' + str(iter_+1) + '.pth'
+        torch.save((model.state_dict()), save_path)
+    if iter_ == 300-1: 
+        save_path = '/cheng/metaMRI/metaMRI/save/'+ experiment_name + '/' + experiment_name + '_E' + str(iter_+1) + '.pth'
+        torch.save((model.state_dict()), save_path)

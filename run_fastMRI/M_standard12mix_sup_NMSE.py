@@ -24,7 +24,7 @@ from functions.training.losses import SSIMLoss
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 
-experiment_name = 'E_standard_12mix(NMSE-lr1e-3CA4)_T8x200_120epoch'
+experiment_name = 'E_standard(NMSE-lr1e-3CA4)_T12x200mix_200epoch'
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -38,7 +38,7 @@ torch.cuda.manual_seed(SEED)
 torch.manual_seed(SEED)
 
 # hyperparameter
-TRAINING_EPOCH = 120
+TRAINING_EPOCH = 200
 num_sample_train = 200
 num_sample_val = 100
 BATCH_SIZE = 1

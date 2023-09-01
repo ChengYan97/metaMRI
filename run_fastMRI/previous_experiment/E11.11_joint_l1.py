@@ -3,7 +3,7 @@ import random
 import numpy as np
 import pickle
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '3'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import torch
 import learn2learn as l2l
 from tqdm import tqdm
@@ -11,7 +11,7 @@ from torch.utils.tensorboard import SummaryWriter
 from torch.optim.lr_scheduler import StepLR, CosineAnnealingLR
 # The corase reconstruction is the rss of the zerofilled multi-coil kspaces
 # after inverse FT.
-from functions.data.transforms import UnetDataTransform_TTTpaper_fixMask, rss_torch, scale_rss
+from functions.data.transforms import UnetDataTransform_TTTpaper_fixMask, rss_torch, scale_sensmap
 # Import a torch.utils.data.Dataset class that takes a list of data examples, a path to those examples
 # a data transform and outputs a torch dataset.
 from functions.data.mri_dataset import SliceDataset
@@ -29,11 +29,11 @@ from functions.math import complex_abs, complex_mul, complex_conj
 
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
-LOSS = 'joint'      # 'sup', 'joint'
+LOSS = 'sup'      # 'sup', 'joint'
 DOMAIN = 'Q'        # 'P', 'Q'
 
-experiment_name = 'E_12.1_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
-
+experiment_name = 'E11.11_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
+# 'E11.10_joint(l1_CA-1e-3-4_Q)_T300_150epoch'
 print('Experiment: ', experiment_name)
 
 
@@ -42,7 +42,7 @@ experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
 writer = SummaryWriter(experiment_path)
 
 # seed
-SEED = 2
+SEED = 1
 random.seed(SEED)
 np.random.seed(SEED)
 torch.cuda.manual_seed(SEED)
@@ -55,14 +55,14 @@ LR = 1e-5
 
 # data path
 if DOMAIN == 'P': 
-    path_train = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_knee_train_300.yaml'
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_knee_train.yaml'
     path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_knee_train/'
     path_val = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_knee_val.yaml'
     path_to_val_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_knee_val/'
     path_mask = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/knee_mask'
 
 elif DOMAIN == 'Q':
-    path_train = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_brain_train_300.yaml'
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_brain_train.yaml'
     path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_brain_train/'
     path_val = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_brain_val.yaml'
     path_to_val_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_brain_val/'
@@ -82,7 +82,15 @@ train_dataloader = torch.utils.data.DataLoader(dataset = trainset, batch_size = 
                 shuffle = False, generator = torch.Generator().manual_seed(SEED), pin_memory = True)
 print("Training date number: ", len(train_dataloader.dataset))
 
+# validation dataset and data loader
+# validationset = SliceDataset(dataset = path_val, path_to_dataset='', 
+#                 path_to_sensmaps = path_to_val_sensmaps, provide_senmaps=True, 
+#                 challenge="multicoil", transform = data_transform, 
+#                 use_dataset_cache=True)
 
+# val_dataloader = torch.utils.data.DataLoader(dataset = validationset, batch_size = 1, 
+#                 shuffle = False, generator = torch.Generator().manual_seed(1), pin_memory = False)
+# print("Validation date number: ", len(val_dataloader.dataset))
 
 #%%
 
@@ -112,7 +120,8 @@ def train(model, dataloader, optimizer, scales_list):
         train_inputs = torch.moveaxis( train_inputs , -1, 0 ) # move complex channels to channel dimension
 
         # fθ(A†y)
-        train_outputs = model(train_inputs.unsqueeze(0)) # [1, 2, height, width]
+        train_outputs = model(train_inputs.unsqueeze(0))
+        train_outputs = train_outputs.squeeze(0)
         
         # supervised loss [x, fθ(A†y)]
         # [1, 2, 768, 392] -> [1, 768, 392]
@@ -125,16 +134,12 @@ def train(model, dataloader, optimizer, scales_list):
             loss_self = 0
         elif LOSS == 'joint':
             # fθ(A†y)
-            train_outputs = torch.moveaxis(train_outputs, 1, -1)    #[1, height, width, 2]
+            train_outputs = torch.moveaxis(train_outputs.unsqueeze(0), 1, -1 )
             # S fθ(A†y)
-            output_sens_image = torch.zeros(sens_maps.shape).to(device) 
-            for j,s in enumerate(sens_maps):
-                ss = s.clone()
-                ss[torch.abs(ss)==0.0] = torch.abs(ss).max()#######
-                output_sens_image[j,:,:,0] = train_outputs[0,:,:,0] * ss[:,:,0] - train_outputs[0,:,:,1] * ss[:,:,1]
-                output_sens_image[j,:,:,1] = train_outputs[0,:,:,0] * ss[:,:,1] + train_outputs[0,:,:,1] * ss[:,:,0]
+            output_sens_image = complex_mul(train_outputs, sens_maps)
+            #output_sens_image = output_sens_image.sum(dim=0, keepdim=False)
             # FS fθ(A†y)
-            Fimg = fft2c(output_sens_image)            # FS fθ(A†y)
+            Fimg = fft2c(output_sens_image)
             # MFS fθ(A†y) = A fθ(A†y)
             Fimg_forward = Fimg * mask
             # self-supervised loss [y, Afθ(A†y)]
@@ -181,7 +186,7 @@ for iter, batch in enumerate(train_dataloader):
     input_kspace = kspace * mask + 0.0
 
     # scale normalization
-    scale_factor = scale_rss(input_kspace, model)
+    scale_factor = scale_sensmap(input_kspace, model)
     scales_list.append(scale_factor)
     print('{}/{} samples normalized.'.format(iter+1,len(train_dataloader)),'\r',end='')
 
@@ -207,6 +212,6 @@ for iteration in range(TRAINING_EPOCH):
     #     pass
     #scheduler.step()
     #print('Learning rate: ', optimizer.param_groups[0]['lr'])
-
     save_path = '/cheng/metaMRI/metaMRI/save/'+ experiment_name + '/' + experiment_name + '_E' + str(iteration+1) + '_best.pth'
     torch.save((model.state_dict()), save_path)
+

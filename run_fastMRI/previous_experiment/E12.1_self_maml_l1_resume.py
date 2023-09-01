@@ -1,6 +1,6 @@
 #%%
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 import random
 import numpy as np
 import copy
@@ -13,7 +13,7 @@ from torch.utils.tensorboard import SummaryWriter
 from torch.optim.lr_scheduler import StepLR, CosineAnnealingLR
 # The corase reconstruction is the rss of the zerofilled multi-coil kspaces
 # after inverse FT.
-from functions.data.transforms import UnetDataTransform_TTTpaper_fixMask, rss_torch, scale_rss
+from functions.data.transforms import UnetDataTransform_TTTpaper_fixMask, rss_torch, scale_sensmap
 from functions.fftc import fft2c_new as fft2c
 from functions.fftc import ifft2c_new as ifft2c
 from functions.math import complex_abs, complex_mul, complex_conj
@@ -31,7 +31,7 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 ########################### experiment name ###########################
 DOMAIN = 'P'
 
-experiment_name = 'E12.1_maml(l1_out-5_in-5_nobgflip)'+DOMAIN+'_T300_300epoch'
+experiment_name = 'E12.1_resume_maml(l1_out-5_in-5)'+DOMAIN+'_T300_300+epoch'
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -45,14 +45,14 @@ torch.cuda.manual_seed(SEED)
 torch.manual_seed(SEED)
 
 ###########################  hyperparametes  ###########################
-EPOCH = 300   
+EPOCH = 100   
 # enumalate the whole data once takes 180 outer loop
 Inner_EPOCH = 1
 BATCH_SIZE = 1
 K = 1      # the same examples for both inner loop and outer loop training
 adapt_steps = 5
 adapt_lr = 0.00001   # adapt θ': α
-meta_lr = 0.001    # update real model θ: β
+meta_lr = 0.00001    # update real model θ: β
 
 ###########################  data & dataloader  ###########################
 
@@ -96,10 +96,12 @@ print("Training date number: ", len(train_dataloader.dataset))
 #                 shuffle = False, generator = torch.Generator().manual_seed(1), pin_memory = False)
 # print("Validation date number: ", len(val_dataloader.dataset))
 
-#%% Check the data 
+# Check the data 
 ###########################  model  ###########################
 # complex
 model = Unet(in_chans = 2,out_chans = 2,chans = 64, num_pool_layers = 4,drop_prob = 0.0)
+checkpoint = '/cheng/metaMRI/metaMRI/save/E12.1_joint(l1_1e-5)P_T300_300epoch/E_12.1_joint(l1_1e-5)P_T300_300epoch_E300_best.pth'
+model.load_state_dict(torch.load(checkpoint))
 model = model.to(device)
 maml = l2l.algorithms.MAML(model, lr=adapt_lr, first_order=False, allow_unused=True)
 
@@ -116,6 +118,7 @@ with open(path_mask,'rb') as fn:
 mask = torch.tensor(mask2d[0]).unsqueeze(0).unsqueeze(0).unsqueeze(-1)
 mask = mask.to(device)
 
+#%%
 print('Compute the scale factor for entire training data: ')
 scales_list = []
 for iter, batch in enumerate(train_dataloader):
@@ -128,7 +131,7 @@ for iter, batch in enumerate(train_dataloader):
     input_kspace = kspace * mask + 0.0
 
     # scale normalization
-    scale_factor = scale_rss(input_kspace, model)
+    scale_factor = scale_sensmap(input_kspace, model)
     scales_list.append(scale_factor)
     print('{}/{} samples normalized.'.format(iter+1,len(train_dataloader)),'\r',end='')
 
@@ -143,7 +146,11 @@ for iter_ in range(EPOCH):
     ###### 2: outer loop ######
     # here we consider 180 outer loop as one training loop
     meta_training_loss = 0.0
-    meta_adaptation_loss = 0.0
+    meta_adaptation_loss_0 = 0.0
+    meta_adaptation_loss_1 = 0.0
+    meta_adaptation_loss_2 = 0.0
+    meta_adaptation_loss_3 = 0.0
+    meta_adaptation_loss_4 = 0.0
 
     ###### 3. Sample batch of tasks Ti ~ p(T) ######
     for iter, batch in enumerate(train_dataloader):
@@ -165,8 +172,14 @@ for iter_ in range(EPOCH):
 
 
         total_update_loss = 0.0
-        total_adapt_loss = 0.0
+        total_adapt_loss_0 = 0.0
+        total_adapt_loss_1 = 0.0
+        total_adapt_loss_2 = 0.0
+        total_adapt_loss_3 = 0.0
+        total_adapt_loss_4 = 0.0
+
         ###### 4: inner loop ######
+        adapt_step_loss = []
         # Ti only contain one task; one task is exactly 1 data point
         for inner_iter in range(Inner_EPOCH):
             # base learner
@@ -181,14 +194,19 @@ for iter_ in range(EPOCH):
                 # fθ(A†y)
                 adapt_output = torch.moveaxis(adapt_output, 1, -1)    #[1, height, width, 2]
                 # S fθ(A†y)
-                output_sens_image = complex_mul(adapt_output, sens_maps)
+                output_sens_image = torch.zeros(sens_maps.shape).to(device) 
+                for j,s in enumerate(sens_maps):
+                    ss = s.clone()
+                    ss[torch.abs(ss)==0.0] = torch.abs(ss).max()
+                    output_sens_image[j,:,:,0] = adapt_output[0,:,:,0] * ss[:,:,0] - adapt_output[0,:,:,1] * ss[:,:,1]
+                    output_sens_image[j,:,:,1] = adapt_output[0,:,:,0] * ss[:,:,1] + adapt_output[0,:,:,1] * ss[:,:,0]
                 # FS fθ(A†y)
                 Fimg = fft2c(output_sens_image)            # FS fθ(A†y)
                 # MFS fθ(A†y) = A fθ(A†y)
                 Fimg_forward = Fimg * mask
                 # self-supervised loss [y, Afθ(A†y)]
                 loss_self = l1_loss(Fimg_forward, scale_input_kspace) / torch.sum(torch.abs(scale_input_kspace))
-
+                adapt_step_loss.append(loss_self.item())
                 ###### 6. Compute  adapted  parameters  with  gradient  descent: θ′i = θ − α∇θLTi(fθ) ######
                 learner.adapt(loss_self)
             
@@ -206,7 +224,12 @@ for iter_ in range(EPOCH):
             # fθ(A†y)
             update_output = torch.moveaxis(update_output, 1, -1)    #[1, height, width, 2]
             # S fθ(A†y)
-            output_sens_image = complex_mul(update_output, sens_maps)            # FS fθ(A†y)
+            output_sens_image = torch.zeros(sens_maps.shape).to(device) 
+            for j,s in enumerate(sens_maps):
+                ss = s.clone()
+                ss[torch.abs(ss)==0.0] = torch.abs(ss).max()
+                output_sens_image[j,:,:,0] = update_output[0,:,:,0] * ss[:,:,0] - update_output[0,:,:,1] * ss[:,:,1]
+                output_sens_image[j,:,:,1] = update_output[0,:,:,0] * ss[:,:,1] + update_output[0,:,:,1] * ss[:,:,0]
             # FS fθ(A†y)
             Fimg = fft2c(output_sens_image)
             # MFS fθ(A†y) = A fθ(A†y)
@@ -219,7 +242,11 @@ for iter_ in range(EPOCH):
 
             # ∑Ti∼p(T)LTi(fθ′i): Ti only contain one task
             total_update_loss += update_loss
-            total_adapt_loss += loss_self.item()
+            total_adapt_loss_0 += adapt_step_loss[0]
+            total_adapt_loss_1 += adapt_step_loss[1]
+            total_adapt_loss_2 += adapt_step_loss[2]
+            total_adapt_loss_3 += adapt_step_loss[3]
+            total_adapt_loss_4 += adapt_step_loss[4]
 
         # del task_batch  # avoid cpu memory leak
         # del learner     # gpu
@@ -232,12 +259,19 @@ for iter_ in range(EPOCH):
         # but we want some value can evaluate the training through whole dataset
         # we use the mean of 180 outer loop loss as the meta training loss
         meta_training_loss += total_update_loss.item()
-        meta_adaptation_loss += total_adapt_loss
+        meta_adaptation_loss_0 += total_adapt_loss_0
+        meta_adaptation_loss_1 += total_adapt_loss_1
+        meta_adaptation_loss_2 += total_adapt_loss_2
+        meta_adaptation_loss_3 += total_adapt_loss_3
+        meta_adaptation_loss_4 += total_adapt_loss_4
 
     scheduler.step()
     
-    print("Meta Adaptation L1 (MAML)", meta_adaptation_loss/len(train_dataloader))
-    writer.add_scalar("Meta Adaptation L1 (MAML)", meta_adaptation_loss/len(train_dataloader), iter_+1)
+    writer.add_scalar("Meta 0-step Adaptation Loss (MAML)", meta_adaptation_loss_0/len(train_dataloader), iter_+1)
+    writer.add_scalar("Meta 1-step Adaptation Loss (MAML)", meta_adaptation_loss_1/len(train_dataloader), iter_+1)
+    writer.add_scalar("Meta 2-step Adaptation Loss (MAML))", meta_adaptation_loss_2/len(train_dataloader), iter_+1)
+    writer.add_scalar("Meta 3-step Adaptation Loss (MAML)", meta_adaptation_loss_3/len(train_dataloader), iter_+1)
+    writer.add_scalar("Meta 4-step Adaptation Loss (MAML)", meta_adaptation_loss_4/len(train_dataloader), iter_+1)
 
     print("Meta Training L1 (MAML)", meta_training_loss/len(train_dataloader))
     writer.add_scalar("Meta Training L1 (MAML)", meta_training_loss/len(train_dataloader), iter_+1)
