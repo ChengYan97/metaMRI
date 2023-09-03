@@ -31,7 +31,8 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 ########################### experiment name ###########################
 DOMAIN = 'P'
 
-experiment_name = 'E14.1_maml_joint(l1_out-5_in-5)'+DOMAIN+'_T300_300epoch'
+experiment_name = 'E14.1_maml_sup(l1_out-5_in-5)'+DOMAIN+'_T300_300epoch'
+# 'E14.1_maml_joint(l1_out-5_in-5)'+DOMAIN+'_T300_300epoch'
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -133,7 +134,6 @@ for iter_ in range(EPOCH):
     meta_adaptation_loss_2 = 0.0
     meta_adaptation_loss_3 = 0.0
     meta_adaptation_loss_4 = 0.0
-    meta_adaptation_loss_5 = 0.0
 
     ###### 3. Sample batch of tasks Ti ~ p(T) ######
     for iter, batch in enumerate(train_dataloader):
@@ -159,8 +159,7 @@ for iter_ in range(EPOCH):
         total_adapt_loss_1 = 0.0
         total_adapt_loss_2 = 0.0
         total_adapt_loss_3 = 0.0
-        total_adapt_loss_4 = 0.0
-        total_adapt_loss_5 = 0.0     
+        total_adapt_loss_4 = 0.0   
         ###### 4: inner loop ######
         # Ti only contain one task; one task is exactly 1 data point
         for inner_iter in range(Inner_EPOCH):
@@ -203,25 +202,26 @@ for iter_ in range(EPOCH):
             # update supervised loss
             update_output_1c = complex_abs(torch.moveaxis(update_output.squeeze(0), 0, -1 )).unsqueeze(0)
             update_sup_loss = l1_loss(update_output_1c, target_image_1c) / torch.sum(torch.abs(target_image_1c))
-            # update self-supervised loss
-            # fθ(A†y)
-            update_output = torch.moveaxis(update_output, 1, -1)    #[1, height, width, 2]
-            # S fθ(A†y)
-            output_sens_image = torch.zeros(sens_maps.shape).to(device) 
-            for j,s in enumerate(sens_maps):
-                ss = s.clone()
-                ss[torch.abs(ss)==0.0] = torch.abs(ss).max()
-                output_sens_image[j,:,:,0] = update_output[0,:,:,0] * ss[:,:,0] - update_output[0,:,:,1] * ss[:,:,1]
-                output_sens_image[j,:,:,1] = update_output[0,:,:,0] * ss[:,:,1] + update_output[0,:,:,1] * ss[:,:,0]
-            # FS fθ(A†y)
-            Fimg = fft2c(output_sens_image)
-            # MFS fθ(A†y) = A fθ(A†y)
-            Fimg_forward = Fimg * mask
-            # self-supervised loss [y, Afθ(A†y)]
-            update_self_loss = l1_loss(Fimg_forward, scale_input_kspace) / torch.sum(torch.abs(scale_input_kspace))
+            # # update self-supervised loss
+            # # fθ(A†y)
+            # update_output = torch.moveaxis(update_output, 1, -1)    #[1, height, width, 2]
+            # # S fθ(A†y)
+            # output_sens_image = torch.zeros(sens_maps.shape).to(device) 
+            # for j,s in enumerate(sens_maps):
+            #     ss = s.clone()
+            #     ss[torch.abs(ss)==0.0] = torch.abs(ss).max()
+            #     output_sens_image[j,:,:,0] = update_output[0,:,:,0] * ss[:,:,0] - update_output[0,:,:,1] * ss[:,:,1]
+            #     output_sens_image[j,:,:,1] = update_output[0,:,:,0] * ss[:,:,1] + update_output[0,:,:,1] * ss[:,:,0]
+            # # FS fθ(A†y)
+            # Fimg = fft2c(output_sens_image)
+            # # MFS fθ(A†y) = A fθ(A†y)
+            # Fimg_forward = Fimg * mask
+            # # self-supervised loss [y, Afθ(A†y)]
+            # update_self_loss = l1_loss(Fimg_forward, scale_input_kspace) / torch.sum(torch.abs(scale_input_kspace))
 
             # joint loss
-            update_loss = update_sup_loss + update_self_loss
+            # update_loss = update_sup_loss + update_self_loss
+            update_loss = update_sup_loss
 
             # ∑Ti∼p(T)LTi(fθ′i): Ti only contain one task
             total_update_loss += update_loss
@@ -230,7 +230,6 @@ for iter_ in range(EPOCH):
             total_adapt_loss_2 += adapt_step_loss[2]
             total_adapt_loss_3 += adapt_step_loss[3]
             total_adapt_loss_4 += adapt_step_loss[4]
-            total_adapt_loss_5 += update_self_loss.item()
 
         # del task_batch  # avoid cpu memory leak
         # del learner     # gpu
@@ -248,7 +247,6 @@ for iter_ in range(EPOCH):
         meta_adaptation_loss_2 += total_adapt_loss_2
         meta_adaptation_loss_3 += total_adapt_loss_3
         meta_adaptation_loss_4 += total_adapt_loss_4
-        meta_adaptation_loss_5 += total_adapt_loss_5
 
     
     writer.add_scalar("Meta 0-step Adaptation Loss (MAML)", meta_adaptation_loss_0/len(train_dataloader), iter_+1)
@@ -256,7 +254,6 @@ for iter_ in range(EPOCH):
     writer.add_scalar("Meta 2-step Adaptation Loss (MAML)", meta_adaptation_loss_2/len(train_dataloader), iter_+1)
     writer.add_scalar("Meta 3-step Adaptation Loss (MAML)", meta_adaptation_loss_3/len(train_dataloader), iter_+1)
     writer.add_scalar("Meta 4-step Adaptation Loss (MAML)", meta_adaptation_loss_4/len(train_dataloader), iter_+1)
-    writer.add_scalar("Meta 5-step Adaptation Loss (MAML)", meta_adaptation_loss_5/len(train_dataloader), iter_+1)
 
     print("Meta Training L1 (MAML)", meta_training_loss/len(train_dataloader))
     writer.add_scalar("Meta Training L1 (MAML)", meta_training_loss/len(train_dataloader), iter_+1)

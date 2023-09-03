@@ -1,6 +1,6 @@
 #%%
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '3'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import random
 import numpy as np
 import copy
@@ -30,10 +30,11 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 
 ########################### experiment name ###########################
 LOSS = 'sup'      # 'sup', 'joint'
-DOMAIN = 'P'        # 'P', 'Q'
+DOMAIN = 'Q'        # 'P', 'Q'
 COIL = 'sensmap'   # 'sensmap'
 
-experiment_name = 'E14.2_maml_out_k-sup(l1_out-5_in-5)'+DOMAIN+'_T300_300epoch'
+experiment_name = 'E14.2_maml_out_k-'+LOSS+'(l1_out-5_in-5)'+DOMAIN+'_T300_300epoch'
+
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'

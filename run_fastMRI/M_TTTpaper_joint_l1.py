@@ -30,10 +30,15 @@ from functions.math import complex_abs, complex_mul, complex_conj
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 LOSS = 'joint'      # 'sup', 'joint'
-DOMAIN = 'Q'        # 'P', 'Q'
-COIL = 'sensmap'   # 'rss', 'sensmap'
+DOMAIN = 'P'        # 'P', 'Q'
+COIL = 'sensmap'    # 'rss', 'sensmap'
+
+Weight_LOSS = False
+LAMBDA = 0.99           # λ sup + (1-λ) self
 
 experiment_name = 'E_tttpaper_' + COIL + '_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
+# experiment_name = 'E_tttpaper_' + COIL + '_SUPdominate_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
+# experiment_name = 'E_tttpaper_' + COIL + '_balance_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
 
 print('Experiment: ', experiment_name)
 
@@ -142,7 +147,10 @@ def train(model, dataloader, optimizer, scales_list):
             loss_self = l1_loss(Fimg_forward, scale_input_kspace) / torch.sum(torch.abs(scale_input_kspace))
         
         # loss
-        loss = loss_sup + loss_self
+        if Weight_LOSS == True: 
+            loss = LAMBDA*loss_sup + (1-LAMBDA)*loss_self
+        else:
+            loss = loss_sup + loss_self
 
         optimizer.zero_grad()
         loss.backward()
