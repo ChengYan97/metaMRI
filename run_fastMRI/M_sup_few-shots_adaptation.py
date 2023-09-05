@@ -24,8 +24,8 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 
 ####################################################################################
 SEED = 6            # 1,2,3,4,5 repeat # for Q2 using seed 1,3,4,5,6
-INIT = 'maml'       # 'standard', 'maml'
-TARGET = 'Q4'       # 'Q1', 'Q2', 'Q3'
+INIT = 'maml_12mix'       # 'standard', 'maml'
+TARGET = 'Q2'       # 'Q1', 'Q2', 'Q3'
 adapt_shot = 5
 
 LR = 1e-3 
@@ -69,6 +69,11 @@ elif INIT == 'mamlE10.4':
     checkpoint_path = "/cheng/metaMRI/metaMRI/save/E10.4_maml(NMSE-lre-3)_T8x50_250epoch/E10.4_maml(NMSE-lre-3)_T8x50_250epoch_E247_best.pth"
 elif INIT == 'standardE10.4':
     checkpoint_path = "/cheng/metaMRI/metaMRI/save/E10.4_standard(NMSE-lr1e-3CA4)_T8x50_200epoch/E10.4_standard(NMSE-lr1e-3CA4)_T8x50_200epoch_E93_best.pth"
+elif INIT == 'maml_12mix':
+    checkpoint_path = '/cheng/metaMRI/metaMRI/save/E_MAML(NMSE-out-3-in-4)_T12x200mix_300epoch/E_MAML(NMSE-out-3-in-4)_T12x200mix_300epoch_E300.pth'
+elif INIT == 'standard_12mix':
+    checkpoint_path = '/cheng/metaMRI/metaMRI/save/E_standard(NMSE-lr1e-3CA4)_T12x200mix_120epoch/E_standard(NMSE-lr1e-3CA4)_T12x200mix_120epoch_E69_best.pth'
+
 else: 
     print('Choose the initialization weight. ')
 
@@ -172,8 +177,8 @@ writer.add_scalar("Testing NMSE", test_loss_NMSE, 0)
 writer.add_scalar("Testing PSNR", test_loss_PSNR, 0)
 writer.add_scalar("Testing SSIM", test_loss_SSIM, 0)
 
-for iteration in tqdm(range(TRAINING_EPOCH)):
-    # print('Iteration:', iteration+1)
+for iteration in range(TRAINING_EPOCH):
+    print('Iteration:', iteration+1)
     # training
     training_loss = adapt(model, adapt_dataloader, optimizer)
     writer.add_scalar("Adaptation training NMSE", training_loss, iteration+1)
