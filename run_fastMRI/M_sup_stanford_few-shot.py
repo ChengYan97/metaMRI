@@ -3,7 +3,7 @@ import numpy as np
 import pickle
 import h5py
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+os.environ['CUDA_VISIBLE_DEVICES'] = '2'
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
@@ -21,12 +21,12 @@ from functions.helper import average_early_stopping_epoch, evaluate_loss_dataloa
 
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
-SEED = 1
-INIT = 'standard'
+SEED = 5
+INIT = 'maml_12mix'
 TRAINING_EPOCH = 100
 LR = 0.001
 CA_LR = 0.0001
-adapt_shot = 20
+adapt_shot = 5
 
 experiment_name = "E_sup_" + INIT + "_" + str(adapt_shot) + "few-adapt_lr" + str(LR) + "_stanford_seed" + str(SEED)
 print('Experiment: ', experiment_name)
@@ -63,6 +63,12 @@ if INIT == 'standard':
     checkpoint_path = "/cheng/metaMRI/metaMRI/save/Conclusion 1.3/setup_8knee/checkpoints/E6.6+_standard(NMSE-lrAnneal)_T8x200_120epoch/E6.6+_standard(NMSE-lrAnneal)_T8x200_120epoch_E64_best.pth"
 elif INIT == 'maml':
     checkpoint_path = "/cheng/metaMRI/metaMRI/save/Conclusion 1.3/setup_8knee/checkpoints/E6.4_maml(NMSE-lr-in1e-3-out1e-4)_T8x200_200epoch_E200_best.pth"
+elif INIT == 'maml_12mix':
+    checkpoint_path = '/cheng/metaMRI/metaMRI/save/E_MAML(NMSE-out-3-in-4)_T12x200mix_300epoch/E_MAML(NMSE-out-3-in-4)_T12x200mix_300epoch_E300.pth'
+elif INIT == 'standard_12mix':
+    checkpoint_path = '/cheng/metaMRI/metaMRI/save/E_standard(NMSE-lr1e-3CA4)_T12x200mix_120epoch/E_standard(NMSE-lr1e-3CA4)_T12x200mix_120epoch_E69_best.pth'
+else: 
+    print('Choose the initialization weight. ')
 
 model = Unet(in_chans=1, out_chans=1, chans=32, num_pool_layers=4, drop_prob=0.0)
 model.load_state_dict(torch.load(checkpoint_path))
