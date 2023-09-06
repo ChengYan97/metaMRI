@@ -1,6 +1,6 @@
 #%%
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+os.environ['CUDA_VISIBLE_DEVICES'] = '3'
 import random
 import numpy as np
 import copy
@@ -24,8 +24,7 @@ from functions.training.losses import SSIMLoss
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 ########################### experiment name ###########################
-experiment_name = "E_MAML(NMSE_outCA-3-4-in-3_AS-9)_T12x200mix_350epoch"
-# "E_MAML(NMSE-out-3-in-4)_T12x200mix_300epoch"
+experiment_name = "E_FOMAML(NMSE_out-3-in-4)_T8x200knee_250epoch"
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -39,15 +38,15 @@ torch.cuda.manual_seed(SEED)
 torch.manual_seed(SEED)
 
 ###########################  hyperparametes  ###########################
-EPOCH = 350   
-# enumalate the whole data once takes 180 outer loop
+EPOCH = 250   
+# enumalate the whole data once takes 320 outer loop
 Inner_EPOCH = 1
 
 K = 4      # K examples for inner loop training
 K_update = 1
-adapt_steps = 9
-adapt_lr = 0.001   # adapt θ': α
-meta_lr = 0.001    # update real model θ: β
+adapt_steps = 5
+adapt_lr = 0.0001   # adapt θ': α
+meta_lr = 0.001     # update real model θ: β
 
 ###########################  data & dataloader  ###########################
 num_train_subset = 200
@@ -55,31 +54,23 @@ num_val_subset = 100
 fewshot = 5
 
 # data path
-path_train1 = '/cheng/metaMRI/metaMRI/data_dict/final/P1/knee_train_PD_Aera_5-9.yaml'
-path_train2 = '/cheng/metaMRI/metaMRI/data_dict/final/P2/knee_train_PD_Biograph_11-18.yaml'
-path_train3 = '/cheng/metaMRI/metaMRI/data_dict/final/P3/knee_train_PD_Skyra_21-25.yaml'
-path_train4 = '/cheng/metaMRI/metaMRI/data_dict/final/P4/knee_train_PDFS_Aera_2-6.yaml'
-path_train5 = '/cheng/metaMRI/metaMRI/data_dict/final/P5/knee_train_PDFS_Biograph_10-17.yaml'
-path_train6 = '/cheng/metaMRI/metaMRI/data_dict/final/P6/knee_train_PDFS_Skyra_18-22.yaml'
-path_train7 = '/cheng/metaMRI/metaMRI/data_dict/final/P7/brain_train_AXT1_Aera_3-5.yaml'
-path_train8 = '/cheng/metaMRI/metaMRI/data_dict/final/P8/brain_train_AXT1_Aera_10-12.yaml'
-path_train9 = '/cheng/metaMRI/metaMRI/data_dict/final/P9/brain_train_AXT1PRE_Skyra_1-5.yaml'
-path_train10 = '/cheng/metaMRI/metaMRI/data_dict/final/P10/brain_train_AXT1PRE_Skyra_10-14.yaml'
-path_train11 = '/cheng/metaMRI/metaMRI/data_dict/final/P11/brain_train_AXT1POST_Avanto_3-4.yaml'
-path_train12 = '/cheng/metaMRI/metaMRI/data_dict/final/P12/brain_train_AXT1POST_Avanto_11-12.yaml'
+path_train1 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Aera_2-9.yaml'
+path_train2 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Aera_15-22.yaml'
+path_train3 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Biograph_15-22.yaml'
+path_train4 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Skyra_15-22.yaml'
+path_train5 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PDFS_Aera_2-9.yaml'
+path_train6 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PDFS_Aera_15-22.yaml'
+path_train7 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PDFS_Biograph_15-22.yaml'
+path_train8 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PDFS_Skyra_15-22.yaml'
 
-path_val1 = '/cheng/metaMRI/metaMRI/data_dict/final/P1/knee_val_PD_Aera_5-9.yaml'
-path_val2 = '/cheng/metaMRI/metaMRI/data_dict/final/P2/knee_val_PD_Biograph_11-18.yaml'
-path_val3 = '/cheng/metaMRI/metaMRI/data_dict/final/P3/knee_val_PD_Skyra_21-25.yaml'
-path_val4 = '/cheng/metaMRI/metaMRI/data_dict/final/P4/knee_val_PDFS_Aera_2-6.yaml'
-path_val5 = '/cheng/metaMRI/metaMRI/data_dict/final/P5/knee_val_PDFS_Biograph_10-17.yaml'
-path_val6 = '/cheng/metaMRI/metaMRI/data_dict/final/P6/knee_val_PDFS_Skyra_18-22.yaml'
-path_val7 = '/cheng/metaMRI/metaMRI/data_dict/final/P7/brain_val_AXT1_Aera_3-5.yaml'
-path_val8 = '/cheng/metaMRI/metaMRI/data_dict/final/P8/brain_val_AXT1_Aera_10-12.yaml'
-path_val9 = '/cheng/metaMRI/metaMRI/data_dict/final/P9/brain_val_AXT1PRE_Skyra_1-5.yaml'
-path_val10 = '/cheng/metaMRI/metaMRI/data_dict/final/P10/brain_val_AXT1PRE_Skyra_10-14.yaml'
-path_val11 = '/cheng/metaMRI/metaMRI/data_dict/final/P11/brain_val_AXT1POST_Avanto_3-4.yaml'
-path_val12 = '/cheng/metaMRI/metaMRI/data_dict/final/P12/brain_val_AXT1POST_Avanto_11-12.yaml'
+path_val1 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Aera_2-9.yaml'
+path_val2 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Aera_15-22.yaml'
+path_val3 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Biograph_15-22.yaml'
+path_val4 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Skyra_15-22.yaml'
+path_val5 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PDFS_Aera_2-9.yaml'
+path_val6 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PDFS_Aera_15-22.yaml'
+path_val7 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PDFS_Biograph_15-22.yaml'
+path_val8 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PDFS_Skyra_15-22.yaml'
 
 
 # mask function and data transform
@@ -90,7 +81,7 @@ data_transform_train = UnetDataTransform_norm('multicoil', mask_func = mask_func
 data_transform = UnetDataTransform_norm('multicoil', mask_func = mask_function, use_seed=True, mode='adapt')
 
 # training dataset and data loader
-path_train_list = [path_train1,path_train2,path_train3,path_train4,path_train5,path_train6,path_train7,path_train8,path_train9,path_train10,path_train11,path_train12]
+path_train_list = [path_train1, path_train2, path_train3, path_train4, path_train5, path_train6, path_train7, path_train8]
 train_dataloader_list = []
 for path_train in path_train_list:
     trainset = SliceDataset(dataset = path_train, path_to_dataset='', path_to_sensmaps=None, provide_senmaps=False, 
@@ -98,7 +89,6 @@ for path_train in path_train_list:
     train_dataloader = torch.utils.data.DataLoader(dataset = trainset, batch_size = K + K_update,
                     shuffle = True, generator = torch.Generator().manual_seed(1), pin_memory = True)
     train_dataloader_list.append(train_dataloader)
-
 
 # adaptation dataset and data loader
 adapt_dataloader_list = []
@@ -110,7 +100,7 @@ for path_adapt in path_train_list:
     adapt_dataloader_list.append(adapt_dataloader)
 
 # validation dataset and data loader
-path_val_list = [path_val1,path_val2,path_val3,path_val4,path_val5,path_val6,path_val7,path_val8,path_val9,path_val10,path_val11,path_val12]
+path_val_list = [path_val1, path_val2, path_val3, path_val4, path_val5, path_val6, path_val7, path_val8]
 validation_dataloader_list = []
 for path_val in path_val_list:
     val_set = SliceDataset(dataset = path_val, path_to_dataset='', path_to_sensmaps=None, provide_senmaps=False, 
@@ -130,7 +120,7 @@ maml = l2l.algorithms.MAML(model, lr=adapt_lr, first_order=False, allow_unused=T
 
 def tuning(model, dataloader, epoch): 
     model.train()
-    tuning_optimizer = torch.optim.Adam(model.parameters(), 0.001)
+    tuning_optimizer = torch.optim.Adam(model.parameters(), 0.0001)
     for iteration in range(epoch):
         total_loss = 0.0
         for iter, batch in enumerate(dataloader): 
@@ -172,7 +162,6 @@ def evaluate(model, dataloader):
 
 ###########################  MAML training  ###########################
 optimizer = optim.Adam(maml.parameters(), meta_lr)
-scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, EPOCH/1, eta_min=0.0001, last_epoch=-1)
 lossfn = nn.MSELoss(reduction='sum')
 
 ### one training loop include 180 outer loop
@@ -187,7 +176,7 @@ for iter_ in range(EPOCH):
 
     # generate a list for random sample specific dataloader
     batch_num = int(num_train_subset/(K+K_update))
-    sample_list = [0]*batch_num+[1]*batch_num+[2]*batch_num+[3]*batch_num+[4]*batch_num+[5]*batch_num+[6]*batch_num+[7]*batch_num+[8]*batch_num+[9]*batch_num+[10]*batch_num+[11]*batch_num
+    sample_list = [0]*batch_num+[1]*batch_num+[2]*batch_num+[3]*batch_num+[4]*batch_num+[5]*batch_num+[6]*batch_num+[7]*batch_num
     random.shuffle(sample_list)
 
     # enumerate one distribution/task
@@ -202,6 +191,7 @@ for iter_ in range(EPOCH):
     meta_adaptation_loss_4 = 0.0
     meta_adaptation_loss_6 = 0.0
     meta_adaptation_loss_8 = 0.0
+
     ###### 3. Sample batch of tasks Ti ~ p(T) ######
     # sample 2 batch at one time
     for index in tqdm(range(0, len(sample_list), Inner_EPOCH)):   
@@ -215,10 +205,11 @@ for iter_ in range(EPOCH):
         total_adapt_loss_4 = 0.0
         total_adapt_loss_6 = 0.0
         total_adapt_loss_8 = 0.0
+
         ###### 4: inner loop ######
         # Ti only contain one task: (K+K_update) data
         for inner_iter in range(Inner_EPOCH):
-            print('Inner loop: ', inner_iter+1)
+            # print('Inner loop: ', inner_iter+1)
             # load one batch from random dataloader
             iterator = iterator_list[i[inner_iter]]  # i = [ , ], 1st loop i[0], 2nd loop i[1]
             task_batch = next(iterator)
@@ -242,7 +233,7 @@ for iter_ in range(EPOCH):
                 K_examples_preds = learner(K_examples_inputs)
                 K_examples_preds = K_examples_preds * K_std + K_mean
                 adapt_loss = lossfn(K_examples_preds, K_examples_targets) / torch.sum(torch.abs(K_examples_targets)**2)
-
+                ### store the adapt loss
                 adapt_step_loss.append(adapt_loss.item())
 
                 ###### 6. Compute  adapted  parameters  with  gradient  descent: θ′i = θ − α∇θLTi(fθ) ######
@@ -287,7 +278,6 @@ for iter_ in range(EPOCH):
         meta_adaptation_loss_6 += total_adapt_loss_6
         meta_adaptation_loss_8 += total_adapt_loss_8
 
-    scheduler.step()
     writer.add_scalar("Meta 0-step Adaptation NMSE (MAML)", meta_adaptation_loss_0/len(sample_list), iter_+1)
     writer.add_scalar("Meta 2-step Adaptation NMSE (MAML)", meta_adaptation_loss_2/len(sample_list), iter_+1)
     writer.add_scalar("Meta 4-step Adaptation NMSE (MAML)", meta_adaptation_loss_4/len(sample_list), iter_+1)
@@ -299,7 +289,7 @@ for iter_ in range(EPOCH):
     
     # validate each epoch
     total_validation_loss = 0.0
-    for val_iter in range(12): 
+    for val_iter in range(8): 
         model_copy = copy.deepcopy(model)
         model_copy = tuning(model_copy, adapt_dataloader_list[val_iter], epoch = 5)
         val_loss = evaluate(model_copy, validation_dataloader_list[val_iter])

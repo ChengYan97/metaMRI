@@ -24,7 +24,7 @@ from functions.training.losses import SSIMLoss
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 ########################### experiment name ###########################
-experiment_name = "E_MAML(NMSE-out-3-in-4)_T8x200knee_250epoch"
+experiment_name = "E_MAML(NMSE_outCA-3-4-in-3_AS-9)_T8x200knee_300epoch"
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -38,15 +38,15 @@ torch.cuda.manual_seed(SEED)
 torch.manual_seed(SEED)
 
 ###########################  hyperparametes  ###########################
-EPOCH = 200   
-# enumalate the whole data once takes 180 outer loop
+EPOCH = 300   
+# enumalate the whole data once takes 320 outer loop
 Inner_EPOCH = 1
 
 K = 4      # K examples for inner loop training
 K_update = 1
-adapt_steps = 5
-adapt_lr = 0.0001   # adapt θ': α
-meta_lr = 0.001    # update real model θ: β
+adapt_steps = 9
+adapt_lr = 0.001   # adapt θ': α
+meta_lr = 0.001     # update real model θ: β
 
 ###########################  data & dataloader  ###########################
 num_train_subset = 200
@@ -54,23 +54,23 @@ num_val_subset = 100
 fewshot = 5
 
 # data path
-path_train1 = '/cheng/metaMRI/metaMRI/data_dict/E-part1/P/knee_train_PD_Aera_2-9.yaml'
-path_train2 = '/cheng/metaMRI/metaMRI/data_dict/E-part1/P/knee_train_PD_Aera_15-22.yaml'
-path_train3 = '/cheng/metaMRI/metaMRI/data_dict/E-part1/P/knee_train_PD_Biograph_15-22.yaml'
-path_train4 = '/cheng/metaMRI/metaMRI/data_dict/E-part1/P/knee_train_PD_Skyra_15-22.yaml'
-path_train5 = '/cheng/metaMRI/metaMRI/data_dict/E-part1/P/knee_train_PDFS_Aera_2-9.yaml'
-path_train6 = '/cheng/metaMRI/metaMRI/data_dict/E-part1/P/knee_train_PDFS_Aera_15-22.yaml'
-path_train7 = '/cheng/metaMRI/metaMRI/data_dict/E-part1/P/knee_train_PDFS_Biograph_15-22.yaml'
-path_train8 = '/cheng/metaMRI/metaMRI/data_dict/E-part1/P/knee_train_PDFS_Skyra_15-22.yaml'
+path_train1 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Aera_2-9.yaml'
+path_train2 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Aera_15-22.yaml'
+path_train3 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Biograph_15-22.yaml'
+path_train4 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Skyra_15-22.yaml'
+path_train5 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PDFS_Aera_2-9.yaml'
+path_train6 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PDFS_Aera_15-22.yaml'
+path_train7 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PDFS_Biograph_15-22.yaml'
+path_train8 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PDFS_Skyra_15-22.yaml'
 
-path_val1 = '/cheng/metaMRI/metaMRI/data_dict/E-part1/P/knee_val_PD_Aera_2-9.yaml'
-path_val2 = '/cheng/metaMRI/metaMRI/data_dict/E-part1/P/knee_val_PD_Aera_15-22.yaml'
-path_val3 = '/cheng/metaMRI/metaMRI/data_dict/E-part1/P/knee_val_PD_Biograph_15-22.yaml'
-path_val4 = '/cheng/metaMRI/metaMRI/data_dict/E-part1/P/knee_val_PD_Skyra_15-22.yaml'
-path_val5 = '/cheng/metaMRI/metaMRI/data_dict/E-part1/P/knee_val_PDFS_Aera_2-9.yaml'
-path_val6 = '/cheng/metaMRI/metaMRI/data_dict/E-part1/P/knee_val_PDFS_Aera_15-22.yaml'
-path_val7 = '/cheng/metaMRI/metaMRI/data_dict/E-part1/P/knee_val_PDFS_Biograph_15-22.yaml'
-path_val8 = '/cheng/metaMRI/metaMRI/data_dict/E-part1/P/knee_val_PDFS_Skyra_15-22.yaml'
+path_val1 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Aera_2-9.yaml'
+path_val2 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Aera_15-22.yaml'
+path_val3 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Biograph_15-22.yaml'
+path_val4 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Skyra_15-22.yaml'
+path_val5 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PDFS_Aera_2-9.yaml'
+path_val6 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PDFS_Aera_15-22.yaml'
+path_val7 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PDFS_Biograph_15-22.yaml'
+path_val8 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PDFS_Skyra_15-22.yaml'
 
 
 # mask function and data transform
@@ -89,7 +89,6 @@ for path_train in path_train_list:
     train_dataloader = torch.utils.data.DataLoader(dataset = trainset, batch_size = K + K_update,
                     shuffle = True, generator = torch.Generator().manual_seed(1), pin_memory = True)
     train_dataloader_list.append(train_dataloader)
-
 
 # adaptation dataset and data loader
 adapt_dataloader_list = []
@@ -121,7 +120,7 @@ maml = l2l.algorithms.MAML(model, lr=adapt_lr, first_order=False, allow_unused=T
 
 def tuning(model, dataloader, epoch): 
     model.train()
-    tuning_optimizer = torch.optim.Adam(model.parameters(), 0.0001)
+    tuning_optimizer = torch.optim.Adam(model.parameters(), 0.001)
     for iteration in range(epoch):
         total_loss = 0.0
         for iter, batch in enumerate(dataloader): 
@@ -163,6 +162,7 @@ def evaluate(model, dataloader):
 
 ###########################  MAML training  ###########################
 optimizer = optim.Adam(maml.parameters(), meta_lr)
+scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, EPOCH/1, eta_min=0.0001, last_epoch=-1)
 lossfn = nn.MSELoss(reduction='sum')
 
 ### one training loop include 180 outer loop
@@ -188,11 +188,11 @@ for iter_ in range(EPOCH):
     # here we consider 180 outer loop as one training loop
     meta_training_loss = 0.0
     meta_adaptation_loss_0 = 0.0
-    meta_adaptation_loss_1 = 0.0
     meta_adaptation_loss_2 = 0.0
-    meta_adaptation_loss_3 = 0.0
     meta_adaptation_loss_4 = 0.0
-    meta_adaptation_loss = 0.0
+    meta_adaptation_loss_6 = 0.0
+    meta_adaptation_loss_8 = 0.0
+
     ###### 3. Sample batch of tasks Ti ~ p(T) ######
     # sample 2 batch at one time
     for index in tqdm(range(0, len(sample_list), Inner_EPOCH)):   
@@ -202,15 +202,15 @@ for iter_ in range(EPOCH):
         # i = [ , ]
         total_update_loss = 0.0
         total_adapt_loss_0 = 0.0
-        total_adapt_loss_1 = 0.0
         total_adapt_loss_2 = 0.0
-        total_adapt_loss_3 = 0.0
         total_adapt_loss_4 = 0.0
-        total_adapt_loss = 0.0      # 5
+        total_adapt_loss_6 = 0.0
+        total_adapt_loss_8 = 0.0
+
         ###### 4: inner loop ######
         # Ti only contain one task: (K+K_update) data
         for inner_iter in range(Inner_EPOCH):
-            print('Inner loop: ', inner_iter+1)
+            # print('Inner loop: ', inner_iter+1)
             # load one batch from random dataloader
             iterator = iterator_list[i[inner_iter]]  # i = [ , ], 1st loop i[0], 2nd loop i[1]
             task_batch = next(iterator)
@@ -234,7 +234,7 @@ for iter_ in range(EPOCH):
                 K_examples_preds = learner(K_examples_inputs)
                 K_examples_preds = K_examples_preds * K_std + K_mean
                 adapt_loss = lossfn(K_examples_preds, K_examples_targets) / torch.sum(torch.abs(K_examples_targets)**2)
-                ### 传出每个adapt step 的Loss
+                ### store the adapt loss
                 adapt_step_loss.append(adapt_loss.item())
 
                 ###### 6. Compute  adapted  parameters  with  gradient  descent: θ′i = θ − α∇θLTi(fθ) ######
@@ -257,11 +257,10 @@ for iter_ in range(EPOCH):
             # ∑Ti∼p(T)LTi(fθ′i): Ti only contain one task
             total_update_loss += update_loss
             total_adapt_loss_0 += adapt_step_loss[0]
-            total_adapt_loss_1 += adapt_step_loss[1]
             total_adapt_loss_2 += adapt_step_loss[2]
-            total_adapt_loss_3 += adapt_step_loss[3]
             total_adapt_loss_4 += adapt_step_loss[4]
-            total_adapt_loss += adapt_loss.item()
+            total_adapt_loss_6 += adapt_step_loss[6]
+            total_adapt_loss_8 += adapt_step_loss[8]
 
         # del task_batch  # avoid cpu memory leak
         # del learner     # gpu
@@ -275,20 +274,17 @@ for iter_ in range(EPOCH):
         # we use the mean of 180 outer loop loss as the meta training loss
         meta_training_loss += total_update_loss.item()
         meta_adaptation_loss_0 += total_adapt_loss_0
-        meta_adaptation_loss_1 += total_adapt_loss_1
         meta_adaptation_loss_2 += total_adapt_loss_2
-        meta_adaptation_loss_3 += total_adapt_loss_3
         meta_adaptation_loss_4 += total_adapt_loss_4
-        meta_adaptation_loss += total_adapt_loss
+        meta_adaptation_loss_6 += total_adapt_loss_6
+        meta_adaptation_loss_8 += total_adapt_loss_8
 
-    writer.add_scalar("Meta no Adaptation NMSE (MAML)", meta_adaptation_loss_0/len(sample_list), iter_+1)
-    writer.add_scalar("Meta 1-step Adaptation NMSE (MAML)", meta_adaptation_loss_1/len(sample_list), iter_+1)
-    writer.add_scalar("Meta 2-step Adaptation NMSE (MAML))", meta_adaptation_loss_2/len(sample_list), iter_+1)
-    writer.add_scalar("Meta 3-step Adaptation NMSE (MAML)", meta_adaptation_loss_3/len(sample_list), iter_+1)
+    scheduler.step()
+    writer.add_scalar("Meta 0-step Adaptation NMSE (MAML)", meta_adaptation_loss_0/len(sample_list), iter_+1)
+    writer.add_scalar("Meta 2-step Adaptation NMSE (MAML)", meta_adaptation_loss_2/len(sample_list), iter_+1)
     writer.add_scalar("Meta 4-step Adaptation NMSE (MAML)", meta_adaptation_loss_4/len(sample_list), iter_+1)
-
-    print("Meta Adaptation NMSE (MAML)", meta_adaptation_loss/len(sample_list))
-    writer.add_scalar("Meta Adaptation NMSE (MAML)", meta_adaptation_loss/len(sample_list), iter_+1)
+    writer.add_scalar("Meta 6-step Adaptation NMSE (MAML)", meta_adaptation_loss_6/len(sample_list), iter_+1)
+    writer.add_scalar("Meta 8-step Adaptation NMSE (MAML)", meta_adaptation_loss_8/len(sample_list), iter_+1)
 
     print("Meta Training NMSE (MAML)", meta_training_loss/len(sample_list))
     writer.add_scalar("Meta Training NMSE (MAML)", meta_training_loss/len(sample_list), iter_+1)
