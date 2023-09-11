@@ -2,7 +2,7 @@
 import random
 import numpy as np
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
@@ -23,8 +23,8 @@ from functions.helper import average_early_stopping_epoch, evaluate_loss_dataloa
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 ####################################################################################
-SEED = 6            # 1,2,3,4,5 repeat # for Q2 using seed 1,3,4,5,6
-INIT = 'maml_12mix'       # 'standard', 'maml'
+SEED = 1            # 1,2,3,4,5 repeat # for Q2 using seed 1,3,4,5,6
+INIT = 'maml_in-3_8knee'       # 'standard', 'maml'
 TARGET = 'Q2'       # 'Q1', 'Q2', 'Q3'
 adapt_shot = 5
 
@@ -73,6 +73,10 @@ elif INIT == 'maml_12mix':
     checkpoint_path = '/cheng/metaMRI/metaMRI/save/E_MAML(NMSE-out-3-in-4)_T12x200mix_300epoch/E_MAML(NMSE-out-3-in-4)_T12x200mix_300epoch_E300.pth'
 elif INIT == 'standard_12mix':
     checkpoint_path = '/cheng/metaMRI/metaMRI/save/E_standard(NMSE-lr1e-3CA4)_T12x200mix_120epoch/E_standard(NMSE-lr1e-3CA4)_T12x200mix_120epoch_E69_best.pth'
+elif INIT == 'fomaml_8knee':
+    checkpoint_path = "/cheng/metaMRI/metaMRI/save/E_FOMAML(NMSE_outCA-3-4-in-4)_T8x200knee_300epoch/E_FOMAML(NMSE_outCA-3-4-in-4)_T8x200knee_300epoch_E191_best.pth"
+elif INIT == 'maml_in-3_8knee':
+    checkpoint_path = "/cheng/metaMRI/metaMRI/save/E_MAML(NMSE_outCA-3-4-in-3_AS-9)_T8x200knee_300epoch/E_MAML(NMSE_outCA-3-4-in-3_AS-9)_T8x200knee_300epoch_E196_best.pth"
 else: 
     print('Choose the initialization weight. ')
 

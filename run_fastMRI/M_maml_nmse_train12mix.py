@@ -128,46 +128,39 @@ model = model.to(device)
 maml = l2l.algorithms.MAML(model, lr=adapt_lr, first_order=False, allow_unused=True)
 
 
-def tuning(model, dataloader, epoch): 
+def tuning_evaluate(model, tune_dataloader, val_dataloader, max_epoch):
     model.train()
-    tuning_optimizer = torch.optim.Adam(model.parameters(), 0.001)
-    for iteration in range(epoch):
-        total_loss = 0.0
-        for iter, batch in enumerate(dataloader): 
+    tuning_optimizer = torch.optim.Adam(model.parameters(), 0.0001)
+    evaluate_loss_history = []
+    for iteration in range(max_epoch):
+        for iter, batch in enumerate(tune_dataloader): 
             input_image, target_image, mean, std, fname, slice_num = batch
             inputs = input_image.to(device)
             targets = target_image.to(device)
             std = std.to(device)
             mean = mean.to(device)
-
             output = model(inputs)
             output = output * std + mean
-
             loss = lossfn(output, targets) / torch.sum(torch.abs(targets)**2)
-
             tuning_optimizer.zero_grad()
             loss.backward()
             tuning_optimizer.step()
-    return model
-
-
-def evaluate(model, dataloader):
-    model.eval()
-    total_loss = 0.0
-    for iter, batch in enumerate(dataloader): 
-        input_image, target_image, mean, std, fname, slice_num = batch
-        inputs = input_image.to(device)
-        targets = target_image.to(device)
-        std = std.to(device)
-        mean = mean.to(device)
-
-        output = model(inputs)
-        output = output * std + mean
-
-        loss = lossfn(output, targets) / torch.sum(torch.abs(targets)**2)
-        total_loss += loss.item()
-    evaluate_loss = total_loss / len(dataloader)
-    return evaluate_loss
+        # validation
+        model.eval()
+        total_loss = 0.0
+        for iter, batch in enumerate(val_dataloader): 
+            input_image, target_image, mean, std, fname, slice_num = batch
+            inputs = input_image.to(device)
+            targets = target_image.to(device)
+            std = std.to(device)
+            mean = mean.to(device)
+            output = model(inputs)
+            output = output * std + mean
+            val_loss = lossfn(output, targets) / torch.sum(torch.abs(targets)**2)
+            total_loss += val_loss.item()
+        evaluate_loss = total_loss / len(val_dataloader)
+        evaluate_loss_history.append(evaluate_loss)
+    return evaluate_loss_history
 
 
 ###########################  MAML training  ###########################
@@ -301,11 +294,11 @@ for iter_ in range(EPOCH):
     total_validation_loss = 0.0
     for val_iter in range(12): 
         model_copy = copy.deepcopy(model)
-        model_copy = tuning(model_copy, adapt_dataloader_list[val_iter], epoch = 5)
-        val_loss = evaluate(model_copy, validation_dataloader_list[val_iter])
+        val_loss_history = tuning_evaluate(model_copy, adapt_dataloader_list[val_iter], validation_dataloader_list[val_iter], max_epoch = 4)
+        val_loss = min(val_loss_history)
         total_validation_loss += val_loss
 
-    validation_loss = total_validation_loss/8
+    validation_loss = total_validation_loss/12
     print('Validation NMSE: ', validation_loss)
     writer.add_scalar("Validation NMSE", validation_loss, iter_+1)  
 

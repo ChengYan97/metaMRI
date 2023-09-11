@@ -24,7 +24,7 @@ from functions.training.losses import SSIMLoss
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 ########################### experiment name ###########################
-experiment_name = "E_MAML(NMSE_outCA-3-4-in-3_AS-9)_T8x200knee_300epoch"
+experiment_name = "E_MAML(NMSE_out-3-in-4_AS-9)_T8x200knee_300epoch"
 
 # tensorboard dir
 experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
@@ -45,7 +45,7 @@ Inner_EPOCH = 1
 K = 4      # K examples for inner loop training
 K_update = 1
 adapt_steps = 9
-adapt_lr = 0.001   # adapt θ': α
+adapt_lr = 0.0001   # adapt θ': α
 meta_lr = 0.001     # update real model θ: β
 
 ###########################  data & dataloader  ###########################
@@ -118,51 +118,44 @@ model = model.to(device)
 maml = l2l.algorithms.MAML(model, lr=adapt_lr, first_order=False, allow_unused=True)
 
 
-def tuning(model, dataloader, epoch): 
+def tuning_evaluate(model, tune_dataloader, val_dataloader, max_epoch):
     model.train()
-    tuning_optimizer = torch.optim.Adam(model.parameters(), 0.001)
-    for iteration in range(epoch):
-        total_loss = 0.0
-        for iter, batch in enumerate(dataloader): 
+    tuning_optimizer = torch.optim.Adam(model.parameters(), 0.0001)
+    evaluate_loss_history = []
+    for iteration in range(max_epoch):
+        for iter, batch in enumerate(tune_dataloader): 
             input_image, target_image, mean, std, fname, slice_num = batch
             inputs = input_image.to(device)
             targets = target_image.to(device)
             std = std.to(device)
             mean = mean.to(device)
-
             output = model(inputs)
             output = output * std + mean
-
             loss = lossfn(output, targets) / torch.sum(torch.abs(targets)**2)
-
             tuning_optimizer.zero_grad()
             loss.backward()
             tuning_optimizer.step()
-    return model
-
-
-def evaluate(model, dataloader):
-    model.eval()
-    total_loss = 0.0
-    for iter, batch in enumerate(dataloader): 
-        input_image, target_image, mean, std, fname, slice_num = batch
-        inputs = input_image.to(device)
-        targets = target_image.to(device)
-        std = std.to(device)
-        mean = mean.to(device)
-
-        output = model(inputs)
-        output = output * std + mean
-
-        loss = lossfn(output, targets) / torch.sum(torch.abs(targets)**2)
-        total_loss += loss.item()
-    evaluate_loss = total_loss / len(dataloader)
-    return evaluate_loss
+        # validation
+        model.eval()
+        total_loss = 0.0
+        for iter, batch in enumerate(val_dataloader): 
+            input_image, target_image, mean, std, fname, slice_num = batch
+            inputs = input_image.to(device)
+            targets = target_image.to(device)
+            std = std.to(device)
+            mean = mean.to(device)
+            output = model(inputs)
+            output = output * std + mean
+            val_loss = lossfn(output, targets) / torch.sum(torch.abs(targets)**2)
+            total_loss += val_loss.item()
+        evaluate_loss = total_loss / len(val_dataloader)
+        evaluate_loss_history.append(evaluate_loss)
+    return evaluate_loss_history
 
 
 ###########################  MAML training  ###########################
 optimizer = optim.Adam(maml.parameters(), meta_lr)
-scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, EPOCH/1, eta_min=0.0001, last_epoch=-1)
+# scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, EPOCH/1, eta_min=0.0001, last_epoch=-1)
 lossfn = nn.MSELoss(reduction='sum')
 
 ### one training loop include 180 outer loop
@@ -279,7 +272,7 @@ for iter_ in range(EPOCH):
         meta_adaptation_loss_6 += total_adapt_loss_6
         meta_adaptation_loss_8 += total_adapt_loss_8
 
-    scheduler.step()
+    # scheduler.step()
     writer.add_scalar("Meta 0-step Adaptation NMSE (MAML)", meta_adaptation_loss_0/len(sample_list), iter_+1)
     writer.add_scalar("Meta 2-step Adaptation NMSE (MAML)", meta_adaptation_loss_2/len(sample_list), iter_+1)
     writer.add_scalar("Meta 4-step Adaptation NMSE (MAML)", meta_adaptation_loss_4/len(sample_list), iter_+1)
@@ -289,12 +282,12 @@ for iter_ in range(EPOCH):
     print("Meta Training NMSE (MAML)", meta_training_loss/len(sample_list))
     writer.add_scalar("Meta Training NMSE (MAML)", meta_training_loss/len(sample_list), iter_+1)
     
-    # validate each epoch
+
     total_validation_loss = 0.0
     for val_iter in range(8): 
         model_copy = copy.deepcopy(model)
-        model_copy = tuning(model_copy, adapt_dataloader_list[val_iter], epoch = 5)
-        val_loss = evaluate(model_copy, validation_dataloader_list[val_iter])
+        val_loss_history = tuning_evaluate(model_copy, adapt_dataloader_list[val_iter], validation_dataloader_list[val_iter], max_epoch = 4)
+        val_loss = min(val_loss_history)
         total_validation_loss += val_loss
 
     validation_loss = total_validation_loss/8
