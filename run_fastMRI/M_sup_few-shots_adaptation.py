@@ -2,7 +2,7 @@
 import random
 import numpy as np
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+os.environ['CUDA_VISIBLE_DEVICES'] = '2'
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
@@ -23,13 +23,13 @@ from functions.helper import average_early_stopping_epoch, evaluate_loss_dataloa
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 ####################################################################################
-SEED = 1            # 1,2,3,4,5 repeat # for Q2 using seed 1,3,4,5,6
-INIT = 'maml'       # 'standard', 'maml'
-TARGET = 'P1'       # 'Q1', 'Q2', 'Q3'
+SEED = 5            # 1,2,3,4,5 repeat # for Q2 using seed 1,3,4,5,6
+INIT = 'standard_12mix'       # 'standard', 'maml'
+TARGET = '12P9'       # 'Q1', 'Q2', 'Q3'
 adapt_shot = 5
 
-LR = 1e-3 
-cosine_annealing = True
+LR = 1e-4 
+cosine_annealing = False
 
 if cosine_annealing: 
     experiment_name = "E_sup_" + INIT + "_" + str(adapt_shot) + "few-adapt_lrCA" + str(LR) + "_" + TARGET +'_seed' + str(SEED)
@@ -41,7 +41,7 @@ experiment_path = '/cheng/metaMRI/metaMRI/save/' + experiment_name + '/'
 writer = SummaryWriter(experiment_path)
 
 # hyperparameter
-TRAINING_EPOCH = 30
+TRAINING_EPOCH = 10
 early_stopping = False
 ####################################################################################
 # seed
@@ -54,9 +54,9 @@ torch.manual_seed(SEED)
 if INIT == 'standard_5batchsize':
     checkpoint_path = "/cheng/metaMRI/metaMRI/save/E6*/E6.6_standard(NMSE-lrAnneal)_T8x200_100epoch_E85_best.pth"
 elif INIT == 'standard':
-    checkpoint_path = "/cheng/metaMRI/metaMRI/save/E6.6+_standard(NMSE-lrAnneal)_T8x200_120epoch/E6.6+_standard(NMSE-lrAnneal)_T8x200_120epoch_E64_best.pth"
+    checkpoint_path = "/cheng/metaMRI/metaMRI/thesis/metaMRI/setup_8knee/checkpoints/E6.6+_standard(NMSE-lrAnneal)_T8x200_120epoch/E6.6+_standard(NMSE-lrAnneal)_T8x200_120epoch_E64_best.pth"
 elif INIT == 'maml':
-    checkpoint_path = "/cheng/metaMRI/metaMRI/save/Conclusion 1.3/setup_8knee/checkpoints/E6.4_maml(NMSE-lr-in1e-3-out1e-4)_T8x200_200epoch_E200_best.pth"
+    checkpoint_path = "/cheng/metaMRI/metaMRI/thesis/metaMRI/setup_8knee/checkpoints/E6.4_maml(NMSE-lr-in1e-3-out1e-4)_T8x200_200epoch_E200_best.pth"
 elif INIT == 'standardE10.2':
     checkpoint_path = "/cheng/metaMRI/metaMRI/save/E10.2_standard(NMSE-lr1e-3CA4)_T8x200_120epoch/E10.2_standard(NMSE-lr1e-3CA4)_T8x200_120epoch_E87_best.pth"
 elif INIT == 'standardE10.3':
@@ -96,12 +96,30 @@ elif TARGET == 'Q4':
 elif TARGET == 'Q5': 
     path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E10.2/Q/brain_train_T1POST_Avanto_5-8.yaml'
     path_test = '/cheng/metaMRI/metaMRI/data_dict/E10.2/Q/brain_test_T1POST_Avanto_5-8.yaml'
+elif TARGET == 'P1_train': 
+    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Aera_2-9.yaml'
+    path_test = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_test_PD_Aera_2-9.yaml'
+elif TARGET == 'P2_train': 
+    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Aera_15-22.yaml'
+    path_test = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_test_PD_Aera_15-22.yaml'
 elif TARGET == 'P1': 
     path_adapt = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Aera_2-9.yaml'
     path_test = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_test_PD_Aera_2-9.yaml'
 elif TARGET == 'P2': 
     path_adapt = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Aera_15-22.yaml'
     path_test = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_test_PD_Aera_15-22.yaml'
+elif TARGET == '12P1_train': 
+    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/final/P1/knee_train_PD_Aera_5-9.yaml'
+    path_test = '/cheng/metaMRI/metaMRI/data_dict/final/P1/knee_test_PD_Aera_5-9.yaml'
+elif TARGET == '12P9_train': 
+    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/final/P9/brain_train_AXT1PRE_Skyra_1-5.yaml'
+    path_test = '/cheng/metaMRI/metaMRI/data_dict/final/P9/brain_test_AXT1PRE_Skyra_1-5.yaml'
+elif TARGET == '12P1': 
+    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/final/P1/knee_val_PD_Aera_5-9.yaml'
+    path_test = '/cheng/metaMRI/metaMRI/data_dict/final/P1/knee_test_PD_Aera_5-9.yaml'
+elif TARGET == '12P9': 
+    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Aera_15-22.yaml'
+    path_test = '/cheng/metaMRI/metaMRI/data_dict/final/P9/brain_test_AXT1PRE_Skyra_1-5.yaml'
 elif TARGET == 'P3': 
     path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PD_Biograph_15-22.yaml'
     path_test = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_test_PD_Biograph_15-22.yaml'
