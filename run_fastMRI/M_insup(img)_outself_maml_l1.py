@@ -1,6 +1,6 @@
 #%%
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+os.environ['CUDA_VISIBLE_DEVICES'] = '2'
 import random
 import numpy as np
 import copy
@@ -32,7 +32,7 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 DOMAIN = 'P'        # 'P', 'Q'
 COIL = 'sensmap'   # 'sensmap'
 
-experiment_name = 'E_TTTmaml_in-sup_out-self(l1_out-5_in-3_AS-2)'+DOMAIN+'_T300_300epoch'
+experiment_name = 'E_TTTmaml_in-sup_out-self(l1_out-5_in-5_AS-2)'+DOMAIN+'_T300_300epoch'
 
 
 # tensorboard dir
@@ -52,7 +52,7 @@ EPOCH = 300
 Inner_EPOCH = 1
 BATCH_SIZE = 1
 adapt_steps = 2
-adapt_lr = 0.001   # adapt θ': α
+adapt_lr = 0.00001   # adapt θ': α
 meta_lr = 0.00001    # update real model θ: β
 
 ###########################  data & dataloader  ###########################

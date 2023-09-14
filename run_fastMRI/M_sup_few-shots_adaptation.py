@@ -2,7 +2,7 @@
 import random
 import numpy as np
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
@@ -24,8 +24,8 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 
 ####################################################################################
 SEED = 1            # 1,2,3,4,5 repeat # for Q2 using seed 1,3,4,5,6
-INIT = 'maml_in-3_8knee'       # 'standard', 'maml'
-TARGET = 'Q2'       # 'Q1', 'Q2', 'Q3'
+INIT = 'maml'       # 'standard', 'maml'
+TARGET = 'P1'       # 'Q1', 'Q2', 'Q3'
 adapt_shot = 5
 
 LR = 1e-3 
@@ -97,11 +97,11 @@ elif TARGET == 'Q5':
     path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E10.2/Q/brain_train_T1POST_Avanto_5-8.yaml'
     path_test = '/cheng/metaMRI/metaMRI/data_dict/E10.2/Q/brain_test_T1POST_Avanto_5-8.yaml'
 elif TARGET == 'P1': 
-    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PD_Aera_2-9.yaml'
-    path_test = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_test_PD_Aera_2-9.yaml'
+    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Aera_2-9.yaml'
+    path_test = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_test_PD_Aera_2-9.yaml'
 elif TARGET == 'P2': 
-    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PD_Aera_15-22.yaml'
-    path_test = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_test_PD_Aera_15-22.yaml'
+    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Aera_15-22.yaml'
+    path_test = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_test_PD_Aera_15-22.yaml'
 elif TARGET == 'P3': 
     path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PD_Biograph_15-22.yaml'
     path_test = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_test_PD_Biograph_15-22.yaml'
