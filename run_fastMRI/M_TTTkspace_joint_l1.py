@@ -3,7 +3,7 @@ import random
 import numpy as np
 import pickle
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 import torch
 import learn2learn as l2l
 from tqdm import tqdm

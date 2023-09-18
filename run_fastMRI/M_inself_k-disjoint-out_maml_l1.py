@@ -1,6 +1,6 @@
 #%%
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 import random
 import numpy as np
 import copy
@@ -29,11 +29,11 @@ from functions.training.losses import SSIMLoss
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 ########################### experiment name ###########################
-LOSS = 'sup'      # 'sup', 'joint'
+
 DOMAIN = 'Q'        # 'P', 'Q'
 COIL = 'sensmap'   # 'sensmap'
 
-experiment_name = 'E14.2_maml_out_k-'+LOSS+'(l1_out-5_in-5)'+DOMAIN+'_T300_300epoch'
+experiment_name = 'E14.4_maml_in1-4_out_k3-4(l1_out-5_in-5)'+DOMAIN+'_T300_300epoch'
 
 
 # tensorboard dir
@@ -100,8 +100,11 @@ l1_loss = nn.L1Loss(reduction='sum')
 
 with open(path_mask,'rb') as fn:
     mask2d = pickle.load(fn)
+flipped_mask2d = np.logical_not(mask2d).astype(int)
 mask = torch.tensor(mask2d[0]).unsqueeze(0).unsqueeze(0).unsqueeze(-1)
+flipped_mask = torch.tensor(flipped_mask2d[0]).unsqueeze(0).unsqueeze(0).unsqueeze(-1)
 mask = mask.to(device)
+flipped_mask = flipped_mask.to(device)
 
 print('Compute the scale factor for entire training data: ')
 scales_list = []
@@ -211,20 +214,13 @@ for iter_ in range(EPOCH):
                 output_sens_image[j,:,:,1] = update_output[0,:,:,0] * ss[:,:,1] + update_output[0,:,:,1] * ss[:,:,0]
             # FS fθ(A†y)
             kspace_output = fft2c(output_sens_image)
-            
-            # supervised loss [x, fθ(A†y)]: one channel image domain in TTT paper
-            update_sup_loss = l1_loss(kspace_output, scale_kspace) / torch.sum(torch.abs(scale_kspace))
-            # self-supervised loss
-            if LOSS == 'sup': 
-                update_self_loss = 0
-            elif LOSS == 'joint':
-                # MFS fθ(A†y) = A fθ(A†y)
-                kspace_forward = kspace_output * mask
-                # self-supervised loss [y, Afθ(A†y)]
-                update_self_loss = l1_loss(kspace_forward, scale_input_kspace) / torch.sum(torch.abs(scale_input_kspace))
-        
-            # loss
-            update_loss = update_sup_loss + update_self_loss
+            # MFS fθ(A†y)
+            flipped_masked_kspace_output = kspace_output * flipped_mask + 0.0
+            flipped_masked_scale_kspace = scale_kspace * flipped_mask + 0.0
+
+
+            update_loss = l1_loss(flipped_masked_kspace_output, flipped_masked_scale_kspace) / torch.sum(torch.abs(flipped_masked_scale_kspace))
+
 
             # ∑Ti∼p(T)LTi(fθ′i): Ti only contain one task
             total_update_loss += update_loss

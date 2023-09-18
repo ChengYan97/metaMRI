@@ -2,7 +2,7 @@
 import random
 import numpy as np
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+os.environ['CUDA_VISIBLE_DEVICES'] = '3'
 import torch
 import learn2learn as l2l
 from tqdm import tqdm
@@ -23,9 +23,9 @@ from functions.training.losses import SSIMLoss
 
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
-TARGET = 'Q3' 
+TARGET = 'P3' 
 
-experiment_name = 'E9_standard(NMSE-CA)_'+ TARGET +'_T1x200_70epoch'
+experiment_name = 'E8knee_standard(NMSE-CA)_'+ TARGET +'_T1x200_70epoch'
 
 
 # tensorboard dir
@@ -43,49 +43,18 @@ torch.manual_seed(SEED)
 TRAINING_EPOCH = 70
 num_sample_train = 200
 num_sample_val = 100
-BATCH_SIZE = 5
+BATCH_SIZE = 1
 
 # data path
-if TARGET == 'Q1': 
-    path_train = '/cheng/metaMRI/metaMRI/data_dict/E-part1/Q/brain_train_T1POST_TrioTim_5-8.yaml'
-    path_val = '/cheng/metaMRI/metaMRI/data_dict/E-part1/Q/brain_val_T1POST_TrioTim_5-8.yaml'
-elif TARGET == 'Q2': 
-    path_train = '/cheng/metaMRI/metaMRI/data_dict/E-part1/Q/brain_train_FLAIR_Skyra_5-8.yaml'
-    path_val = '/cheng/metaMRI/metaMRI/data_dict/E-part1/Q/brain_val_FLAIR_Skyra_5-8.yaml'
-elif TARGET == 'Q3': 
-    path_train = '/cheng/metaMRI/metaMRI/data_dict/E-part1/Q/brain_train_T2_Aera_5-8.yaml'
-    path_val = '/cheng/metaMRI/metaMRI/data_dict/E-part1/Q/brain_val_T2_Aera_5-8.yaml'
-elif TARGET == 'Q4': 
-    path_train = '/cheng/metaMRI/metaMRI/data_dict/E10.2/Q/brain_train_T1_Aera_5-8.yaml'
-    path_val = '/cheng/metaMRI/metaMRI/data_dict/E10.2/Q/brain_val_T1_Aera_5-8.yaml'
-elif TARGET == 'Q5': 
-    path_train = '/cheng/metaMRI/metaMRI/data_dict/E10.2/Q/brain_train_T1POST_Avanto_5-8.yaml'
-    path_val = '/cheng/metaMRI/metaMRI/data_dict/E10.2/Q/brain_val_T1POST_Avanto_5-8.yaml'
-    
-elif TARGET == 'P1': 
-    path_train = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_train_PD_Aera_2-9.yaml'
-    path_val = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PD_Aera_2-9.yaml'
+if TARGET == 'P1': 
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Aera_2-9.yaml'
+    path_val = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Aera_2-9.yaml'
 elif TARGET == 'P2': 
-    path_train = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_train_PD_Aera_15-22.yaml'
-    path_val = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PD_Aera_15-22.yaml'
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Aera_15-22.yaml'
+    path_val = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Aera_15-22.yaml'
 elif TARGET == 'P3': 
-    path_train = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_train_PD_Biograph_15-22.yaml'
-    path_val = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PD_Biograph_15-22.yaml'
-elif TARGET == 'P4': 
-    path_train = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_train_PD_Skyra_15-22.yaml'
-    path_val = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PD_Skyra_15-22.yaml'
-elif TARGET == 'P5': 
-    path_train = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_train_PDFS_Aera_2-9.yaml'
-    path_val = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PDFS_Aera_2-9.yaml'
-elif TARGET == 'P6': 
-    path_train = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_train_PDFS_Aera_15-22.yaml'
-    path_val = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PDFS_Aera_15-22.yaml'
-elif TARGET == 'P7': 
-    path_train = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_train_PDFS_Biograph_15-22.yaml'
-    path_val = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PDFS_Biograph_15-22.yaml'
-elif TARGET == 'P8': 
-    path_train = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_train_PDFS_Skyra_15-22.yaml'
-    path_val = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PDFS_Skyra_15-22.yaml'
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Biograph_15-22.yaml'
+    path_val = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Biograph_15-22.yaml'
 
 
 
