@@ -22,11 +22,11 @@ from functions.helper import average_early_stopping_epoch, evaluate_loss_dataloa
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 SEED = 5
-INIT = 'maml_12mix'
-TRAINING_EPOCH = 100
+INIT = 'maml'
+TRAINING_EPOCH = 70
 LR = 0.001
 CA_LR = 0.0001
-adapt_shot = 5
+adapt_shot = 10
 
 experiment_name = "E_sup_" + INIT + "_" + str(adapt_shot) + "few-adapt_lr" + str(LR) + "_stanford_seed" + str(SEED)
 print('Experiment: ', experiment_name)
@@ -60,9 +60,9 @@ mask_test = mask_test.to(device)
 
 ### model ###
 if INIT == 'standard':
-    checkpoint_path = "/cheng/metaMRI/metaMRI/save/Conclusion 1.3/setup_8knee/checkpoints/E6.6+_standard(NMSE-lrAnneal)_T8x200_120epoch/E6.6+_standard(NMSE-lrAnneal)_T8x200_120epoch_E64_best.pth"
+    checkpoint_path = "/cheng/metaMRI/metaMRI/thesis/metaMRI/setup_8knee/checkpoints/E6.6+_standard(NMSE-lrAnneal)_T8x200_120epoch/E6.6+_standard(NMSE-lrAnneal)_T8x200_120epoch_E64_best.pth"
 elif INIT == 'maml':
-    checkpoint_path = "/cheng/metaMRI/metaMRI/save/Conclusion 1.3/setup_8knee/checkpoints/E6.4_maml(NMSE-lr-in1e-3-out1e-4)_T8x200_200epoch_E200_best.pth"
+    checkpoint_path = "/cheng/metaMRI/metaMRI/thesis/metaMRI/setup_8knee/checkpoints/E6.4_maml(NMSE-lr-in1e-3-out1e-4)_T8x200_200epoch_E200_best.pth"
 elif INIT == 'maml_12mix':
     checkpoint_path = '/cheng/metaMRI/metaMRI/save/E_MAML(NMSE-out-3-in-4)_T12x200mix_300epoch/E_MAML(NMSE-out-3-in-4)_T12x200mix_300epoch_E300.pth'
 elif INIT == 'standard_12mix':
@@ -171,7 +171,8 @@ writer.add_scalar("Testing SSIM", test_loss_SSIM, 0)
 indices = random.sample(range(len(train_slices)), adapt_shot)
 fewshot_train = [train_slices[i] for i in indices]
 
-for iteration in tqdm(range(TRAINING_EPOCH)):
+for iteration in range(TRAINING_EPOCH):
+    print('Iteration: ', iteration+1)
     # training
     training_loss = stanford_data_adapt(model, fewshot_train, optimizer)
     writer.add_scalar("Adaptation training NMSE", training_loss, iteration+1)

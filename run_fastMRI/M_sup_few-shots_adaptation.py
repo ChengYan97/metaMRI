@@ -2,7 +2,7 @@
 import random
 import numpy as np
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '3'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
@@ -25,9 +25,9 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 ####################################################################################
 SEED = 1            # 1,2,3,4,5 repeat # for Q2 using seed 1,3,4,5,6
 INIT = 'maml'       # 'standard', 'maml'
-TARGET = 'P3_train'       # 'Q1', 'Q2', 'Q3'
+TARGET = 'Q1'       # 'Q1', 'Q2', 'Q3'
 adapt_shot = 200
-TRAINING_EPOCH = 10
+TRAINING_EPOCH = 30
 LR = 1e-3 
 cosine_annealing = True
 early_stopping = False
@@ -83,10 +83,10 @@ else:
     print('Choose the initialization weight. ')
 
 # target domain
-if TARGET == 'Q1' or TARGET == 'P9': 
+if TARGET == 'Q1': 
     path_adapt = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/Q/brain_train_T1POST_TrioTim_5-8.yaml'
     path_test = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/Q/brain_test_T1POST_TrioTim_5-8.yaml'
-elif TARGET == 'Q2' or TARGET == 'P10': 
+elif TARGET == 'Q2': 
     path_adapt = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/Q/brain_train_FLAIR_Skyra_5-8.yaml'
     path_test = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/Q/brain_test_FLAIR_Skyra_5-8.yaml'
 elif TARGET == 'Q3': 
