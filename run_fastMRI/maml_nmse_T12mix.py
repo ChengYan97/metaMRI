@@ -45,41 +45,41 @@ Inner_EPOCH = 1
 
 K = 4      # K examples for inner loop training
 K_update = 1
-adapt_steps = 9
-adapt_lr = 0.001   # adapt θ': α
+adapt_steps = 5
+adapt_lr = 0.0001   # adapt θ': α
 meta_lr = 0.001    # update real model θ: β
 
 ###########################  data & dataloader  ###########################
 num_train_subset = 200
 num_val_subset = 100
-fewshot = 5
+fewshot = 5 # indenpendent val, only effect early stop, could be larger
 
 # data path
-path_train1 = '/cheng/metaMRI/metaMRI/data_dict/final/P1/knee_train_PD_Aera_5-9.yaml'
-path_train2 = '/cheng/metaMRI/metaMRI/data_dict/final/P2/knee_train_PD_Biograph_11-18.yaml'
-path_train3 = '/cheng/metaMRI/metaMRI/data_dict/final/P3/knee_train_PD_Skyra_21-25.yaml'
-path_train4 = '/cheng/metaMRI/metaMRI/data_dict/final/P4/knee_train_PDFS_Aera_2-6.yaml'
-path_train5 = '/cheng/metaMRI/metaMRI/data_dict/final/P5/knee_train_PDFS_Biograph_10-17.yaml'
-path_train6 = '/cheng/metaMRI/metaMRI/data_dict/final/P6/knee_train_PDFS_Skyra_18-22.yaml'
-path_train7 = '/cheng/metaMRI/metaMRI/data_dict/final/P7/brain_train_AXT1_Aera_3-5.yaml'
-path_train8 = '/cheng/metaMRI/metaMRI/data_dict/final/P8/brain_train_AXT1_Aera_10-12.yaml'
-path_train9 = '/cheng/metaMRI/metaMRI/data_dict/final/P9/brain_train_AXT1PRE_Skyra_1-5.yaml'
-path_train10 = '/cheng/metaMRI/metaMRI/data_dict/final/P10/brain_train_AXT1PRE_Skyra_10-14.yaml'
-path_train11 = '/cheng/metaMRI/metaMRI/data_dict/final/P11/brain_train_AXT1POST_Avanto_3-4.yaml'
-path_train12 = '/cheng/metaMRI/metaMRI/data_dict/final/P12/brain_train_AXT1POST_Avanto_11-12.yaml'
+path_train1 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P1/knee_train_PD_Aera_5-9.yaml'
+path_train2 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P2/knee_train_PD_Biograph_11-18.yaml'
+path_train3 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P3/knee_train_PD_Skyra_21-25.yaml'
+path_train4 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P4/knee_train_PDFS_Aera_2-6.yaml'
+path_train5 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P5/knee_train_PDFS_Biograph_10-17.yaml'
+path_train6 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P6/knee_train_PDFS_Skyra_18-22.yaml'
+path_train7 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P7/brain_train_AXT1_Aera_3-5.yaml'
+path_train8 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P8/brain_train_AXT1_Aera_10-12.yaml'
+path_train9 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P9/brain_train_AXT1PRE_Skyra_1-5.yaml'
+path_train10 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P10/brain_train_AXT1PRE_Skyra_10-14.yaml'
+path_train11 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P11/brain_train_AXT1POST_Avanto_3-4.yaml'
+path_train12 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P12/brain_train_AXT1POST_Avanto_11-12.yaml'
 
-path_val1 = '/cheng/metaMRI/metaMRI/data_dict/final/P1/knee_val_PD_Aera_5-9.yaml'
-path_val2 = '/cheng/metaMRI/metaMRI/data_dict/final/P2/knee_val_PD_Biograph_11-18.yaml'
-path_val3 = '/cheng/metaMRI/metaMRI/data_dict/final/P3/knee_val_PD_Skyra_21-25.yaml'
-path_val4 = '/cheng/metaMRI/metaMRI/data_dict/final/P4/knee_val_PDFS_Aera_2-6.yaml'
-path_val5 = '/cheng/metaMRI/metaMRI/data_dict/final/P5/knee_val_PDFS_Biograph_10-17.yaml'
-path_val6 = '/cheng/metaMRI/metaMRI/data_dict/final/P6/knee_val_PDFS_Skyra_18-22.yaml'
-path_val7 = '/cheng/metaMRI/metaMRI/data_dict/final/P7/brain_val_AXT1_Aera_3-5.yaml'
-path_val8 = '/cheng/metaMRI/metaMRI/data_dict/final/P8/brain_val_AXT1_Aera_10-12.yaml'
-path_val9 = '/cheng/metaMRI/metaMRI/data_dict/final/P9/brain_val_AXT1PRE_Skyra_1-5.yaml'
-path_val10 = '/cheng/metaMRI/metaMRI/data_dict/final/P10/brain_val_AXT1PRE_Skyra_10-14.yaml'
-path_val11 = '/cheng/metaMRI/metaMRI/data_dict/final/P11/brain_val_AXT1POST_Avanto_3-4.yaml'
-path_val12 = '/cheng/metaMRI/metaMRI/data_dict/final/P12/brain_val_AXT1POST_Avanto_11-12.yaml'
+path_val1 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P1/knee_val_PD_Aera_5-9.yaml'
+path_val2 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P2/knee_val_PD_Biograph_11-18.yaml'
+path_val3 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P3/knee_val_PD_Skyra_21-25.yaml'
+path_val4 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P4/knee_val_PDFS_Aera_2-6.yaml'
+path_val5 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P5/knee_val_PDFS_Biograph_10-17.yaml'
+path_val6 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P6/knee_val_PDFS_Skyra_18-22.yaml'
+path_val7 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P7/brain_val_AXT1_Aera_3-5.yaml'
+path_val8 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P8/brain_val_AXT1_Aera_10-12.yaml'
+path_val9 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P9/brain_val_AXT1PRE_Skyra_1-5.yaml'
+path_val10 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P10/brain_val_AXT1PRE_Skyra_10-14.yaml'
+path_val11 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P11/brain_val_AXT1POST_Avanto_3-4.yaml'
+path_val12 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P12/brain_val_AXT1POST_Avanto_11-12.yaml'
 
 
 # mask function and data transform
@@ -191,10 +191,10 @@ for iter_ in range(EPOCH):
     # here we consider 180 outer loop as one training loop
     meta_training_loss = 0.0
     meta_adaptation_loss_0 = 0.0
+    meta_adaptation_loss_1 = 0.0
     meta_adaptation_loss_2 = 0.0
+    meta_adaptation_loss_3 = 0.0
     meta_adaptation_loss_4 = 0.0
-    meta_adaptation_loss_6 = 0.0
-    meta_adaptation_loss_8 = 0.0
     ###### 3. Sample batch of tasks Ti ~ p(T) ######
     # sample 2 batch at one time
     for index in tqdm(range(0, len(sample_list), Inner_EPOCH)):   
@@ -204,10 +204,10 @@ for iter_ in range(EPOCH):
         # i = [ , ]
         total_update_loss = 0.0
         total_adapt_loss_0 = 0.0
+        total_adapt_loss_1 = 0.0
         total_adapt_loss_2 = 0.0
+        total_adapt_loss_3 = 0.0
         total_adapt_loss_4 = 0.0
-        total_adapt_loss_6 = 0.0
-        total_adapt_loss_8 = 0.0
         ###### 4: inner loop ######
         # Ti only contain one task: (K+K_update) data
         for inner_iter in range(Inner_EPOCH):
@@ -258,10 +258,10 @@ for iter_ in range(EPOCH):
             # ∑Ti∼p(T)LTi(fθ′i): Ti only contain one task
             total_update_loss += update_loss
             total_adapt_loss_0 += adapt_step_loss[0]
+            total_adapt_loss_1 += adapt_step_loss[1]
             total_adapt_loss_2 += adapt_step_loss[2]
+            total_adapt_loss_3 += adapt_step_loss[3]
             total_adapt_loss_4 += adapt_step_loss[4]
-            total_adapt_loss_6 += adapt_step_loss[6]
-            total_adapt_loss_8 += adapt_step_loss[8]
 
         # del task_batch  # avoid cpu memory leak
         # del learner     # gpu
@@ -275,17 +275,17 @@ for iter_ in range(EPOCH):
         # we use the mean of 180 outer loop loss as the meta training loss
         meta_training_loss += total_update_loss.item()
         meta_adaptation_loss_0 += total_adapt_loss_0
+        meta_adaptation_loss_1 += total_adapt_loss_1
         meta_adaptation_loss_2 += total_adapt_loss_2
+        meta_adaptation_loss_3 += total_adapt_loss_3
         meta_adaptation_loss_4 += total_adapt_loss_4
-        meta_adaptation_loss_6 += total_adapt_loss_6
-        meta_adaptation_loss_8 += total_adapt_loss_8
 
     scheduler.step()
     writer.add_scalar("Meta 0-step Adaptation NMSE (MAML)", meta_adaptation_loss_0/len(sample_list), iter_+1)
+    writer.add_scalar("Meta 1-step Adaptation NMSE (MAML)", meta_adaptation_loss_1/len(sample_list), iter_+1)
     writer.add_scalar("Meta 2-step Adaptation NMSE (MAML)", meta_adaptation_loss_2/len(sample_list), iter_+1)
+    writer.add_scalar("Meta 3-step Adaptation NMSE (MAML)", meta_adaptation_loss_3/len(sample_list), iter_+1)
     writer.add_scalar("Meta 4-step Adaptation NMSE (MAML)", meta_adaptation_loss_4/len(sample_list), iter_+1)
-    writer.add_scalar("Meta 6-step Adaptation NMSE (MAML)", meta_adaptation_loss_6/len(sample_list), iter_+1)
-    writer.add_scalar("Meta 8-step Adaptation NMSE (MAML)", meta_adaptation_loss_8/len(sample_list), iter_+1)
 
     print("Meta Training NMSE (MAML)", meta_training_loss/len(sample_list))
     writer.add_scalar("Meta Training NMSE (MAML)", meta_training_loss/len(sample_list), iter_+1)

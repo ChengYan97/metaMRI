@@ -24,6 +24,7 @@ from functions.training.losses import SSIMLoss
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 
+TASK = '8knee'      # '8knee' or '12mix'
 experiment_name = 'E_standard(NMSE-lr1e-3CA4)_T12x200mix_200epoch'
 
 # tensorboard dir
@@ -44,31 +45,50 @@ num_sample_val = 100
 BATCH_SIZE = 1
 
 # data path
-path_train1 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P1/knee_train_PD_Aera_5-9.yaml'
-path_train2 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P2/knee_train_PD_Biograph_11-18.yaml'
-path_train3 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P3/knee_train_PD_Skyra_21-25.yaml'
-path_train4 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P4/knee_train_PDFS_Aera_2-6.yaml'
-path_train5 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P5/knee_train_PDFS_Biograph_10-17.yaml'
-path_train6 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P6/knee_train_PDFS_Skyra_18-22.yaml'
-path_train7 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P7/brain_train_AXT1_Aera_3-5.yaml'
-path_train8 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P8/brain_train_AXT1_Aera_10-12.yaml'
-path_train9 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P9/brain_train_AXT1PRE_Skyra_1-5.yaml'
-path_train10 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P10/brain_train_AXT1PRE_Skyra_10-14.yaml'
-path_train11 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P11/brain_train_AXT1POST_Avanto_3-4.yaml'
-path_train12 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P12/brain_train_AXT1POST_Avanto_11-12.yaml'
+if TASK == '8knee': 
+    path_train1 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Aera_2-9.yaml'
+    path_train2 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Aera_15-22.yaml'
+    path_train3 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Biograph_15-22.yaml'
+    path_train4 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Skyra_15-22.yaml'
+    path_train5 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PDFS_Aera_2-9.yaml'
+    path_train6 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PDFS_Aera_15-22.yaml'
+    path_train7 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PDFS_Biograph_15-22.yaml'
+    path_train8 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PDFS_Skyra_15-22.yaml'
 
-path_val1 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P1/knee_val_PD_Aera_5-9.yaml'
-path_val2 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P2/knee_val_PD_Biograph_11-18.yaml'
-path_val3 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P3/knee_val_PD_Skyra_21-25.yaml'
-path_val4 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P4/knee_val_PDFS_Aera_2-6.yaml'
-path_val5 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P5/knee_val_PDFS_Biograph_10-17.yaml'
-path_val6 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P6/knee_val_PDFS_Skyra_18-22.yaml'
-path_val7 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P7/brain_val_AXT1_Aera_3-5.yaml'
-path_val8 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P8/brain_val_AXT1_Aera_10-12.yaml'
-path_val9 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P9/brain_val_AXT1PRE_Skyra_1-5.yaml'
-path_val10 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P10/brain_val_AXT1PRE_Skyra_10-14.yaml'
-path_val11 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P11/brain_val_AXT1POST_Avanto_3-4.yaml'
-path_val12 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P12/brain_val_AXT1POST_Avanto_11-12.yaml'
+    path_val1 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Aera_2-9.yaml'
+    path_val2 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Aera_15-22.yaml'
+    path_val3 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Biograph_15-22.yaml'
+    path_val4 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Skyra_15-22.yaml'
+    path_val5 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PDFS_Aera_2-9.yaml'
+    path_val6 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PDFS_Aera_15-22.yaml'
+    path_val7 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PDFS_Biograph_15-22.yaml'
+    path_val8 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PDFS_Skyra_15-22.yaml'
+elif TASK == '12mix': 
+    path_train1 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P1/knee_train_PD_Aera_5-9.yaml'
+    path_train2 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P2/knee_train_PD_Biograph_11-18.yaml'
+    path_train3 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P3/knee_train_PD_Skyra_21-25.yaml'
+    path_train4 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P4/knee_train_PDFS_Aera_2-6.yaml'
+    path_train5 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P5/knee_train_PDFS_Biograph_10-17.yaml'
+    path_train6 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P6/knee_train_PDFS_Skyra_18-22.yaml'
+    path_train7 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P7/brain_train_AXT1_Aera_3-5.yaml'
+    path_train8 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P8/brain_train_AXT1_Aera_10-12.yaml'
+    path_train9 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P9/brain_train_AXT1PRE_Skyra_1-5.yaml'
+    path_train10 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P10/brain_train_AXT1PRE_Skyra_10-14.yaml'
+    path_train11 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P11/brain_train_AXT1POST_Avanto_3-4.yaml'
+    path_train12 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P12/brain_train_AXT1POST_Avanto_11-12.yaml'
+
+    path_val1 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P1/knee_val_PD_Aera_5-9.yaml'
+    path_val2 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P2/knee_val_PD_Biograph_11-18.yaml'
+    path_val3 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P3/knee_val_PD_Skyra_21-25.yaml'
+    path_val4 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P4/knee_val_PDFS_Aera_2-6.yaml'
+    path_val5 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P5/knee_val_PDFS_Biograph_10-17.yaml'
+    path_val6 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P6/knee_val_PDFS_Skyra_18-22.yaml'
+    path_val7 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P7/brain_val_AXT1_Aera_3-5.yaml'
+    path_val8 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P8/brain_val_AXT1_Aera_10-12.yaml'
+    path_val9 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P9/brain_val_AXT1PRE_Skyra_1-5.yaml'
+    path_val10 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P10/brain_val_AXT1PRE_Skyra_10-14.yaml'
+    path_val11 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P11/brain_val_AXT1POST_Avanto_3-4.yaml'
+    path_val12 = '/cheng/metaMRI/metaMRI/data_dict/Task_12mix/P12/brain_val_AXT1POST_Avanto_11-12.yaml'
 
 # mask function and data transform
 mask_function = create_mask_for_mask_type(mask_type_str = 'random', self_sup = False, 
@@ -78,7 +98,10 @@ data_transform_train = UnetDataTransform_norm('multicoil', mask_func = mask_func
 data_transform = UnetDataTransform_norm('multicoil', mask_func = mask_function, use_seed=True, mode='adapt')
 
 # training dataset and data loader
-path_train_list = [path_train1,path_train2,path_train3,path_train4,path_train5,path_train6,path_train7,path_train8,path_train9,path_train10,path_train11,path_train12]
+if TASK == '8knee': 
+    path_train_list = [path_train1, path_train2, path_train3, path_train4, path_train5, path_train6, path_train7, path_train8]
+elif TASK == '12mix': 
+    path_train_list = [path_train1,path_train2,path_train3,path_train4,path_train5,path_train6,path_train7,path_train8,path_train9,path_train10,path_train11,path_train12]
 trainset_list = []
 for path in path_train_list:
     trainset = SliceDataset(dataset = path, path_to_dataset='', path_to_sensmaps=None, provide_senmaps=False, 
@@ -91,7 +114,10 @@ train_dataloader = torch.utils.data.DataLoader(dataset = train_set, batch_size =
 print("Training date number: ", len(train_dataloader.dataset))
 
 # validation dataset and data loader
-path_val_list = [path_val1,path_val2,path_val3,path_val4,path_val5,path_val6,path_val7,path_val8,path_val9,path_val10,path_val11,path_val12]
+if TASK == '8knee': 
+    path_val_list = [path_val1, path_val2, path_val3, path_val4, path_val5, path_val6, path_val7, path_val8]
+elif TASK == '12mix':
+    path_val_list = [path_val1,path_val2,path_val3,path_val4,path_val5,path_val6,path_val7,path_val8,path_val9,path_val10,path_val11,path_val12]
 val_dataset_list = []
 for path_val in path_val_list:
     valset = SliceDataset(dataset = path_val, path_to_dataset='', path_to_sensmaps=None, provide_senmaps=False, 

@@ -51,7 +51,7 @@ meta_lr = 0.001     # update real model θ: β
 ###########################  data & dataloader  ###########################
 num_train_subset = 200
 num_val_subset = 100
-fewshot = 5    # could be larger
+fewshot = 5    # indenpendent val, only effect early stop, could be larger
 
 # data path
 path_train1 = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Aera_2-9.yaml'
