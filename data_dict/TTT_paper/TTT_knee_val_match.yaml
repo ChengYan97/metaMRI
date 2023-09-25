@@ -1,0 +1,345 @@
+- filename: file1000126
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000126.h5
+  predefined_mask: null
+  slice: 16
+- filename: file1000323
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000323.h5
+  predefined_mask: null
+  slice: 17
+- filename: file1000107
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000107.h5
+  predefined_mask: null
+  slice: 15
+- filename: file1000243
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000243.h5
+  predefined_mask: null
+  slice: 16
+- filename: file1000758
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000758.h5
+  predefined_mask: null
+  slice: 15
+- filename: file1000264
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000264.h5
+  predefined_mask: null
+  slice: 18
+- filename: file1000153
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000153.h5
+  predefined_mask: null
+  slice: 17
+- filename: file1000308
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000308.h5
+  predefined_mask: null
+  slice: 18
+- filename: file1000073
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000073.h5
+  predefined_mask: null
+  slice: 15
+- filename: file1000052
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000052.h5
+  predefined_mask: null
+  slice: 19
+- filename: file1000314
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000314.h5
+  predefined_mask: null
+  slice: 16
+- filename: file1000031
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000031.h5
+  predefined_mask: null
+  slice: 20
+- filename: file1000071
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000071.h5
+  predefined_mask: null
+  slice: 17
+- filename: file1000537
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000537.h5
+  predefined_mask: null
+  slice: 17
+- filename: file1000350
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000350.h5
+  predefined_mask: null
+  slice: 16
+- filename: file1000328
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000328.h5
+  predefined_mask: null
+  slice: 17
+- filename: file1000552
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000552.h5
+  predefined_mask: null
+  slice: 18
+- filename: file1001096
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001096.h5
+  predefined_mask: null
+  slice: 17
+- filename: file1000885
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000885.h5
+  predefined_mask: null
+  slice: 15
+- filename: file1000432
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000432.h5
+  predefined_mask: null
+  slice: 17
+- filename: file1000356
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000356.h5
+  predefined_mask: null
+  slice: 17
+- filename: file1000925
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000925.h5
+  predefined_mask: null
+  slice: 15
+- filename: file1000628
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000628.h5
+  predefined_mask: null
+  slice: 18
+- filename: file1000871
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000871.h5
+  predefined_mask: null
+  slice: 17
+- filename: file1001219
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001219.h5
+  predefined_mask: null
+  slice: 16
+- filename: file1001168
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001168.h5
+  predefined_mask: null
+  slice: 15
+- filename: file1000496
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000496.h5
+  predefined_mask: null
+  slice: 16
+- filename: file1001148
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001148.h5
+  predefined_mask: null
+  slice: 16
+- filename: file1000842
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000842.h5
+  predefined_mask: null
+  slice: 19
+- filename: file1001687
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001687.h5
+  predefined_mask: null
+  slice: 20
+- filename: file1000891
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000891.h5
+  predefined_mask: null
+  slice: 17
+- filename: file1001793
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001793.h5
+  predefined_mask: null
+  slice: 17
+- filename: file1001104
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001104.h5
+  predefined_mask: null
+  slice: 17
+- filename: file1002035
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1002035.h5
+  predefined_mask: null
+  slice: 15
+- filename: file1002280
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1002280.h5
+  predefined_mask: null
+  slice: 17
+- filename: file1002274
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1002274.h5
+  predefined_mask: null
+  slice: 21
+- filename: file1001598
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001598.h5
+  predefined_mask: null
+  slice: 15
+- filename: file1002526
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1002526.h5
+  predefined_mask: null
+  slice: 15
+- filename: file1001843
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001843.h5
+  predefined_mask: null
+  slice: 20
+- filename: file1002257
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1002257.h5
+  predefined_mask: null
+  slice: 15
+- filename: file1000817
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000817.h5
+  predefined_mask: null
+  slice: 17
+- filename: file1001983
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001983.h5
+  predefined_mask: null
+  slice: 19
+- filename: file1001977
+  path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001977.h5
+  predefined_mask: null
+  slice: 16
+
+# - filename: file1000126
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000126.h5
+#   predefined_mask: null
+#   slice: 17
+# - filename: file1000323
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000323.h5
+#   predefined_mask: null
+#   slice: 18
+# - filename: file1000107
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000107.h5
+#   predefined_mask: null
+#   slice: 16
+# - filename: file1000243
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000243.h5
+#   predefined_mask: null
+#   slice: 17
+# - filename: file1000758
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000758.h5
+#   predefined_mask: null
+#   slice: 16
+# - filename: file1000264
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000264.h5
+#   predefined_mask: null
+#   slice: 19
+# - filename: file1000153
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000153.h5
+#   predefined_mask: null
+#   slice: 18
+# - filename: file1000308
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000308.h5
+#   predefined_mask: null
+#   slice: 19
+# - filename: file1000073
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000073.h5
+#   predefined_mask: null
+#   slice: 16
+# - filename: file1000052
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000052.h5
+#   predefined_mask: null
+#   slice: 20
+# - filename: file1000314
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000314.h5
+#   predefined_mask: null
+#   slice: 17
+# - filename: file1000031
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000031.h5
+#   predefined_mask: null
+#   slice: 21
+# - filename: file1000071
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000071.h5
+#   predefined_mask: null
+#   slice: 18
+# - filename: file1000537
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000537.h5
+#   predefined_mask: null
+#   slice: 18
+# - filename: file1000350
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000350.h5
+#   predefined_mask: null
+#   slice: 17
+# - filename: file1000328
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000328.h5
+#   predefined_mask: null
+#   slice: 18
+# - filename: file1000552
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000552.h5
+#   predefined_mask: null
+#   slice: 19
+# - filename: file1001096
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001096.h5
+#   predefined_mask: null
+#   slice: 18
+# - filename: file1000885
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000885.h5
+#   predefined_mask: null
+#   slice: 16
+# - filename: file1000432
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000432.h5
+#   predefined_mask: null
+#   slice: 18
+# - filename: file1000356
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000356.h5
+#   predefined_mask: null
+#   slice: 18
+# - filename: file1000925
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000925.h5
+#   predefined_mask: null
+#   slice: 16
+# - filename: file1000628
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000628.h5
+#   predefined_mask: null
+#   slice: 19
+# - filename: file1000871
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000871.h5
+#   predefined_mask: null
+#   slice: 18
+# - filename: file1001219
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001219.h5
+#   predefined_mask: null
+#   slice: 17
+# - filename: file1001168
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001168.h5
+#   predefined_mask: null
+#   slice: 16
+# - filename: file1000496
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000496.h5
+#   predefined_mask: null
+#   slice: 17
+# - filename: file1001148
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001148.h5
+#   predefined_mask: null
+#   slice: 17
+# - filename: file1000842
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000842.h5
+#   predefined_mask: null
+#   slice: 20
+# - filename: file1001687
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001687.h5
+#   predefined_mask: null
+#   slice: 21
+# - filename: file1000891
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000891.h5
+#   predefined_mask: null
+#   slice: 18
+# - filename: file1001793
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001793.h5
+#   predefined_mask: null
+#   slice: 18
+# - filename: file1001104
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001104.h5
+#   predefined_mask: null
+#   slice: 18
+# - filename: file1002035
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1002035.h5
+#   predefined_mask: null
+#   slice: 16
+# - filename: file1002280
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1002280.h5
+#   predefined_mask: null
+#   slice: 18
+# - filename: file1002274
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1002274.h5
+#   predefined_mask: null
+#   slice: 22
+# - filename: file1001598
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001598.h5
+#   predefined_mask: null
+#   slice: 16
+# - filename: file1002526
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1002526.h5
+#   predefined_mask: null
+#   slice: 16
+# - filename: file1001843
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001843.h5
+#   predefined_mask: null
+#   slice: 21
+# - filename: file1002257
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1002257.h5
+#   predefined_mask: null
+#   slice: 16
+# - filename: file1000817
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1000817.h5
+#   predefined_mask: null
+#   slice: 18
+# - filename: file1001983
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001983.h5
+#   predefined_mask: null
+#   slice: 20
+# - filename: file1001977
+#   path: /media/hdd1/fastMRIdata/knee/multicoil_val/file1001977.h5
+#   predefined_mask: null
+#   slice: 17
