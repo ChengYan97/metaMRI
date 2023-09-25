@@ -22,3 +22,18 @@ run_fastMRI
 ┣ TTTkspace_joint_l1.py: TTT training in kspace
 ┗ TTTpaper_joint_l1.py: TTT original RSS coarse recon and SENSE coarse recon
 ```
+
+### Prerequisites
+
+*- Clone repository and install dependencies*
+```sh
+$ pip install -r requirements.txt
+```
+
+### Acknowledgments and references
+
+ - [fastMRI](https://github.com/facebookresearch/fastMRI)
+ - [learn2learn](https://github.com/learnables/learn2learn)
+ - [Klug et al. "Analyzing the Sample Complexity of Self-Supervised Image Reconstruction Methods"](https://github.com/MLI-lab/sample_complexity_ss_recon)
+
+
