@@ -2,7 +2,7 @@
 import random
 import numpy as np
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+os.environ['CUDA_VISIBLE_DEVICES'] = '2'
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
@@ -25,9 +25,9 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 ####################################################################################
 SEED = 1            # 1,2,3,4,5 repeat # for Q2 using seed 1,3,4,5,6
 INIT = 'maml'       # 'standard', 'maml'
-TARGET = 'Q1'       # 'Q1', 'Q2', 'Q3'
+TARGET = 'P8_train'       # 'Q1', 'Q2', 'Q3'
 adapt_shot = 200
-TRAINING_EPOCH = 30
+TRAINING_EPOCH = 10
 LR = 1e-3 
 cosine_annealing = True
 early_stopping = False
@@ -107,27 +107,28 @@ elif TARGET == 'P2_train':
 elif TARGET == 'P3_train': 
     path_adapt = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Biograph_15-22.yaml'
     path_test = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_test_PD_Biograph_15-22.yaml'
+elif TARGET == 'P4_train': 
+    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Skyra_15-22.yaml'
+    path_test = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_test_PD_Skyra_15-22.yaml'
+elif TARGET == 'P5_train': 
+    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PDFS_Aera_2-9.yaml'
+    path_test = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_test_PDFS_Aera_2-9.yaml'
+elif TARGET == 'P6_train': 
+    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PDFS_Aera_15-22.yaml'
+    path_test = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_test_PDFS_Aera_15-22.yaml'
+elif TARGET == 'P7_train': 
+    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PDFS_Biograph_15-22.yaml'
+    path_test = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_test_PDFS_Biograph_15-22.yaml'
+elif TARGET == 'P8_train': 
+    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PDFS_Skyra_15-22.yaml'
+    path_test = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_test_PDFS_Skyra_15-22.yaml'
 elif TARGET == '12P1_train': 
     path_adapt = '/cheng/metaMRI/metaMRI/data_dict/final/P1/knee_train_PD_Aera_5-9.yaml'
     path_test = '/cheng/metaMRI/metaMRI/data_dict/final/P1/knee_test_PD_Aera_5-9.yaml'
 elif TARGET == '12P9_train': 
     path_adapt = '/cheng/metaMRI/metaMRI/data_dict/final/P9/brain_train_AXT1PRE_Skyra_1-5.yaml'
     path_test = '/cheng/metaMRI/metaMRI/data_dict/final/P9/brain_test_AXT1PRE_Skyra_1-5.yaml'
-elif TARGET == 'P4': 
-    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PD_Skyra_15-22.yaml'
-    path_test = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_test_PD_Skyra_15-22.yaml'
-elif TARGET == 'P5': 
-    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PDFS_Aera_2-9.yaml'
-    path_test = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_test_PDFS_Aera_2-9.yaml'
-elif TARGET == 'P6': 
-    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PDFS_Aera_15-22.yaml'
-    path_test = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_test_PDFS_Aera_15-22.yaml'
-elif TARGET == 'P7': 
-    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PDFS_Biograph_15-22.yaml'
-    path_test = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_test_PDFS_Biograph_15-22.yaml'
-elif TARGET == 'P8': 
-    path_adapt = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_val_PDFS_Skyra_15-22.yaml'
-    path_test = '/cheng/metaMRI/metaMRI/data_dict/E6.3/P/knee_test_PDFS_Skyra_15-22.yaml'
+
 
 print(path_test)
 #############################################################################################

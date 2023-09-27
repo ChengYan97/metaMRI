@@ -2,7 +2,7 @@
 import random
 import numpy as np
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '3'
+os.environ['CUDA_VISIBLE_DEVICES'] = '2'
 import torch
 import learn2learn as l2l
 from tqdm import tqdm
@@ -23,7 +23,7 @@ from functions.training.losses import SSIMLoss
 
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
-TARGET = 'P3' 
+TARGET = 'P9_mix' 
 
 experiment_name = 'E8knee_standard(NMSE-CA)_'+ TARGET +'_T1x200_70epoch'
 
@@ -55,8 +55,27 @@ elif TARGET == 'P2':
 elif TARGET == 'P3': 
     path_train = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Biograph_15-22.yaml'
     path_val = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Biograph_15-22.yaml'
-
-
+elif TARGET == 'P4': 
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PD_Skyra_15-22.yaml'
+    path_val = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PD_Skyra_15-22.yaml'
+elif TARGET == 'P5': 
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PDFS_Aera_2-9.yaml'
+    path_val = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PDFS_Aera_2-9.yaml'
+elif TARGET == 'P6': 
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PDFS_Aera_15-22.yaml'
+    path_val = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PDFS_Aera_15-22.yaml'
+elif TARGET == 'P7': 
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PDFS_Biograph_15-22.yaml'
+    path_val = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PDFS_Biograph_15-22.yaml'
+elif TARGET == 'P8': 
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_train_PDFS_Skyra_15-22.yaml'
+    path_val = '/cheng/metaMRI/metaMRI/data_dict/Task_8knee/P/knee_val_PDFS_Skyra_15-22.yaml'
+elif TARGET == 'P1_mix': 
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/final/P1/knee_train_PD_Aera_5-9.yaml'
+    path_val = '/cheng/metaMRI/metaMRI/data_dict/final/P1/knee_val_PD_Aera_5-9.yaml'
+elif TARGET == 'P9_mix': 
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/final/P9/brain_train_AXT1PRE_Skyra_1-5.yaml'
+    path_val = '/cheng/metaMRI/metaMRI/data_dict/final/P9/brain_val_AXT1PRE_Skyra_1-5.yaml'
 
 
 # mask function and data transform
