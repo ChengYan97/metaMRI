@@ -1,0 +1,52 @@
+conda==23.3.1
+conda-build==3.24.0
+conda-package-handling @ file:///croot/conda-package-handling_1666940373510/work
+fasteners==0.18
+fastjsonschema @ file:///opt/conda/conda-bld/python-fastjsonschema_1661371079312/work
+fastmri==0.2.0
+glob2 @ file:///home/linux1/recipes/ci/glob2_1610991677669/work
+h5py @ file:///tmp/abs_4aewd3wzey/croots/recipe/h5py_1659091371897/work
+ipykernel @ file:///croot/ipykernel_1671488378391/work
+ipython @ file:///croot/ipython_1670919316550/work
+ipython-genutils @ file:///tmp/build/80754af9/ipython_genutils_1606773439826/work
+ipywidgets @ file:///croot/ipywidgets_1679394798311/work
+json5 @ file:///tmp/build/80754af9/json5_1624432770122/work
+jsonpatch @ file:///tmp/build/80754af9/jsonpatch_1615747632069/work
+jsonpointer==2.1
+jsonschema @ file:///croot/jsonschema_1676558650973/work
+jupyter @ file:///tmp/abs_33h4eoipez/croots/recipe/jupyter_1659349046347/work
+jupyter-console @ file:///croot/jupyter_console_1679999630278/work
+jupyter-server @ file:///opt/conda/conda-bld/jupyter_server_1644494914632/work
+jupyter_client @ file:///croot/jupyter_client_1680171862562/work
+jupyter_core @ file:///croot/jupyter_core_1679906564508/work
+jupyterlab @ file:///opt/conda/conda-bld/jupyterlab_1647445413472/work
+jupyterlab-server @ file:///opt/conda/conda-bld/jupyterlab_server_1644500396812/work
+jupyterlab-widgets @ file:///croot/jupyterlab_widgets_1679055282532/work
+learn2learn==0.1.7
+Markdown @ file:///croot/markdown_1671541909495/work
+matplotlib @ file:///croot/matplotlib-suite_1679593461707/work
+matplotlib-inline @ file:///opt/conda/conda-bld/matplotlib-inline_1662014470464/work
+notebook @ file:///croot/notebook_1680011997181/work
+numpy @ file:///opt/conda/conda-bld/numpy_and_numpy_base_1652801679809/work
+pandas==1.5.3
+Pillow==9.3.0
+python-dateutil @ file:///tmp/build/80754af9/python-dateutil_1626374649649/work
+python-etcd==0.4.5
+pytorch-lightning @ file:///croot/pytorch-lightning_1677759520759/work
+PyWavelets @ file:///croot/pywavelets_1670425177960/work
+PyYAML==6.0
+scikit-image @ file:///croot/scikit-image_1669241743693/work
+scikit-learn @ file:///croot/scikit-learn_1680198742267/work
+scipy==1.10.1
+seaborn @ file:///croot/seaborn_1673479180098/work
+tensorboard @ file:///home/builder/mesters/opt/envs/tensorflow/conda-bld/tensorboard_1678126660189/work/tensorboard-2.11.0-py3-none-any.whl
+tensorboard-data-server @ file:///croot/tensorboard-data-server_1670853588388/work/tensorboard_data_server-0.6.1-py3-none-manylinux2010_x86_64.whl
+tensorboard-plugin-wit @ file:///home/builder/tkoch/workspace/tensorflow/tensorboard-plugin-wit_1658918494740/work/tensorboard_plugin_wit-1.8.1-py3-none-any.whl
+toml @ file:///tmp/build/80754af9/toml_1616166611790/work
+torch==1.13.1
+torchelastic==0.2.2
+torchmetrics @ file:///croot/torchmetrics_1677572957414/work
+torchtext==0.14.1
+torchvision==0.14.1
+tqdm @ file:///opt/conda/conda-bld/tqdm_1664392687731/work
+xmltodict @ file:///Users/ktietz/demo/mc3/conda-bld/xmltodict_1629301980723/work
