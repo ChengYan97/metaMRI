@@ -158,7 +158,7 @@ def train(model, dataloader, optimizer):
             # MFS fθ(A†y) = A fθ(A†y)
             Fimg_forward = Fimg * mask
             # self-supervised loss [y, Afθ(A†y)]
-            loss_self = l1_loss(Fimg_forward, kspace) / torch.sum(torch.abs(kspace))
+            loss_self = l1_loss(Fimg_forward, input_kspace) / torch.sum(torch.abs(input_kspace))
         
         # loss
         loss = loss_sup + loss_self
