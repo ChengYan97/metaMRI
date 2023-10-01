@@ -31,12 +31,12 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 
 LOSS = 'joint'      # 'sup', 'joint'
 DOMAIN = 'P'        # 'P', 'Q'
-COIL = 'sensmap'    # 'rss', 'sensmap'
+COIL = 'rss'    # 'rss', 'sensmap'
 
 Weight_LOSS = False
 LAMBDA = 0.99           # λ sup + (1-λ) self
 
-experiment_name = 'E_tttpaper_' + COIL + '_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
+experiment_name = 'E_tttpaper_' + COIL + '_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch_nosimple'
 # experiment_name = 'E_tttpaper_' + COIL + '_SUPdominate_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
 # experiment_name = 'E_tttpaper_' + COIL + '_balance_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
 
@@ -63,6 +63,8 @@ LR = 1e-5
 if DOMAIN == 'P': 
     path_train = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_knee_train_300.yaml'
     path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_knee_train/'
+    path_val = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_knee_val_match.yaml'
+    path_to_val_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_knee_val/'
     path_mask = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/knee_mask'
 
 elif DOMAIN == 'Q':
@@ -84,7 +86,15 @@ train_dataloader = torch.utils.data.DataLoader(dataset = trainset, batch_size = 
                 shuffle = False, generator = torch.Generator().manual_seed(SEED), pin_memory = True)
 print("Training date number: ", len(train_dataloader.dataset))
 
+# val dataset and data loader
+valset = SliceDataset(dataset = path_val, path_to_dataset='', 
+                path_to_sensmaps = path_to_val_sensmaps, provide_senmaps=True, 
+                challenge="multicoil", transform = data_transform, 
+                use_dataset_cache=True)
 
+valset_dataloader = torch.utils.data.DataLoader(dataset = valset, batch_size = BATCH_SIZE,
+                shuffle = True, generator = torch.Generator().manual_seed(SEED), pin_memory = True)
+print("Validation date number: ", len(valset_dataloader.dataset))
 
 #%%
 
@@ -165,6 +175,46 @@ def train(model, dataloader, optimizer, scales_list):
     return avg_train_loss, avg_train_loss_sup, avg_train_loss_self
 
 
+def evaluate(model, dataloader, scales_list): 
+    model.eval()
+    val_loss = 0.0
+
+    for iter, batch in tqdm(enumerate(dataloader)):
+        kspace, sens_maps, sens_maps_conj, binary_background_mask, fname, slice_num = batch
+        kspace = kspace.squeeze(0).to(device)
+        sens_maps = sens_maps.squeeze(0).to(device)
+        sens_maps_conj = sens_maps_conj.squeeze(0).to(device)
+
+        # input k space
+        input_kspace = kspace * mask + 0.0
+        scale_input_kspace = scales_list[iter] * input_kspace
+
+        if COIL == 'rss':
+            target_image_1c = rss_torch(complex_abs(ifft2c(kspace * scales_list[iter]))).unsqueeze(0)
+            val_inputs = rss_torch(ifft2c(scale_input_kspace))
+        elif COIL == 'sensmap':
+            target_image_1c = complex_abs(complex_mul(ifft2c(kspace * scales_list[iter]), sens_maps_conj).sum(dim=0, keepdim=False)).unsqueeze(0)
+            val_inputs = complex_mul(ifft2c(scale_input_kspace), sens_maps_conj).sum(dim=0, keepdim=False)
+
+        # [height, width, 2]
+        val_inputs = torch.moveaxis( val_inputs , -1, 0 ) # move complex channels to channel dimension
+        # [2, height, width]
+        # normalize input to have zero mean and std one
+
+        # fθ(A†y)
+        val_outputs = model(val_inputs.unsqueeze(0))
+
+        val_outputs_1c = complex_abs(torch.moveaxis(val_outputs.squeeze(0), 0, -1 )).unsqueeze(0) # [1, height, width]
+
+        # supervised loss [x, fθ(A†y)]: one channel image domain in TTT paper
+        loss_val = l1_loss(val_outputs_1c, target_image_1c) / torch.sum(torch.abs(target_image_1c))
+
+        val_loss += loss_val.item()
+
+    avg_val_loss = val_loss / len(dataloader)
+    return avg_val_loss
+
+
 model = Unet(in_chans=2, out_chans=2, chans=64, num_pool_layers=4, drop_prob=0.0)
 model = model.to(device)
 
@@ -198,6 +248,28 @@ for iter, batch in enumerate(train_dataloader):
     scales_list.append(scale_factor)
     print('{}/{} samples normalized.'.format(iter+1,len(train_dataloader)),'\r',end='')
 
+
+print('Compute the scale factor for entire validation data: ')
+scales_list_val = []
+for iter, batch in enumerate(valset_dataloader):
+    kspace, sens_maps, sens_maps_conj, _, fname, slice_num = batch
+    kspace = kspace.squeeze(0).to(device)
+    sens_maps = sens_maps.squeeze(0).to(device)
+    sens_maps_conj = sens_maps_conj.squeeze(0).to(device)
+
+    # input k space
+    input_kspace = kspace * mask + 0.0
+
+    # scale normalization
+    if COIL == 'rss':
+        scale_factor = scale_rss(input_kspace, model)
+    elif COIL == 'sensmap':
+        scale_factor = scale_sensmap(input_kspace, model, sens_maps_conj)
+    
+    scales_list_val.append(scale_factor)
+    print('{}/{} samples normalized.'.format(iter+1,len(valset_dataloader)),'\r',end='')
+
+
 print('Training: ')
 for iteration in range(TRAINING_EPOCH):
     print('Iteration:', iteration+1)
@@ -207,6 +279,11 @@ for iteration in range(TRAINING_EPOCH):
     writer.add_scalar("Training normalized L1", training_loss, iteration+1)
     writer.add_scalar("Training normalized L1 - sup loss", training_loss_sup, iteration+1)
     writer.add_scalar("Training normalized L1 - self loss", training_loss_self, iteration+1)
+
+    # val
+    validation_loss = evaluate(model, valset_dataloader, scales_list_val)
+    print('Validation normalized L1', validation_loss) 
+    writer.add_scalar("Validation normalized L1", validation_loss, iteration+1)
   
     save_path = '/cheng/metaMRI/metaMRI/save/'+ experiment_name + '/' + experiment_name + '_E' + str(iteration+1) + '.pth'
     torch.save((model.state_dict()), save_path)
