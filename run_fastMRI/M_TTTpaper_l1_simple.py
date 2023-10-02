@@ -3,7 +3,7 @@ import random
 import numpy as np
 import pickle
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import torch
 import learn2learn as l2l
 from tqdm import tqdm
@@ -94,7 +94,7 @@ valset = SliceDataset(dataset = path_val, path_to_dataset='',
                 use_dataset_cache=True)
 
 valset_dataloader = torch.utils.data.DataLoader(dataset = valset, batch_size = BATCH_SIZE,
-                shuffle = True, generator = torch.Generator().manual_seed(SEED), pin_memory = True)
+                shuffle = False, generator = torch.Generator().manual_seed(SEED), pin_memory = True)
 print("Validation date number: ", len(valset_dataloader.dataset))
 
 
@@ -243,5 +243,5 @@ for iteration in range(TRAINING_EPOCH):
     print('Validation normalized L1', validation_loss) 
     writer.add_scalar("Validation normalized L1", validation_loss, iteration+1)
 
-    save_path = '/cheng/metaMRI/TTT++/save/'+ experiment_name + '/' + experiment_name + '_E' + str(iteration+1) + '.pth'
+    save_path = '/cheng/metaMRI/metaMRI/save/'+ experiment_name + '/' + experiment_name + '_E' + str(iteration+1) + '.pth'
     torch.save((model.state_dict()), save_path)

@@ -93,7 +93,7 @@ valset = SliceDataset(dataset = path_val, path_to_dataset='',
                 use_dataset_cache=True)
 
 valset_dataloader = torch.utils.data.DataLoader(dataset = valset, batch_size = BATCH_SIZE,
-                shuffle = True, generator = torch.Generator().manual_seed(SEED), pin_memory = True)
+                shuffle = False, generator = torch.Generator().manual_seed(SEED), pin_memory = True)
 print("Validation date number: ", len(valset_dataloader.dataset))
 
 #%%

@@ -3,7 +3,7 @@ import random
 import numpy as np
 import pickle
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '3'
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 import torch
 import learn2learn as l2l
 from tqdm import tqdm
@@ -93,7 +93,7 @@ valset = SliceDataset(dataset = path_val, path_to_dataset='',
                 use_dataset_cache=True)
 
 valset_dataloader = torch.utils.data.DataLoader(dataset = valset, batch_size = BATCH_SIZE,
-                shuffle = True, generator = torch.Generator().manual_seed(SEED), pin_memory = True)
+                shuffle = False, generator = torch.Generator().manual_seed(SEED), pin_memory = True)
 print("Validation date number: ", len(valset_dataloader.dataset))
 
 #%%
