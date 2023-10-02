@@ -61,10 +61,18 @@ sensmap_path = '/cheng/metaMRI/metaMRI/data_dict_temp/stanford_sensmap/'
 with open('/cheng/metaMRI/ttt_for_deep_learning_cs/unet/train_data/stanford_train','rb') as fn:
     train_slices = pickle.load(fn)
 
+with open('/cheng/metaMRI/ttt_for_deep_learning_cs/unet/train_data/stanford_val','rb') as fn:
+    val_slices = pickle.load(fn)
+
 with open('/cheng/metaMRI/ttt_for_deep_learning_cs/unet/train_data/stanford_mask','rb') as fn:
     mask2d = pickle.load(fn)
 mask = torch.tensor(mask2d[0]).unsqueeze(0).unsqueeze(0).unsqueeze(-1)
 mask = mask.to(device)
+
+with open('/cheng/metaMRI/ttt_for_deep_learning_cs/unet/test_data/dataset_shift/mask2d','rb') as fn:
+    mask2d = pickle.load(fn)
+mask_val = torch.tensor(mask2d[0]).unsqueeze(0).unsqueeze(0).unsqueeze(-1)
+mask_val = mask_val.to(device)
 
 # train_slices = [train_slices[i] for i in range(len(train_slices))]
 
@@ -158,44 +166,56 @@ def train(model, dataloader, optimizer):
     avg_train_loss_self = train_loss_self / len(dataloader)
     return avg_train_loss, avg_train_loss_sup, avg_train_loss_self
 
-# def evaluate(model, dataloader): 
-#     model.eval()
-#     val_loss = 0.0
+def evaluate(model, dataloader): 
+    model.eval()
+    val_loss = 0.0
+    for iter, slice_file_name in tqdm(enumerate(dataloader)):
+        slice = slice_file_name['slice']  # slice: 69
+        file_name = slice_file_name['filename']  # file_name: 'ge9.h5'
+        filename_no_extension, file_extension = os.path.splitext(file_name)  # filename: 'ge9'. file_extension: '.h5'
+        ### load the training k-space
+        f = h5py.File(mypath + file_name, 'r')
+        kspace = f['kspace'][slice] # ground truth k-space: [8,320,320]
+        kspace = to_tensor(kspace).to(device)   # complex k-space [8,320,320,2]
 
-#     for iter, batch in tqdm(enumerate(dataloader)):
-#         kspace, sens_maps, sens_maps_conj, binary_background_mask, fname, slice_num = batch
-#         kspace = kspace.squeeze(0).to(device)
-#         sens_maps = sens_maps.squeeze(0).to(device)
-#         sens_maps_conj = sens_maps_conj.squeeze(0).to(device)
+        ### load the sensmap
+        # your name style and path
+        smap_fname = str(filename_no_extension) + '_smaps_slice' + str(slice) + '.h5'
+        with h5py.File(sensmap_path + smap_fname, "r") as hf:
+            sens_maps = hf["sens_maps"][()] #np.array of shape coils,height,width with complex valued entries
+        sens_maps = to_tensor(sens_maps)
+        sens_maps_conj = complex_conj(sens_maps)
+        sens_maps = sens_maps.to(device)
+        sens_maps_conj = sens_maps_conj.to(device)
 
-#         # input k space
-#         input_kspace = kspace * mask + 0.0
+        # input k space
+        input_kspace = kspace * mask_val + 0.0
 
-#         if COIL == 'rss':
-#             target_image_1c = rss_torch(complex_abs(ifft2c(kspace))).unsqueeze(0)
-#             val_inputs = rss_torch(ifft2c(input_kspace))
-#         elif COIL == 'sensmap':
-#             target_image_1c = complex_abs(complex_mul(ifft2c(kspace), sens_maps_conj).sum(dim=0, keepdim=False)).unsqueeze(0)
-#             val_inputs = complex_mul(ifft2c(input_kspace), sens_maps_conj).sum(dim=0, keepdim=False)
+        if COIL == 'rss':
+            target_image_1c = rss_torch(complex_abs(ifft2c(kspace))).unsqueeze(0)
+            val_inputs = rss_torch(ifft2c(input_kspace))
+        elif COIL == 'sensmap':
+            target_image_1c = complex_abs(complex_mul(ifft2c(kspace), sens_maps_conj).sum(dim=0, keepdim=False)).unsqueeze(0)
+            val_inputs = complex_mul(ifft2c(input_kspace), sens_maps_conj).sum(dim=0, keepdim=False)
 
-#         # [height, width, 2]
-#         val_inputs = torch.moveaxis( val_inputs , -1, 0 ) # move complex channels to channel dimension
-#         # [2, height, width]
-#         # normalize input to have zero mean and std one
-#         val_inputs, mean, std = normalize_separate_over_ch(val_inputs, eps=1e-11)
+        # [height, width, 2]
+        val_inputs = torch.moveaxis( val_inputs , -1, 0 ) # move complex channels to channel dimension
+        # [2, height, width]
+        # normalize input to have zero mean and std one
+        val_inputs, mean, std = normalize_separate_over_ch(val_inputs, eps=1e-11)
         
-#         # fθ(A†y)
-#         val_outputs = model(val_inputs.unsqueeze(0))
-#         val_outputs = val_outputs.squeeze(0) * std + mean
-#         val_outputs_1c = complex_abs(torch.moveaxis(val_outputs.squeeze(0), 0, -1 )).unsqueeze(0) # [1, height, width]
+        # fθ(A†y)
+        val_outputs = model(val_inputs.unsqueeze(0))
+        val_outputs = val_outputs.squeeze(0) * std + mean
+        val_outputs_1c = complex_abs(torch.moveaxis(val_outputs.squeeze(0), 0, -1 )).unsqueeze(0) # [1, height, width]
 
-#         # supervised loss [x, fθ(A†y)]: one channel image domain in TTT paper
-#         loss_val = l1_loss(val_outputs_1c, target_image_1c) / torch.sum(torch.abs(target_image_1c))
+        # supervised loss [x, fθ(A†y)]: one channel image domain in TTT paper
+        loss_val = l1_loss(val_outputs_1c, target_image_1c) / torch.sum(torch.abs(target_image_1c))
 
-#         val_loss += loss_val.item()
+        val_loss += loss_val.item()
 
-#     avg_val_loss = val_loss / len(dataloader)
-#     return avg_val_loss
+    avg_val_loss = val_loss / len(dataloader)
+    return avg_val_loss
 
 model = Unet(in_chans=2, out_chans=2, chans=64, num_pool_layers=4, drop_prob=0.0)
 model = model.to(device)
@@ -217,9 +237,9 @@ for iteration in range(TRAINING_EPOCH):
     writer.add_scalar("Training normalized L1 - self loss", training_loss_self, iteration+1)
     
     # val
-    # validation_loss = evaluate(model, valset_dataloader)
-    # print('Validation normalized L1', validation_loss) 
-    # writer.add_scalar("Validation normalized L1", validation_loss, iteration+1)
+    validation_loss = evaluate(model, val_slices)
+    print('Validation normalized L1', validation_loss) 
+    writer.add_scalar("Validation normalized L1", validation_loss, iteration+1)
 
     save_path = '/cheng/metaMRI/metaMRI/save/'+ experiment_name + '/' + experiment_name + '_E' + str(iteration+1) + '.pth'
     torch.save((model.state_dict()), save_path)
