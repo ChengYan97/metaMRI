@@ -32,7 +32,7 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 LOSS = 'sup'      # 'sup', 'joint'
 DOMAIN = 'P'        # 'P', 'Q'
 COIL = 'sensmap'   # 'sensmap'
-background_flippping = True
+background_flippping = False
 
 #experiment_name = 'E_tttkspace_' + COIL + '_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
 experiment_name = 'test'
@@ -110,28 +110,23 @@ def train(model, dataloader, optimizer, mask):
         # input k space
         input_kspace = kspace * mask + 0.0
 
-        # gt kspace: y*
-        scale_kspace = scales_list[iter] * kspace
 
-        # A†y
-        scale_input_kspace = scales_list[iter] * input_kspace
         if COIL == 'rss':
-            train_inputs = rss_torch(ifft2c(scale_input_kspace))
+            train_inputs = rss_torch(ifft2c(input_kspace))
         elif COIL == 'sensmap':    
-            train_inputs = complex_mul(ifft2c(scale_input_kspace), sens_maps_conj).sum(dim=0, keepdim=False)
+            train_inputs = complex_mul(ifft2c(input_kspace), sens_maps_conj).sum(dim=0, keepdim=False)
         # [height, width, 2]
         train_inputs = torch.moveaxis( train_inputs , -1, 0 ) # move complex channels to channel dimension
         # [2, height, width]
         # normalize input to have zero mean and std one
-        # train_inputs, mean, std = normalize_separate_over_ch(train_inputs, eps=1e-11)
-
+        train_inputs, mean, std = normalize_separate_over_ch(train_inputs, eps=1e-11)
         # fθ(A†y)
         train_outputs = model(train_inputs.unsqueeze(0)) # [1, 2, height, width]
-        # train_outputs = train_outputs.squeeze(0) * std + mean
+        train_outputs = train_outputs.squeeze(0) * std + mean
 
         # supervised loss 
         # fθ(A†y)
-        train_outputs = torch.moveaxis(train_outputs, 1, -1 )
+        train_outputs = torch.moveaxis(train_outputs.unsqueeze(0), 1, -1 )  #[1, height, width, 2]
         # S fθ(A†y)
         if background_flippping == True: 
             train_output_sens_image = torch.zeros(sens_maps.shape).to(device) 
@@ -144,7 +139,7 @@ def train(model, dataloader, optimizer, mask):
             train_output_sens_image = complex_mul(train_outputs, sens_maps)
         kspace_output = fft2c(train_output_sens_image)
         # supervised loss [x, fθ(A†y)]: one channel image domain in TTT paper
-        loss_sup = l1_loss(kspace_output, scale_kspace) / torch.sum(torch.abs(scale_kspace))
+        loss_sup = l1_loss(kspace_output, kspace) / torch.sum(torch.abs(kspace))
         
         # self-supervised loss
         if LOSS == 'sup': 
@@ -153,7 +148,7 @@ def train(model, dataloader, optimizer, mask):
             # MFS fθ(A†y) = A fθ(A†y)
             Fimg_forward = kspace_output * mask
             # self-supervised loss [y, Afθ(A†y)]
-            loss_self = l1_loss(Fimg_forward, scale_input_kspace) / torch.sum(torch.abs(scale_input_kspace))
+            loss_self = l1_loss(Fimg_forward, input_kspace) / torch.sum(torch.abs(input_kspace))
         
         # loss
         loss = loss_sup + loss_self
@@ -166,7 +161,7 @@ def train(model, dataloader, optimizer, mask):
     avg_train_loss = train_loss / len(dataloader)
     return avg_train_loss
 
-def evaluate(model, dataloader, scales_list): 
+def evaluate(model, dataloader): 
     model.eval()
     val_loss = 0.0
 
@@ -178,26 +173,25 @@ def evaluate(model, dataloader, scales_list):
 
         # input k space
         input_kspace = kspace * mask + 0.0
-        scale_kspace = scales_list[iter] * kspace
-        scale_input_kspace = scales_list[iter] * input_kspace
 
         if COIL == 'rss':
             #target_image_1c = rss_torch(complex_abs(ifft2c(kspace * scales_list[iter]))).unsqueeze(0)
-            val_inputs = rss_torch(ifft2c(scale_input_kspace))
+            val_inputs = rss_torch(ifft2c(input_kspace))
         elif COIL == 'sensmap':
             #target_image_1c = complex_abs(complex_mul(ifft2c(kspace * scales_list[iter]), sens_maps_conj).sum(dim=0, keepdim=False)).unsqueeze(0)
-            val_inputs = complex_mul(ifft2c(scale_input_kspace), sens_maps_conj).sum(dim=0, keepdim=False)
+            val_inputs = complex_mul(ifft2c(input_kspace), sens_maps_conj).sum(dim=0, keepdim=False)
 
         # [height, width, 2]
         val_inputs = torch.moveaxis( val_inputs , -1, 0 ) # move complex channels to channel dimension
         # [2, height, width]
         # normalize input to have zero mean and std one
+        val_inputs, mean, std = normalize_separate_over_ch(val_inputs, eps=1e-11)
 
         # fθ(A†y)
         val_outputs = model(val_inputs.unsqueeze(0))
-
+        val_outputs = val_outputs.squeeze(0) * std + mean
         #val_outputs_1c = complex_abs(torch.moveaxis(val_outputs.squeeze(0), 0, -1 )).unsqueeze(0) # [1, height, width]
-        val_outputs = torch.moveaxis(val_outputs, 1, -1 )
+        val_outputs = torch.moveaxis(val_outputs.unsqueeze(0), 1, -1 )  #[1, height, width, 2]
         # S fθ(A†y)
         if background_flippping == True: 
             val_output_sens_image = torch.zeros(sens_maps.shape).to(device) 
@@ -210,7 +204,7 @@ def evaluate(model, dataloader, scales_list):
             val_output_sens_image = complex_mul(val_outputs, sens_maps)
         val_kspace_output = fft2c(val_output_sens_image)
         # supervised loss [x, fθ(A†y)]: one channel image domain in TTT paper
-        loss_val = l1_loss(val_kspace_output, scale_kspace) / torch.sum(torch.abs(scale_kspace))
+        loss_val = l1_loss(val_kspace_output, kspace) / torch.sum(torch.abs(kspace))
         val_loss += loss_val.item()
 
     avg_val_loss = val_loss / len(dataloader)
@@ -229,46 +223,6 @@ with open(path_mask,'rb') as fn:
 mask = torch.tensor(mask2d[0]).unsqueeze(0).unsqueeze(0).unsqueeze(-1)
 mask = mask.to(device)
 
-print('Compute the scale factor for entire training data: ')
-scales_list = []
-for iter, batch in enumerate(train_dataloader):
-    kspace, sens_maps, sens_maps_conj, _, fname, slice_num = batch
-    kspace = kspace.squeeze(0).to(device)
-    sens_maps = sens_maps.squeeze(0).to(device)
-    sens_maps_conj = sens_maps_conj.squeeze(0).to(device)
-
-    # input k space
-    input_kspace = kspace * mask + 0.0
-
-    # scale normalization
-    if COIL == 'rss':
-        scale_factor = scale_sensmap(input_kspace, model)
-    elif COIL == 'sensmap':
-        scale_factor = scale_sensmap(input_kspace, model, sens_maps_conj)
-    
-    scales_list.append(scale_factor)
-    print('{}/{} samples normalized.'.format(iter+1,len(train_dataloader)),'\r',end='')
-
-print('Compute the scale factor for entire validation data: ')
-scales_list_val = []
-for iter, batch in enumerate(valset_dataloader):
-    kspace, sens_maps, sens_maps_conj, _, fname, slice_num = batch
-    kspace = kspace.squeeze(0).to(device)
-    sens_maps = sens_maps.squeeze(0).to(device)
-    sens_maps_conj = sens_maps_conj.squeeze(0).to(device)
-
-    # input k space
-    input_kspace = kspace * mask + 0.0
-
-    # scale normalization
-    if COIL == 'rss':
-        scale_factor = scale_rss(input_kspace, model)
-    elif COIL == 'sensmap':
-        scale_factor = scale_sensmap(input_kspace, model, sens_maps_conj)
-    
-    scales_list_val.append(scale_factor)
-    print('{}/{} samples normalized.'.format(iter+1,len(valset_dataloader)),'\r',end='')
-
 
 print('Training: ')
 for iteration in range(TRAINING_EPOCH):
@@ -279,7 +233,7 @@ for iteration in range(TRAINING_EPOCH):
     writer.add_scalar("Training normalized L1", training_loss, iteration+1)
 
     # val
-    validation_loss = evaluate(model, valset_dataloader, scales_list_val)
+    validation_loss = evaluate(model, valset_dataloader)
     print('Validation normalized L1', validation_loss) 
     writer.add_scalar("Validation normalized L1", validation_loss, iteration+1)
   
