@@ -242,7 +242,7 @@ for iter, batch in enumerate(train_dataloader):
 
     # scale normalization
     if COIL == 'rss':
-        scale_factor = scale_sensmap(input_kspace, model)
+        scale_factor = scale_rss(input_kspace, model)
     elif COIL == 'sensmap':
         scale_factor = scale_sensmap(input_kspace, model, sens_maps_conj)
     
