@@ -3,7 +3,7 @@ import random
 import numpy as np
 import pickle
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 import torch
 import learn2learn as l2l
 from tqdm import tqdm
@@ -27,13 +27,12 @@ from functions.math import complex_abs, complex_mul, complex_conj
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 LOSS = 'joint'      # 'sup', 'joint'
-DOMAIN = 'P'        # 'P', 'Q'
+DOMAIN = 'Q'        # 'P', 'Q'
 COIL = 'sensmap'    # 'rss', 'sensmap'
 background_flippping = False
 # 0-1 normalization
 
-#experiment_name = 'E_' + COIL + '_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch_simple'
-experiment_name = 'testtttt'
+experiment_name = 'E_' + COIL + '_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch_stanford'
 
 print('Experiment: ', experiment_name)
 

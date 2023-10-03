@@ -3,7 +3,7 @@ import random
 import numpy as np
 import pickle
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+os.environ['CUDA_VISIBLE_DEVICES'] = '3'
 import torch
 import learn2learn as l2l
 from tqdm import tqdm
@@ -30,12 +30,12 @@ from functions.math import complex_abs, complex_mul, complex_conj
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 LOSS = 'sup'      # 'sup', 'joint'
-DOMAIN = 'P'        # 'P', 'Q'
+DOMAIN = 'Q'        # 'P', 'Q'
 COIL = 'sensmap'   # 'sensmap'
 background_flippping = False
 
-#experiment_name = 'E_tttkspace_' + COIL + '_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
-experiment_name = 'test'
+experiment_name = 'E_tttkspace_' + COIL + '_' + LOSS + '(l1_1e-5)'+ DOMAIN +'_T300_300epoch'
+
 
 print('Experiment: ', experiment_name)
 
@@ -58,14 +58,14 @@ LR = 1e-5
 
 # data path
 if DOMAIN == 'P': 
-    path_train = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_knee_train_300.yaml'
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_knee_train.yaml'
     path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_knee_train/'
     path_val = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_knee_val_match.yaml'
     path_to_val_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_knee_val/'
     path_mask = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/knee_mask'
 
 elif DOMAIN == 'Q':
-    path_train = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_brain_train_300.yaml'
+    path_train = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_brain_train.yaml'
     path_to_train_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_brain_train/'
     path_val = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/TTT_brain_val.yaml'
     path_to_val_sensmaps = '/cheng/metaMRI/metaMRI/data_dict/TTT_paper/sensmap_brain_val/'
